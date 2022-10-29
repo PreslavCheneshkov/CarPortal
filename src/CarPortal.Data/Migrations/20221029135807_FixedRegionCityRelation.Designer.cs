@@ -4,6 +4,7 @@ using CarPortal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarPortal.Data.Migrations
 {
     [DbContext(typeof(CarPortalDbContext))]
-    partial class CarPortalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221029135807_FixedRegionCityRelation")]
+    partial class FixedRegionCityRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -264,6 +266,9 @@ namespace CarPortal.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("RegionId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SellerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -273,6 +278,8 @@ namespace CarPortal.Data.Migrations
                     b.HasIndex("CarPortalUserId");
 
                     b.HasIndex("CityId");
+
+                    b.HasIndex("RegionId");
 
                     b.HasIndex("SellerId");
 
@@ -617,7 +624,7 @@ namespace CarPortal.Data.Migrations
                     b.HasOne("CarPortal.Data.Entities.Offer.Region", "Region")
                         .WithMany("Cities")
                         .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Region");
@@ -630,18 +637,26 @@ namespace CarPortal.Data.Migrations
                         .HasForeignKey("CarPortalUserId");
 
                     b.HasOne("CarPortal.Data.Entities.Offer.City", "City")
-                        .WithMany("Offers")
+                        .WithMany()
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CarPortal.Data.Entities.Offer.Region", "Region")
+                        .WithMany()
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CarPortal.Data.Entities.User.CarPortalUser", "Seller")
                         .WithMany("PublishedOffers")
                         .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("City");
+
+                    b.Navigation("Region");
 
                     b.Navigation("Seller");
                 });
@@ -726,11 +741,6 @@ namespace CarPortal.Data.Migrations
             modelBuilder.Entity("CarPortal.Data.Entities.Car.Manufacturer", b =>
                 {
                     b.Navigation("Models");
-                });
-
-            modelBuilder.Entity("CarPortal.Data.Entities.Offer.City", b =>
-                {
-                    b.Navigation("Offers");
                 });
 
             modelBuilder.Entity("CarPortal.Data.Entities.Offer.OfferComment", b =>

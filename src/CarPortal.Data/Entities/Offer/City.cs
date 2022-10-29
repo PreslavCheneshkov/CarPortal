@@ -19,5 +19,7 @@ namespace CarPortal.Data.Entities.Offer
         [ForeignKey(nameof(Region))]
         public int RegionId { get; set; }
         public Region Region { get; set; } = null!;
+
+        public ICollection<Offer> Offers { get; set; } = new List<Offer>();
     }
 }

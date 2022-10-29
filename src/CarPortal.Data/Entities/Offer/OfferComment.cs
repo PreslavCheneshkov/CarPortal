@@ -24,6 +24,10 @@ namespace CarPortal.Data.Entities.Offer
         [Required]
         [StringLength(300)]
         public string Content { get; set; } = null!;
+        [Required]
+        public DateTime CreatedOn { get; set; }
+        [Required]
+        public int Likes { get; set; }
         public ICollection<OfferComment> Replies { get; set; } = new List<OfferComment>();
     }
 }

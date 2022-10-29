@@ -1,4 +1,5 @@
 using CarPortal.Data;
+using CarPortal.Data.Entities.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +11,7 @@ builder.Services.AddDbContext<CarPortalDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<CarPortalUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<CarPortalDbContext>();
 builder.Services.AddControllersWithViews();
 

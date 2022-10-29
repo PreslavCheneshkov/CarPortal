@@ -25,10 +25,6 @@ namespace CarPortal.Data.Entities.Offer
         public DateTime CreatedOn { get; set; }
         public DateTime LastEdited { get; set; }
         [Required]
-        [ForeignKey(nameof(Region))]
-        public int RegionId { get; set; }
-        public Region Region { get; set; } = null!;
-        [Required]
         [ForeignKey(nameof(City))]
         public int CityId { get; set; }
         public City City { get; set; } = null!;

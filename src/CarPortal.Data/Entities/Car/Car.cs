@@ -13,6 +13,10 @@ namespace CarPortal.Data.Entities.Car
         [Key]
         public int Id { get; set; }
         [Required]
+        [ForeignKey(nameof(VehicleCategory))]
+        public int VehicleCategoryId { get; set; }
+        public VehicleCategory VehicleCategory { get; set; } = null!;
+        [Required]
         [ForeignKey(nameof(Manufacturer))]
         public int ManufacturerId { get; set; }
         public Manufacturer Manufacturer { get; set; } = null!;
