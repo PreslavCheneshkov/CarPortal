@@ -1,7 +1,7 @@
 ﻿using CarPortal.Data;
 using CarPortal.Data.Entities.Car;
 using CarPortal.Data.Entities.Offer;
-#pragma warning disable CS8602 // Rethrow to preserve stack details
+#pragma warning disable CS8602
 
 namespace CarPortal.DataSeeder
 {
