@@ -19,10 +19,7 @@ namespace CarPortal.Data.Entities.Car
         [ForeignKey(nameof(Manufacturer))]
         public int ManufacturerId { get; set; }
         public Manufacturer Manufacturer { get; set; } = null!;
-        [Required]
-        [ForeignKey(nameof(TransmissionType))]
-        public int TransmissionTypeId { get; set; }
-        public TransmissionType TransmissionType { get; set; } = null!;
+
 
     }
 }

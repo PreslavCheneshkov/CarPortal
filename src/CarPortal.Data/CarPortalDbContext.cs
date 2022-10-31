@@ -8,9 +8,20 @@ namespace CarPortal.Data
 {
     public class CarPortalDbContext : IdentityDbContext<CarPortalUser>
     {
+        public CarPortalDbContext() : base()
+        {
+        }
         public CarPortalDbContext(DbContextOptions<CarPortalDbContext> options)
             : base(options)
         {
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Server=.;Database=CarPortal;Trusted_Connection=True;MultipleActiveResultSets=true");
+            }
+            base.OnConfiguring(optionsBuilder);
         }
         public DbSet<Car> Cars { get; set; } = null!;
         public DbSet<Color> Colors { get; set; } = null!;
@@ -29,18 +40,17 @@ namespace CarPortal.Data
             builder.Entity<Offer>()
                 .HasOne(o => o.Seller)
                 .WithMany(s => s.PublishedOffers)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Entity<City>()
-                .HasOne(c => c.Region)
-                .WithMany(r => r.Cities)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Offer>()
                 .HasOne(o => o.City)
                 .WithMany(c => c.Offers)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<City>()
+                .HasOne(c => c.Region)
+                .WithMany(r => r.Cities)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }

@@ -16,10 +16,7 @@ namespace CarPortal.Data.Entities.Car
         [ForeignKey(nameof(VehicleCategory))]
         public int VehicleCategoryId { get; set; }
         public VehicleCategory VehicleCategory { get; set; } = null!;
-        [Required]
-        [ForeignKey(nameof(Manufacturer))]
-        public int ManufacturerId { get; set; }
-        public Manufacturer Manufacturer { get; set; } = null!;
+
         [Required]
         [ForeignKey(nameof(Model))]
         public int ModelId { get; set; }
@@ -29,6 +26,10 @@ namespace CarPortal.Data.Entities.Car
         public int FuelTypeId { get; set; }
         public FuelType FuelType { get; set; } = null!;
         public double? EngineDisplacement { get; set; }
+        [Required]
+        [ForeignKey(nameof(TransmissionType))]
+        public int TransmissionTypeId { get; set; }
+        public TransmissionType TransmissionType { get; set; } = null!;
         public int Year { get; set; }
         public int Mileage { get; set; }
         [Required]

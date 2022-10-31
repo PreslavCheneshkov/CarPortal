@@ -42,13 +42,13 @@ namespace CarPortal.Data.Migrations
                     b.Property<bool>("IsBrandNew")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ManufacturerId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Mileage")
                         .HasColumnType("int");
 
                     b.Property<int>("ModelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TransmissionTypeId")
                         .HasColumnType("int");
 
                     b.Property<int>("VehicleCategoryId")
@@ -63,9 +63,9 @@ namespace CarPortal.Data.Migrations
 
                     b.HasIndex("FuelTypeId");
 
-                    b.HasIndex("ManufacturerId");
-
                     b.HasIndex("ModelId");
+
+                    b.HasIndex("TransmissionTypeId");
 
                     b.HasIndex("VehicleCategoryId");
 
@@ -82,7 +82,8 @@ namespace CarPortal.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -102,7 +103,8 @@ namespace CarPortal.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.HasKey("Id");
 
@@ -121,7 +123,8 @@ namespace CarPortal.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.HasKey("Id");
 
@@ -162,14 +165,9 @@ namespace CarPortal.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("TransmissionTypeId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ManufacturerId");
-
-                    b.HasIndex("TransmissionTypeId");
 
                     b.ToTable("Models");
                 });
@@ -184,7 +182,8 @@ namespace CarPortal.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.HasKey("Id");
 
@@ -201,7 +200,8 @@ namespace CarPortal.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.HasKey("Id");
 
@@ -240,7 +240,8 @@ namespace CarPortal.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("AdditionalInfo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("CarId")
                         .HasColumnType("int");
@@ -248,7 +249,8 @@ namespace CarPortal.Data.Migrations
                     b.Property<string>("CarPortalUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("CityId")
+                    b.Property<int?>("CityId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("ContactPhoneNumber")
@@ -331,7 +333,8 @@ namespace CarPortal.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -557,15 +560,15 @@ namespace CarPortal.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CarPortal.Data.Entities.Car.Manufacturer", "Manufacturer")
-                        .WithMany()
-                        .HasForeignKey("ManufacturerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CarPortal.Data.Entities.Car.Model", "Model")
                         .WithMany()
                         .HasForeignKey("ModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CarPortal.Data.Entities.Car.TransmissionType", "TransmissionType")
+                        .WithMany()
+                        .HasForeignKey("TransmissionTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -579,9 +582,9 @@ namespace CarPortal.Data.Migrations
 
                     b.Navigation("FuelType");
 
-                    b.Navigation("Manufacturer");
-
                     b.Navigation("Model");
+
+                    b.Navigation("TransmissionType");
 
                     b.Navigation("VehicleCategory");
                 });
@@ -601,15 +604,7 @@ namespace CarPortal.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CarPortal.Data.Entities.Car.TransmissionType", "TransmissionType")
-                        .WithMany()
-                        .HasForeignKey("TransmissionTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Manufacturer");
-
-                    b.Navigation("TransmissionType");
                 });
 
             modelBuilder.Entity("CarPortal.Data.Entities.Offer.City", b =>
@@ -617,7 +612,7 @@ namespace CarPortal.Data.Migrations
                     b.HasOne("CarPortal.Data.Entities.Offer.Region", "Region")
                         .WithMany("Cities")
                         .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Region");
@@ -632,13 +627,13 @@ namespace CarPortal.Data.Migrations
                     b.HasOne("CarPortal.Data.Entities.Offer.City", "City")
                         .WithMany("Offers")
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CarPortal.Data.Entities.User.CarPortalUser", "Seller")
                         .WithMany("PublishedOffers")
                         .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("City");

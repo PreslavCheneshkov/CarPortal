@@ -20,13 +20,16 @@ namespace CarPortal.Data.Entities.Offer
         [ForeignKey(nameof(CarPortalUser))]
         public string SellerId { get; set; } = null!;
         public CarPortalUser Seller { get; set; } = null!;
-        public decimal Price { get; set; }
-        public string? AdditionalInfo { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime LastEdited { get; set; }
         [Required]
+        public decimal Price { get; set; }
+        [StringLength(500)]
+        public string? AdditionalInfo { get; set; }
+        [Required]
+        public DateTime CreatedOn { get; set; }
+        [Required]
+        public DateTime LastEdited { get; set; }
         [ForeignKey(nameof(City))]
-        public int CityId { get; set; }
+        public int? CityId { get; set; }
         public City City { get; set; } = null!;
         [Required]
         [DataType(DataType.PhoneNumber)]
