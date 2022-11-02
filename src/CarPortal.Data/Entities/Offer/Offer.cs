@@ -30,8 +30,13 @@ namespace CarPortal.Data.Entities.Offer
         [Required]
         public DateTime LastEdited { get; set; }
         [ForeignKey(nameof(City))]
-        public int? CityId { get; set; }
+        [Required]
+        public int CityId { get; set; }
         public City City { get; set; } = null!;
+        [Required]
+        [ForeignKey(nameof(Region))]
+        public int RegionId { get; set; }
+        public Region Region { get; set; } = null!;
         [Required]
         [DataType(DataType.PhoneNumber)]
         public string ContactPhoneNumber { get; set; } = null!;
