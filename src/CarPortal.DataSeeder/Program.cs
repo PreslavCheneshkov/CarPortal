@@ -16,11 +16,11 @@ namespace CarPortal.DataSeeder
             SeedColors(context);
             SeedExtras(context);
             SeedFuelTypes(context);
-            SeedManufacturers(context);
-            SeedModels(context);
             SeedTransmissionTypes(context);
             SeedVehicleCategories(context);
+            SeedManufacturers(context);
             SeedRegions(context);
+            SeedModels(context);
             SeedCities(context);
         }
         static void SeedColors(CarPortalDbContext context)
@@ -81,13 +81,11 @@ namespace CarPortal.DataSeeder
         }
         static void SeedModels(CarPortalDbContext context)
         {
-            var manufacturers = context.Manufacturers.Select(m => new
-            {
-                Id = m.Id,
-                Name = m.Name,
-            });
+            var manufacturers = context.Manufacturers;
 
             string[] models = new string[] {};
+
+            List<Model> modelsToAdd = new List<Model>();
 
             foreach (var manufacturer in manufacturers)
             {
@@ -115,15 +113,14 @@ namespace CarPortal.DataSeeder
                     case "Hyundai": models = new string[] { "Tuscon", "i30", "i20", "i10"}; break;
                     default: break;
                 }
-                List<Model> modelsToAdd = new List<Model>();
+
                 foreach (var model in models)
                 {
                     modelsToAdd.Add(new Model() { ManufacturerId = manufacturer.Id, Name = model });
                 }
-
-                context.Models.AddRange(modelsToAdd);
-                context.SaveChanges();
             }
+            context.Models.AddRange(modelsToAdd);
+            context.SaveChanges();
         }
         static void SeedTransmissionTypes(CarPortalDbContext context)
         {
@@ -169,13 +166,11 @@ namespace CarPortal.DataSeeder
         }
         static void SeedCities(CarPortalDbContext context)
         {
-            var regions = context.Regions.Select(m => new
-            {
-                Id = m.Id,
-                Name = m.Name,
-            });
+            var regions = context.Regions;
 
             string[] cities = new string[] { };
+
+            List<City> citiesToAdd = new List<City>();
 
             foreach (var region in regions)
             {
@@ -191,15 +186,14 @@ namespace CarPortal.DataSeeder
                     
                     default: break;
                 }
-                List<City> citiesToAdd = new List<City>();
+
                 foreach (var city in cities)
                 {
                     citiesToAdd.Add(new City() { RegionId = region.Id, Name = city });
                 }
-
-                context.Cities.AddRange(citiesToAdd);
-                context.SaveChanges();
             }
+            context.Cities.AddRange(citiesToAdd);
+            context.SaveChanges();
         }
     }
 }
