@@ -9,6 +9,8 @@ namespace CarPortal.Web.Models.Offer
         [Required]
         public int VehicleCategoryId { get; set; }
         [Required]
+        public int ManufacturerId { get; set; }
+        [Required]
         public int ModelId { get; set; }
         [Required]
         public int FuelTypeId { get; set; }
@@ -26,7 +28,7 @@ namespace CarPortal.Web.Models.Offer
         public IEnumerable<VehicleCategoryDropDown> VehicleCategories { get; set; } = new List<VehicleCategoryDropDown>();
         public IEnumerable<VehicleModelDropDown> VehicleModels { get; set; } = new List<VehicleModelDropDown>();
         public IEnumerable<FuelTypeDropDown> FuelTypes { get; set; } = new List<FuelTypeDropDown>();
-        public IEnumerable<TransmissionTypeDropDown> TranmissionTypes { get; set; } = new List<TransmissionTypeDropDown>();
+        public IEnumerable<TransmissionTypeDropDown> TransmissionTypes { get; set; } = new List<TransmissionTypeDropDown>();
         public IEnumerable<ColorDropDown> Colors { get; set; } = new List<ColorDropDown>();
         public IEnumerable<ManufacturerDropDown> Manufacturers { get; set; } = new List<ManufacturerDropDown>();
     }

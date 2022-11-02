@@ -9,6 +9,7 @@ namespace CarPortal.Web.Controllers
         {
             return View();
         }
+        [HttpGet]
         public IActionResult AddOffer()
         {
             var model = new AddOfferViewModel();

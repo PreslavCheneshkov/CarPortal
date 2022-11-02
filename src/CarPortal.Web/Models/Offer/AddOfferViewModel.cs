@@ -12,6 +12,7 @@ namespace CarPortal.Web.Models.Offer
         [Required]
         [StringLength(AdditionalInfoMaxLength, MinimumLength = AdditionalInfoMinLength)]
         public string? AdditionalInfo { get; set; }
+        [Required]
         public int CityId { get; set; }
         public IEnumerable<RegionDropDown> Regions { get; set; } = new List<RegionDropDown>();
         public IEnumerable<CityDropDown> Cities { get; set; } = new List<CityDropDown>();

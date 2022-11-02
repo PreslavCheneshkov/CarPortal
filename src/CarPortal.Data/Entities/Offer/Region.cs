@@ -15,6 +15,7 @@ namespace CarPortal.Data.Entities.Offer
         [StringLength(50)]
         public string Name { get; set; } = null!;
         public ICollection<City> Cities { get; set; } = new List<City>();
+        public ICollection<Offer> Offers { get; set; } = new List<Offer>();
 
     }
 }
