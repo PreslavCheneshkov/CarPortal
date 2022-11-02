@@ -81,24 +81,17 @@ namespace CarPortal.DataSeeder
         }
         static void SeedModels(CarPortalDbContext context)
         {
-            var manufacturersSQL = context.Manufacturers.Select(m => new
+            var manufacturers = context.Manufacturers.Select(m => new
             {
                 Id = m.Id,
                 Name = m.Name,
             });
 
-            Dictionary<string, int> manufacturers = new Dictionary<string, int>();
-
-            foreach (var manufacturer in manufacturersSQL)
-            {
-                manufacturers.Add(manufacturer.Name, manufacturer.Id);
-            }
-
             string[] models = new string[] {};
 
             foreach (var manufacturer in manufacturers)
             {
-                switch (manufacturer.Key)
+                switch (manufacturer.Name)
                 {
                     case "Volkswagen": models = new string[]  { "Golf", "Passat", "Arteon", "Polo", "Toareg" }; break;
                     case "Audi": models = new string[] { "A3", "A4", "A5", "A6", "A8", "S3", "RS4", "RS6", "R8" }; break;
@@ -125,7 +118,7 @@ namespace CarPortal.DataSeeder
                 List<Model> modelsToAdd = new List<Model>();
                 foreach (var model in models)
                 {
-                    modelsToAdd.Add(new Model() { ManufacturerId = manufacturer.Value, Name = model });
+                    modelsToAdd.Add(new Model() { ManufacturerId = manufacturer.Id, Name = model });
                 }
 
                 context.Models.AddRange(modelsToAdd);
@@ -176,24 +169,17 @@ namespace CarPortal.DataSeeder
         }
         static void SeedCities(CarPortalDbContext context)
         {
-            var regionsSQL = context.Regions.Select(m => new
+            var regions = context.Regions.Select(m => new
             {
                 Id = m.Id,
                 Name = m.Name,
             });
 
-            Dictionary<string, int> regions = new Dictionary<string, int>();
-
-            foreach (var region in regionsSQL)
-            {
-                regions.Add(region.Name, region.Id);
-            }
-
             string[] cities = new string[] { };
 
             foreach (var region in regions)
             {
-                switch (region.Key)
+                switch (region.Name)
                 {
                     case "Varna": cities = new string[] { "Varna", "Aksakovo", "Devnya", "Provadiya", "Kranevo" }; break;
                     case "Sofia": cities = new string[] { "Sofia", "Pravets"}; break;
@@ -208,7 +194,7 @@ namespace CarPortal.DataSeeder
                 List<City> citiesToAdd = new List<City>();
                 foreach (var city in cities)
                 {
-                    citiesToAdd.Add(new City() { RegionId = region.Value, Name = city });
+                    citiesToAdd.Add(new City() { RegionId = region.Id, Name = city });
                 }
 
                 context.Cities.AddRange(citiesToAdd);
