@@ -11,5 +11,6 @@ namespace CarPortal.Core.Services.Contracts
     {
         Task AddOfferAsync(OfferInputModel inputModel, string sellerId);
         Task<OfferDropDownsModel> PopulateViewModelWithDropDownsAsync();
+        Task<IEnumerable<SeeAllOffersDto>> GetAllOffers();
     }
 }

@@ -30,5 +30,7 @@ namespace CarPortal.Core.DTOs.Offer
         public int ColorId { get; set; }
         [Required]
         public string ContactPhoneNumber { get; set; } = null!;
+        [Required]
+        public bool IsBrandNew { get; set; }
     }
 }

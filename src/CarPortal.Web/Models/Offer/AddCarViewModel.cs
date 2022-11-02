@@ -25,6 +25,8 @@ namespace CarPortal.Web.Models.Offer
         [Required]
         public int ColorId { get; set; }
 
+        [Required]
+        public bool IsBrandNew { get; set; }
         public IEnumerable<VehicleCategoryDropDown> VehicleCategories { get; set; } = new List<VehicleCategoryDropDown>();
         public IEnumerable<VehicleModelDropDown> VehicleModels { get; set; } = new List<VehicleModelDropDown>();
         public IEnumerable<FuelTypeDropDown> FuelTypes { get; set; } = new List<FuelTypeDropDown>();

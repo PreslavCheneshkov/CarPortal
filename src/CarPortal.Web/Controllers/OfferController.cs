@@ -52,6 +52,7 @@ namespace CarPortal.Web.Controllers
                 CityId = model.CityId,
                 RegionId = model.RegionId,
                 AdditionalInfo = model.AdditionalInfo,
+                ContactPhoneNumber = model.ContactPhoneNumber,
                 Car = new CarInputModel()
                 {
                     VehicleCategoryId = model.Car.VehicleCategoryId,
@@ -63,6 +64,7 @@ namespace CarPortal.Web.Controllers
                     EngineDisplacement = model.Car.EngineDisplacement,
                     Mileage = model.Car.Mileage,
                     Year = model.Car.Year,
+                    IsBrandNew = model.Car.IsBrandNew,
                 }
             };
 
@@ -71,6 +73,12 @@ namespace CarPortal.Web.Controllers
             await offerService.AddOfferAsync(offer, userId);
 
             return RedirectToAction("Index", "Home");
+        }
+        public async Task<IActionResult> SeeAll()
+        {
+            var offers = await offerService.GetAllOffers() as IEnumerable<SeeAllOffersViewModel>;
+
+            return View(offers);
         }
     }
 }

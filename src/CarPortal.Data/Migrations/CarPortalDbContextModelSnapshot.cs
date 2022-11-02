@@ -279,6 +279,8 @@ namespace CarPortal.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CarId");
+
                     b.HasIndex("CarPortalUserId");
 
                     b.HasIndex("CityId");
@@ -637,6 +639,12 @@ namespace CarPortal.Data.Migrations
 
             modelBuilder.Entity("CarPortal.Data.Entities.Offer.Offer", b =>
                 {
+                    b.HasOne("CarPortal.Data.Entities.Car.Car", "Car")
+                        .WithMany()
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CarPortal.Data.Entities.User.CarPortalUser", null)
                         .WithMany("SavedOffers")
                         .HasForeignKey("CarPortalUserId");
@@ -658,6 +666,8 @@ namespace CarPortal.Data.Migrations
                         .HasForeignKey("SellerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Car");
 
                     b.Navigation("City");
 

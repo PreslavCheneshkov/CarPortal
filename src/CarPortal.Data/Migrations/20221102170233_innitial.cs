@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CarPortal.Data.Migrations
 {
-    public partial class Innitial : Migration
+    public partial class innitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -332,6 +332,25 @@ namespace CarPortal.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Extras",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
+                    CarId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Extras", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Extras_Cars_CarId",
+                        column: x => x.CarId,
+                        principalTable: "Cars",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Offers",
                 columns: table => new
                 {
@@ -363,6 +382,12 @@ namespace CarPortal.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_Offers_Cars_CarId",
+                        column: x => x.CarId,
+                        principalTable: "Cars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Offers_Cities_CityId",
                         column: x => x.CityId,
                         principalTable: "Cities",
@@ -374,25 +399,6 @@ namespace CarPortal.Data.Migrations
                         principalTable: "Regions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Extras",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
-                    CarId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Extras", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Extras_Cars_CarId",
-                        column: x => x.CarId,
-                        principalTable: "Cars",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -530,6 +536,11 @@ namespace CarPortal.Data.Migrations
                 column: "OfferId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Offers_CarId",
+                table: "Offers",
+                column: "CarId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Offers_CarPortalUserId",
                 table: "Offers",
                 column: "CarPortalUserId");
@@ -577,10 +588,16 @@ namespace CarPortal.Data.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Offers");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "Cars");
 
             migrationBuilder.DropTable(
-                name: "Offers");
+                name: "Cities");
 
             migrationBuilder.DropTable(
                 name: "Colors");
@@ -598,16 +615,10 @@ namespace CarPortal.Data.Migrations
                 name: "VehicleCategories");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Cities");
+                name: "Regions");
 
             migrationBuilder.DropTable(
                 name: "Manufacturers");
-
-            migrationBuilder.DropTable(
-                name: "Regions");
         }
     }
 }

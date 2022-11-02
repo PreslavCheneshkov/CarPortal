@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarPortal.Data.Migrations
 {
     [DbContext(typeof(CarPortalDbContext))]
-    [Migration("20221102144102_Innitial")]
-    partial class Innitial
+    [Migration("20221102170233_innitial")]
+    partial class innitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -280,6 +280,8 @@ namespace CarPortal.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CarId");
 
                     b.HasIndex("CarPortalUserId");
 
@@ -639,6 +641,12 @@ namespace CarPortal.Data.Migrations
 
             modelBuilder.Entity("CarPortal.Data.Entities.Offer.Offer", b =>
                 {
+                    b.HasOne("CarPortal.Data.Entities.Car.Car", "Car")
+                        .WithMany()
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CarPortal.Data.Entities.User.CarPortalUser", null)
                         .WithMany("SavedOffers")
                         .HasForeignKey("CarPortalUserId");
@@ -660,6 +668,8 @@ namespace CarPortal.Data.Migrations
                         .HasForeignKey("SellerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Car");
 
                     b.Navigation("City");
 

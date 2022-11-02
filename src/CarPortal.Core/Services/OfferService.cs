@@ -32,6 +32,7 @@ namespace CarPortal.Core.Services
                 EngineDisplacement = inputModel.Car.EngineDisplacement,
                 ColorId = inputModel.Car.ColorId,
                 Year = inputModel.Car.Year,
+                IsBrandNew = inputModel.Car.IsBrandNew,
                 Mileage = inputModel.Car.Mileage,
             };
 
@@ -49,6 +50,33 @@ namespace CarPortal.Core.Services
 
             context.Offers.Add(offer);
             await context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<SeeAllOffersDto>> GetAllOffers()
+        {
+            var offers = await context.Offers
+                                      .Include(o => o.Car)
+                                      .ThenInclude(c => c.Model)
+                                      .ThenInclude(m => m.Manufacturer)
+                                      .Include(o => o.Car)
+                                      .ThenInclude(c => c.Color)
+                                      .Include(o => o.Car)
+                                      .ThenInclude(c => c.TransmissionType)
+                                      .Include(o => o.Car)
+                                      .ThenInclude(c => c.FuelType)
+                                      .Include(o => o.Car)
+                                      .Select(o => new SeeAllOffersDto
+                                      {
+                                          Manufacturer = o.Car.Manufacturer.Name,
+                                          Model = o.Car.Model.Name,
+                                          FuelType = o.Car.FuelType.Name,
+                                          Year = o.Car.Year,
+                                          Mileage = o.Car.Mileage,
+                                          ContactPhone = o.ContactPhoneNumber,
+                                          Price = o.Price,
+                                      }).ToArrayAsync();
+            
+            return offers;
         }
 
         public async Task<OfferDropDownsModel> PopulateViewModelWithDropDownsAsync()

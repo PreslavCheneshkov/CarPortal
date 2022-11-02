@@ -1,0 +1,24 @@
+﻿@using CarPortal.Web.Models.Offer
+@model List<SeeAllOffersViewModel>
+
+@{
+    ViewBag.Title = "Browse all";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    @foreach (var item in @Model)
+    {
+        <div class="col-md-6">
+            <label>@item.Manufacturer</label>
+            <label>@item.Model</label>
+            <label>@item.Year</label>
+            <label>@item.FuelType</label>
+            <label>@item.Mileage</label>
+            <label>@item.Price</label>
+            <label>@item.ContactPhone</label>
+        </div>
+    }
+</div>
