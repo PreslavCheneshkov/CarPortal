@@ -1,6 +1,6 @@
-﻿namespace CarPortal.Web.Models.Offer.DropDownModels
+﻿namespace CarPortal.Core.Dtos.Offer.DropDownModels
 {
-    public class RegionDropDown
+    public class VehicleModelDropDown
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;

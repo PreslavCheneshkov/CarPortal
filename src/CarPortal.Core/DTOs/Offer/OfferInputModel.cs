@@ -1,10 +1,14 @@
-﻿using CarPortal.Core.Dtos.Offer.DropDownModels;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using static CarPortal.Data.Constants.OfferConstants;
 
-namespace CarPortal.Web.Models.Offer
+namespace CarPortal.Core.DTOs.Offer
 {
-    public class AddOfferViewModel
+    public class OfferInputModel
     {
         [Required]
         [Range(0, double.MaxValue)]
@@ -18,8 +22,6 @@ namespace CarPortal.Web.Models.Offer
         public int CityId { get; set; }
         [Required]
         public string ContactPhoneNumber { get; set; } = null!;
-        public IEnumerable<RegionDropDown> Regions { get; set; } = new List<RegionDropDown>();
-        public IEnumerable<CityDropDown> Cities { get; set; } = new List<CityDropDown>();
-        public AddCarViewModel Car { get; set; } = new AddCarViewModel();
+        public CarInputModel Car { get; set; } = new CarInputModel();
     }
 }

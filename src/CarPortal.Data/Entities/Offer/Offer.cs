@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CarPortal.Data.Entities.Car;
 using static CarPortal.Data.Constants.OfferConstants;
 
 namespace CarPortal.Data.Entities.Offer
@@ -17,6 +18,8 @@ namespace CarPortal.Data.Entities.Offer
         [Required]
         [ForeignKey(nameof(Car))]
         public int CarId { get; set; }
+        [Required]
+        public Car.Car Car { get; set; } = null!;
         [Required]
         [ForeignKey(nameof(CarPortalUser))]
         public string SellerId { get; set; } = null!;

@@ -1,5 +1,5 @@
-﻿using CarPortal.Web.Attributes;
-using CarPortal.Web.Models.Offer.DropDownModels;
+﻿using CarPortal.Core.Attributes;
+using CarPortal.Core.Dtos.Offer.DropDownModels;
 using System.ComponentModel.DataAnnotations;
 
 namespace CarPortal.Web.Models.Offer

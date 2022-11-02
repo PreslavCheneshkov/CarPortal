@@ -1,3 +1,5 @@
+using CarPortal.Core.Services;
+using CarPortal.Core.Services.Contracts;
 using CarPortal.Data;
 using CarPortal.Data.Entities.User;
 using Microsoft.AspNetCore.Identity;
@@ -23,6 +25,8 @@ builder.Services.AddDefaultIdentity<CarPortalUser>(options =>
 })
     .AddEntityFrameworkStores<CarPortalDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IOfferService, OfferService>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

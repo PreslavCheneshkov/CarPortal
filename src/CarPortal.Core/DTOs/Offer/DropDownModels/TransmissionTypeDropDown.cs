@@ -1,4 +1,4 @@
-﻿namespace CarPortal.Web.Models.Offer.DropDownModels
+﻿namespace CarPortal.Core.Dtos.Offer.DropDownModels
 {
     public class TransmissionTypeDropDown
     {

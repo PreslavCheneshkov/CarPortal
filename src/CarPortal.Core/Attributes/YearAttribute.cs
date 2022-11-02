@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CarPortal.Web.Attributes
+namespace CarPortal.Core.Attributes
 {
     public class YearAttribute : ValidationAttribute
     {

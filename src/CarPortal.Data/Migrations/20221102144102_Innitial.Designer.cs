@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarPortal.Data.Migrations
 {
     [DbContext(typeof(CarPortalDbContext))]
-    [Migration("20221102134050_Innitial")]
+    [Migration("20221102144102_Innitial")]
     partial class Innitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -256,8 +256,7 @@ namespace CarPortal.Data.Migrations
                     b.Property<string>("CarPortalUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("CityId")
-                        .IsRequired()
+                    b.Property<int>("CityId")
                         .HasColumnType("int");
 
                     b.Property<string>("ContactPhoneNumber")
@@ -273,6 +272,9 @@ namespace CarPortal.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("RegionId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SellerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -282,6 +284,8 @@ namespace CarPortal.Data.Migrations
                     b.HasIndex("CarPortalUserId");
 
                     b.HasIndex("CityId");
+
+                    b.HasIndex("RegionId");
 
                     b.HasIndex("SellerId");
 
@@ -645,6 +649,12 @@ namespace CarPortal.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("CarPortal.Data.Entities.Offer.Region", "Region")
+                        .WithMany("Offers")
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CarPortal.Data.Entities.User.CarPortalUser", "Seller")
                         .WithMany("PublishedOffers")
                         .HasForeignKey("SellerId")
@@ -652,6 +662,8 @@ namespace CarPortal.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("City");
+
+                    b.Navigation("Region");
 
                     b.Navigation("Seller");
                 });
@@ -753,6 +765,8 @@ namespace CarPortal.Data.Migrations
             modelBuilder.Entity("CarPortal.Data.Entities.Offer.Region", b =>
                 {
                     b.Navigation("Cities");
+
+                    b.Navigation("Offers");
                 });
 
             modelBuilder.Entity("CarPortal.Data.Entities.User.CarPortalUser", b =>

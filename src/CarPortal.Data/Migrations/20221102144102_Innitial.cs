@@ -344,6 +344,7 @@ namespace CarPortal.Data.Migrations
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastEdited = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CityId = table.Column<int>(type: "int", nullable: false),
+                    RegionId = table.Column<int>(type: "int", nullable: false),
                     ContactPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CarPortalUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
@@ -367,6 +368,12 @@ namespace CarPortal.Data.Migrations
                         principalTable: "Cities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Offers_Regions_RegionId",
+                        column: x => x.RegionId,
+                        principalTable: "Regions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -531,6 +538,11 @@ namespace CarPortal.Data.Migrations
                 name: "IX_Offers_CityId",
                 table: "Offers",
                 column: "CityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Offers_RegionId",
+                table: "Offers",
+                column: "RegionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Offers_SellerId",
