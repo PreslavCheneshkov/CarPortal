@@ -76,7 +76,16 @@ namespace CarPortal.Web.Controllers
         }
         public async Task<IActionResult> SeeAll()
         {
-            var offers = await offerService.GetAllOffers() as IEnumerable<SeeAllOffersViewModel>;
+            var offers = (await offerService.GetAllOffers()).Select(o => new SeeAllOffersViewModel() 
+            {
+                Manufacturer = o.Manufacturer,
+                Model = o.Model,
+                FuelType = o.FuelType,
+                Year = o.Year,
+                Price = o.Price,
+                Mileage = o.Mileage,
+                ContactPhone = o.ContactPhone,
+            }).ToList();
 
             return View(offers);
         }

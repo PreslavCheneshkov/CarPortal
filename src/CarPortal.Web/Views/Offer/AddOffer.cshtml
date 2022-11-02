@@ -6,14 +6,14 @@
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
-<hr/>
+<hr />
 
 <div class="row">
     <div class="col-12">
         <form asp-action="AddOffer" method="post">
             <h3 class="text-center">Technical info:</h3>
             <div class="mb-3">
-                <label asp-for="@Model.Car.VehicleCategoryId" class="form-label" >Category</label>
+                <label asp-for="@Model.Car.VehicleCategoryId" class="form-label">Category</label>
                 <select asp-for="@Model.Car.VehicleCategoryId" class="form-control">
                     <option value="null"></option>
                     @foreach (var category in @Model.Car.VehicleCategories)
@@ -23,8 +23,8 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.Car.ManufacturerId" class="form-label" >Manufacturer</label>
-                <select asp-for="@Model.Car.ManufacturerId" class="form-control">
+                <label asp-for="@Model.Car.ManufacturerId" class="form-label">Manufacturer</label>
+                <select id="manufacturerSelect" asp-for="@Model.Car.ManufacturerId" class="form-control">
                     <option value="null"></option>
                     @foreach (var manufacturer in @Model.Car.Manufacturers)
                     {
@@ -33,8 +33,8 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.Car.ModelId" class="form-label" >Model</label>
-                <select asp-for="@Model.Car.ModelId" class="form-control">
+                <label asp-for="@Model.Car.ModelId" class="form-label">Model</label>
+                <select id="modelSelect" asp-for="@Model.Car.ModelId" class="form-control">
                     <option value="null"></option>
                     @foreach (var vehicleModel in @Model.Car.VehicleModels)
                     {
@@ -43,7 +43,7 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.Car.FuelTypeId" class="form-label" >FuelType</label>
+                <label asp-for="@Model.Car.FuelTypeId" class="form-label">FuelType</label>
                 <select asp-for="@Model.Car.FuelTypeId" class="form-control">
                     <option value="null"></option>
                     @foreach (var fuelType in @Model.Car.FuelTypes)
@@ -53,7 +53,7 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.Car.TransmissionTypeId" class="form-label" >Transmission Type</label>
+                <label asp-for="@Model.Car.TransmissionTypeId" class="form-label">Transmission Type</label>
                 <select asp-for="@Model.Car.TransmissionTypeId" class="form-control">
                     <option value="null"></option>
                     @foreach (var transmissionType in @Model.Car.TransmissionTypes)
@@ -63,22 +63,22 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.Car.EngineDisplacement" class="form-label" >Engine Displacement:</label>
+                <label asp-for="@Model.Car.EngineDisplacement" class="form-label">Engine Displacement:</label>
                 <input asp-for="@Model.Car.EngineDisplacement" class="form-control" />
-                <span asp-validation-for="@Model.Car.EngineDisplacement" class="text-danger" ></span>
+                <span asp-validation-for="@Model.Car.EngineDisplacement" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.Car.Year" class="form-label" >Year:</label>
+                <label asp-for="@Model.Car.Year" class="form-label">Year:</label>
                 <input asp-for="@Model.Car.Year" class="form-control" />
-                <span asp-validation-for="@Model.Car.Year" class="text-danger" ></span>
+                <span asp-validation-for="@Model.Car.Year" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.Car.Mileage" class="form-label" >Mileage:</label>
+                <label asp-for="@Model.Car.Mileage" class="form-label">Mileage:</label>
                 <input asp-for="@Model.Car.Mileage" class="form-control" />
-                <span asp-validation-for="@Model.Car.Mileage" class="text-danger" ></span>
+                <span asp-validation-for="@Model.Car.Mileage" class="text-danger"></span>
             </div>
-             <div class="mb-3">
-                <label asp-for="@Model.Car.ColorId" class="form-label" >Color:</label>
+            <div class="mb-3">
+                <label asp-for="@Model.Car.ColorId" class="form-label">Color:</label>
                 <select asp-for="@Model.Car.ColorId" class="form-control">
                     <option value="null"></option>
                     @foreach (var color in @Model.Car.Colors)
@@ -88,19 +88,19 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.Car.IsBrandNew" class="form-label" >Is the vehicle brand new?</label>
+                <label asp-for="@Model.Car.IsBrandNew" class="form-label">Is the vehicle brand new?</label>
                 <input asp-for="@Model.Car.IsBrandNew" class="form-check" />
-                <span asp-validation-for="@Model.Car.IsBrandNew" class="text-danger" ></span>
+                <span asp-validation-for="@Model.Car.IsBrandNew" class="text-danger"></span>
             </div>
             <hr />
             <h3 class="text-center">Offer info:</h3>
             <div class="mb-3">
                 <label asp-for="@Model.Price" class="form-label"> Price</label>
                 <input asp-for="@Model.Price" class="form-control" />
-                <span asp-validation-for="@Model.Price" class="text-danger" ></span>
+                <span asp-validation-for="@Model.Price" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.RegionId" class="form-label" >Region</label>
+                <label asp-for="@Model.RegionId" class="form-label">Region</label>
                 <select asp-for="@Model.RegionId" class="form-control">
                     <option value="null"></option>
                     @foreach (var region in @Model.Regions)
@@ -110,7 +110,7 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.CityId" class="form-label" >City</label>
+                <label asp-for="@Model.CityId" class="form-label">City</label>
                 <select asp-for="@Model.CityId" class="form-control">
                     <option value="null"></option>
                     @foreach (var city in @Model.Cities)
@@ -120,13 +120,13 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.AdditionalInfo" class="form-label" >Additional info:</label>
-                <textarea asp-for="@Model.AdditionalInfo" class="form-control" rows="4" ></textarea>
+                <label asp-for="@Model.AdditionalInfo" class="form-label">Additional info:</label>
+                <textarea asp-for="@Model.AdditionalInfo" class="form-control" rows="4"></textarea>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.ContactPhoneNumber" class="form-label" >Contact phone number:</label>
+                <label asp-for="@Model.ContactPhoneNumber" class="form-label">Contact phone number:</label>
                 <input asp-for="@Model.ContactPhoneNumber" class="form-control" />
-                <span asp-validation-for="@Model.ContactPhoneNumber" class="text-danger" ></span>
+                <span asp-validation-for="@Model.ContactPhoneNumber" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <input class="btn btn-primary" type="submit" value="Add" />
@@ -134,3 +134,10 @@
         </form>
     </div>
 </div>
+
+<script>
+    let atest = 4;
+    let manufacturerElement = document.getElementById("manufacturerSelect").addEventListener("change", () => {
+        fetch 'http://localhost:7232/Offer/GetModelsForManufacturer/' + atest;
+    });
+</script>
