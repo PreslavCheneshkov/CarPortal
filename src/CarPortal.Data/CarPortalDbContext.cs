@@ -37,6 +37,11 @@ namespace CarPortal.Data
         public DbSet<OfferComment> OfferComments { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Car>()
+                .HasOne(c => c.Manufacturer)
+                .WithMany(c => c.Cars)
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.Entity<Offer>()
                 .HasOne(o => o.Seller)
                 .WithMany(s => s.PublishedOffers)

@@ -1,0 +1,17 @@
+﻿@using CarPortal.Web.Models.Offer
+@model AddOfferViewModel
+
+@{
+    ViewBag.Title = "Add Offer";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr/>
+
+<div class="row">
+    <div class="col-12">
+        <form asp-action="AddOffer" method="post">
+            <label asp-for="Car.Manufacturers" ></label>
+        </form>
+    </div>
+</div>

@@ -281,6 +281,7 @@ namespace CarPortal.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     VehicleCategoryId = table.Column<int>(type: "int", nullable: false),
                     ModelId = table.Column<int>(type: "int", nullable: false),
+                    ManufacturerId = table.Column<int>(type: "int", nullable: false),
                     FuelTypeId = table.Column<int>(type: "int", nullable: false),
                     EngineDisplacement = table.Column<double>(type: "float", nullable: true),
                     TransmissionTypeId = table.Column<int>(type: "int", nullable: false),
@@ -304,6 +305,12 @@ namespace CarPortal.Data.Migrations
                         principalTable: "FuelTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Cars_Manufacturers_ManufacturerId",
+                        column: x => x.ManufacturerId,
+                        principalTable: "Manufacturers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Cars_Models_ModelId",
                         column: x => x.ModelId,
@@ -464,6 +471,11 @@ namespace CarPortal.Data.Migrations
                 name: "IX_Cars_FuelTypeId",
                 table: "Cars",
                 column: "FuelTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cars_ManufacturerId",
+                table: "Cars",
+                column: "ManufacturerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cars_ModelId",

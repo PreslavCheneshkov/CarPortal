@@ -22,6 +22,10 @@ namespace CarPortal.Data.Entities.Car
         public int ModelId { get; set; }
         public Model Model { get; set; } = null!;
         [Required]
+        [ForeignKey(nameof(Manufacturer))]
+        public int ManufacturerId { get; set; }
+        public Manufacturer Manufacturer { get; set; } = null!;
+        [Required]
         [ForeignKey(nameof(FuelType))]
         public int FuelTypeId { get; set; }
         public FuelType FuelType { get; set; } = null!;

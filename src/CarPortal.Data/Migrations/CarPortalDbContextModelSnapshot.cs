@@ -42,6 +42,9 @@ namespace CarPortal.Data.Migrations
                     b.Property<bool>("IsBrandNew")
                         .HasColumnType("bit");
 
+                    b.Property<int>("ManufacturerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Mileage")
                         .HasColumnType("int");
 
@@ -62,6 +65,8 @@ namespace CarPortal.Data.Migrations
                     b.HasIndex("ColorId");
 
                     b.HasIndex("FuelTypeId");
+
+                    b.HasIndex("ManufacturerId");
 
                     b.HasIndex("ModelId");
 
@@ -560,6 +565,12 @@ namespace CarPortal.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CarPortal.Data.Entities.Car.Manufacturer", "Manufacturer")
+                        .WithMany("Cars")
+                        .HasForeignKey("ManufacturerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("CarPortal.Data.Entities.Car.Model", "Model")
                         .WithMany()
                         .HasForeignKey("ModelId")
@@ -581,6 +592,8 @@ namespace CarPortal.Data.Migrations
                     b.Navigation("Color");
 
                     b.Navigation("FuelType");
+
+                    b.Navigation("Manufacturer");
 
                     b.Navigation("Model");
 
@@ -720,6 +733,8 @@ namespace CarPortal.Data.Migrations
 
             modelBuilder.Entity("CarPortal.Data.Entities.Car.Manufacturer", b =>
                 {
+                    b.Navigation("Cars");
+
                     b.Navigation("Models");
                 });
 

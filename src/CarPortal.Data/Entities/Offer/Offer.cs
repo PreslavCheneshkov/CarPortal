@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CarPortal.Data.Constants.OfferConstants;
 
 namespace CarPortal.Data.Entities.Offer
 {
@@ -22,7 +23,7 @@ namespace CarPortal.Data.Entities.Offer
         public CarPortalUser Seller { get; set; } = null!;
         [Required]
         public decimal Price { get; set; }
-        [StringLength(500)]
+        [StringLength(AdditionalInfoMaxLength)]
         public string? AdditionalInfo { get; set; }
         [Required]
         public DateTime CreatedOn { get; set; }

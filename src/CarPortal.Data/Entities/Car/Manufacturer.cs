@@ -15,5 +15,6 @@ namespace CarPortal.Data.Entities.Car
         [StringLength(100)]
         public string Name { get; set; } = null!;
         public ICollection<Model> Models { get; set; } = new List<Model>();
+        public ICollection<Car> Cars { get; set; } = new List<Car>();
     }
 }

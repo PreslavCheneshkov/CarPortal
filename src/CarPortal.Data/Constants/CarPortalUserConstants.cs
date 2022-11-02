@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarPortal.Core.Constants
+namespace CarPortal.Data.Constants
 {
     public class CarPortalUserConstants
     {
@@ -16,5 +16,10 @@ namespace CarPortal.Core.Constants
 
         public const int MaxPasswordLength = 100;
         public const int MinPasswordLength = 6;
+    }
+    public class OfferConstants
+    {
+        public const int AdditionalInfoMaxLength = 500;
+        public const int AdditionalInfoMinLength = 0;
     }
 }

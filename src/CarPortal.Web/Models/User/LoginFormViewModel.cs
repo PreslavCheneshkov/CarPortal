@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static CarPortal.Core.Constants.CarPortalUserConstants;
+using static CarPortal.Data.Constants.CarPortalUserConstants;
 #pragma warning disable CS8618
 
 namespace CarPortal.Web.Models.User
