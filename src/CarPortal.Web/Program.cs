@@ -26,7 +26,8 @@ builder.Services.AddDefaultIdentity<CarPortalUser>(options =>
     .AddEntityFrameworkStores<CarPortalDbContext>();
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IOfferService, OfferService>();
+builder.Services.AddTransient<IOfferService, OfferService>();
+builder.Services.AddTransient<IDropDownService, DropDownService>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

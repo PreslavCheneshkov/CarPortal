@@ -24,7 +24,7 @@
             </div>
             <div class="mb-3">
                 <label asp-for="@Model.Car.ManufacturerId" class="form-label">Manufacturer</label>
-                <select id="manufacturerSelect" asp-for="@Model.Car.ManufacturerId" class="form-control">
+                <select id="manufacturerSelect" onselect="GetModels" asp-for="@Model.Car.ManufacturerId" class="form-control">
                     <option value="null"></option>
                     @foreach (var manufacturer in @Model.Car.Manufacturers)
                     {
@@ -135,9 +135,24 @@
     </div>
 </div>
 
-<script>
-    let atest = 4;
-    let manufacturerElement = document.getElementById("manufacturerSelect").addEventListener("change", () => {
-        fetch 'http://localhost:7232/Offer/GetModelsForManufacturer/' + atest;
-    });
-</script>
+
+@section Scripts{
+    <script>
+function GetModels(manufacturerId) = {
+    $(document).ready(function() {
+            $.ajax({
+                type: "GET",
+                url: "/api/DropDow",
+                data: "{3}",
+                success: function(data) {
+                    var s = '<option value="-1">Please Select a Model</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        s += '<option value="' + data[i].ModelId + '">' + data[i].ModelName + '</option>';
+                    }
+                    $("#departmentsDropdown").html(s);
+                }
+            });
+        });
+}
+    </script>
+}
