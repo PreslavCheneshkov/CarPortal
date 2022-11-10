@@ -1,6 +1,8 @@
 ﻿using CarPortal.Core.DTOs.Offer;
 using CarPortal.Core.Services.Contracts;
+using CarPortal.Data.Entities.User;
 using CarPortal.Web.Models.Offer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -9,9 +11,15 @@ namespace CarPortal.Web.Controllers
     public class OfferController : CarPortalController
     {
         private readonly IOfferService offerService;
-        public OfferController(IOfferService _offerService)
+        private readonly UserManager<CarPortalUser> userManager;
+
+        public OfferController(
+            IOfferService _offerService,
+            UserManager<CarPortalUser> _userManager
+            )
         {
             offerService = _offerService;
+            userManager = _userManager;
         }
         public IActionResult Index()
         {
@@ -68,9 +76,10 @@ namespace CarPortal.Web.Controllers
                 }
             };
 
-            string userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+            var user = await userManager.GetUserAsync(this.User);
+            //string userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
 
-            await offerService.AddOfferAsync(offer, userId);
+            await offerService.AddOfferAsync(offer, user.Id);
 
             return RedirectToAction("Index", "Home");
         }

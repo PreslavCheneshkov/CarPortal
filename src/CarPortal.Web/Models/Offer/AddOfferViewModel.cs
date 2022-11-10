@@ -20,6 +20,7 @@ namespace CarPortal.Web.Models.Offer
         public string ContactPhoneNumber { get; set; } = null!;
         public IEnumerable<RegionDropDown> Regions { get; set; } = new List<RegionDropDown>();
         public IEnumerable<CityDropDown> Cities { get; set; } = new List<CityDropDown>();
+        public IEnumerable<IFormFile> Images { get; set; } = new List<IFormFile>();
         public AddCarViewModel Car { get; set; } = new AddCarViewModel();
     }
 }
