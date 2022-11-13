@@ -61,6 +61,7 @@ namespace CarPortal.Web.Controllers
                 RegionId = model.RegionId,
                 AdditionalInfo = model.AdditionalInfo,
                 ContactPhoneNumber = model.ContactPhoneNumber,
+                Images = model.Images,
                 Car = new CarInputModel()
                 {
                     VehicleCategoryId = model.Car.VehicleCategoryId,
@@ -94,6 +95,7 @@ namespace CarPortal.Web.Controllers
                 Price = o.Price,
                 Mileage = o.Mileage,
                 ContactPhone = o.ContactPhone,
+                ImageUrl = o.ImageUrl,
             }).ToList();
 
             return View(offers);

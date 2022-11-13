@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,12 +17,20 @@ namespace CarPortal.Core.DTOs.Offer
 
         [StringLength(AdditionalInfoMaxLength, MinimumLength = AdditionalInfoMinLength)]
         public string? AdditionalInfo { get; set; }
+
         [Required]
         public int RegionId { get; set; }
+
         [Required]
         public int CityId { get; set; }
+
         [Required]
         public string ContactPhoneNumber { get; set; } = null!;
+
+        [Required]
+        public IEnumerable<IFormFile> Images { get; set; } = new List<IFormFile>();
+
+
         public CarInputModel Car { get; set; } = new CarInputModel();
     }
 }

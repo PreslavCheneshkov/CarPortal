@@ -43,5 +43,6 @@ namespace CarPortal.Data.Entities.Offer
         [Required]
         [DataType(DataType.PhoneNumber)]
         public string ContactPhoneNumber { get; set; } = null!;
+        public IEnumerable<CarImage> Images { get; set; } = new List<CarImage>();
     }
 }

@@ -10,7 +10,7 @@
 
 <div class="row">
     <div class="col-12">
-        <form asp-action="AddOffer" method="post">
+        <form asp-action="AddOffer" method="post" enctype="multipart/form-data">
             <h3 class="text-center">Technical info:</h3>
             <div class="mb-3">
                 <label asp-for="@Model.Car.VehicleCategoryId" class="form-label">Category</label>

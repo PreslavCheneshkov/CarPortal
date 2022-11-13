@@ -4,6 +4,7 @@ using CarPortal.Core.Services.Contracts;
 using CarPortal.Data;
 using CarPortal.Data.Entities.Car;
 using CarPortal.Data.Entities.Offer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,20 @@ namespace CarPortal.Core.Services
     public class OfferService : IOfferService
     {
         private readonly CarPortalDbContext context;
-        public OfferService(CarPortalDbContext _context)
+        private readonly IWebHostEnvironment environment;
+
+        private readonly string[] allowedImageExtensions = { ".jpg", ".jpeg", ".png"};
+        private string wwwrootPath;
+
+        public OfferService(
+            CarPortalDbContext _context,
+            IWebHostEnvironment _environment
+            )
         {
+            environment = _environment;
             context = _context;
+            wwwrootPath = environment.WebRootPath;
+            Directory.CreateDirectory($"{wwwrootPath}/Images/Offer");
         }
         public async Task AddOfferAsync(OfferInputModel inputModel, string sellerId)
         {
@@ -48,23 +60,36 @@ namespace CarPortal.Core.Services
                 ContactPhoneNumber = inputModel.ContactPhoneNumber,
             };
 
-            context.Offers.Add(offer);
+            List<CarImage> images = new List<CarImage>();
+
+            foreach (var imageInput in inputModel.Images)
+            {
+                CarImage image = new CarImage()
+                {
+                    Offer = offer,
+                    Extension = Path.GetExtension(imageInput.FileName),
+                };
+                if (!allowedImageExtensions.Contains(image.Extension))
+                {
+                    continue;
+                }
+                images.Add(image);
+
+                string physicalPath = $"{wwwrootPath}/Images/Offer/{image.Id}{image.Extension}";
+                using (Stream fileStream = new FileStream(physicalPath, FileMode.Create))
+                {
+                    await imageInput.CopyToAsync(fileStream);
+                }
+            }
+
+            offer.Images = images;
+            await context.Offers.AddAsync(offer);
             await context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<SeeAllOffersDto>> GetAllOffers()
         {
             var offers = await context.Offers
-                                      .Include(o => o.Car)
-                                      .ThenInclude(c => c.Model)
-                                      .ThenInclude(m => m.Manufacturer)
-                                      .Include(o => o.Car)
-                                      .ThenInclude(c => c.Color)
-                                      .Include(o => o.Car)
-                                      .ThenInclude(c => c.TransmissionType)
-                                      .Include(o => o.Car)
-                                      .ThenInclude(c => c.FuelType)
-                                      .Include(o => o.Car)
                                       .Select(o => new SeeAllOffersDto
                                       {
                                           Manufacturer = o.Car.Manufacturer.Name,
@@ -74,6 +99,7 @@ namespace CarPortal.Core.Services
                                           Mileage = o.Car.Mileage,
                                           ContactPhone = o.ContactPhoneNumber,
                                           Price = o.Price,
+                                          ImageUrl = $"/Images/Offer/{o.Images.FirstOrDefault(x => true).Id}{o.Images.FirstOrDefault(x => true).Extension}",
                                       }).ToArrayAsync();
             
             return offers;
