@@ -57,6 +57,16 @@ namespace CarPortal.Data
                 .WithMany(r => r.Cities)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<Offer>()
+                .HasOne(o => o.MainPicture)
+                .WithOne(mp => mp.Offer)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Offer>()
+                .HasMany(o => o.Images)
+                .WithOne(i => i.Offer)
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(builder);
         }
     }

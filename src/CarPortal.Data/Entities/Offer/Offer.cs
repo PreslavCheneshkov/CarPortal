@@ -15,34 +15,55 @@ namespace CarPortal.Data.Entities.Offer
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
         [ForeignKey(nameof(Car))]
         public int CarId { get; set; }
+
         [Required]
         public Car.Car Car { get; set; } = null!;
+
         [Required]
         [ForeignKey(nameof(CarPortalUser))]
         public string SellerId { get; set; } = null!;
+
         public CarPortalUser Seller { get; set; } = null!;
+
         [Required]
         public decimal Price { get; set; }
+
         [StringLength(AdditionalInfoMaxLength)]
         public string? AdditionalInfo { get; set; }
+
         [Required]
         public DateTime CreatedOn { get; set; }
+
         [Required]
         public DateTime LastEdited { get; set; }
+
         [ForeignKey(nameof(City))]
         [Required]
         public int CityId { get; set; }
+
         public City City { get; set; } = null!;
+
         [Required]
         [ForeignKey(nameof(Region))]
         public int RegionId { get; set; }
+
         public Region Region { get; set; } = null!;
+
         [Required]
         [DataType(DataType.PhoneNumber)]
         public string ContactPhoneNumber { get; set; } = null!;
+
+        [Required]
+        [ForeignKey(nameof(CarImage))]
+        public string MainPictureId { get; set; } = null!;
+
+        [Required]
+        public CarImage MainPicture { get; set; } = null!;
+
         public IEnumerable<CarImage> Images { get; set; } = new List<CarImage>();
     }
 }

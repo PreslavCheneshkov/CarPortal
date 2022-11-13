@@ -11,16 +11,33 @@
 <div class="row">
     @foreach (var item in @Model)
     {
-        <div class="col-md-6">
-            <label>@item.Manufacturer</label>
-            <label>@item.Model</label>
-            <label>@item.Year</label>
-            <label>@item.FuelType</label>
-            <label>@item.Mileage</label>
-            <label>@item.Price</label>
-            <label>@item.ContactPhone</label>
-            <img src="@item.ImageUrl" />
+        <div class="card col-md-3 m-3">
+            <img class="card-img-top" src="@item.ImageUrl" alt="Car image">
+            <div class="card-body">
+                <h5 class="card-title">@(item.Manufacturer + @item.Model)</h5>
+                <p class="card-text">Offer Info</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">@item.Price</li>
+                <li class="list-group-item">@item.FuelType</li>
+                <li class="list-group-item">@item.Year</li>
+            </ul>
+            <div class="card-body">
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+            </div>
         </div>
-        <hr />
+        
+@*         <div class="col-md-6">
+    <label>@item.Manufacturer</label>
+    <label>@item.Model</label>
+    <label>@item.Year</label>
+    <label>@item.FuelType</label>
+    <label>@item.Mileage</label>
+    <label>@item.Price</label>
+    <label>@item.ContactPhone</label>
+    <img src="@item.ImageUrl" />
+    </div>
+    <hr />*@
     }
 </div>
