@@ -25,6 +25,7 @@ namespace CarPortal.Web.Controllers
         {
             return View();
         }
+
         [HttpGet]
         public async Task<IActionResult> AddOffer()
         {
@@ -46,6 +47,7 @@ namespace CarPortal.Web.Controllers
 
             return View(model);
         }
+
         [HttpPost]
         public async Task<IActionResult> AddOffer(AddOfferViewModel model)
         {
@@ -79,12 +81,12 @@ namespace CarPortal.Web.Controllers
             };
 
             var user = await userManager.GetUserAsync(this.User);
-            //string userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
 
             await offerService.AddOfferAsync(offer, user.Id);
 
             return RedirectToAction("Index", "Home");
         }
+
         public async Task<IActionResult> SeeAll()
         {
             var offers = (await offerService.GetAllOffers()).Select(o => new SeeAllOffersViewModel() 
@@ -100,6 +102,18 @@ namespace CarPortal.Web.Controllers
             }).ToList();
 
             return View(offers);
+        }
+
+        public async Task<IActionResult> GetOfferById(int offerId)
+        {
+            var offer = await offerService.GetOfferByIdAsync(offerId);
+
+            if (offer == null)
+            {
+                return NotFound();
+            }
+
+            return View(offer);
         }
     }
 }

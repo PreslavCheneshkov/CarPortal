@@ -32,6 +32,7 @@ namespace CarPortal.Core.Services
             wwwrootPath = environment.WebRootPath;
             Directory.CreateDirectory($"{wwwrootPath}/Images/Offer");
         }
+
         public async Task AddOfferAsync(OfferInputModel inputModel, string sellerId)
         {
             Car car = new Car()
@@ -52,6 +53,7 @@ namespace CarPortal.Core.Services
             {
                 Car = car,
                 CreatedOn = DateTime.UtcNow,
+                LastEdited = DateTime.UtcNow,
                 AdditionalInfo = inputModel.AdditionalInfo,
                 SellerId = sellerId,
                 CityId = inputModel.CityId,
@@ -121,6 +123,39 @@ namespace CarPortal.Core.Services
                                       }).ToArrayAsync();
             
             return offers;
+        }
+
+        public async Task<SingleOfferDto> GetOfferByIdAsync(int offerId)
+        {
+            var offer = await context.Offers
+                                       .Select(o => new SingleOfferDto()
+                                       {
+                                           Id = o.Id,
+                                           CarDto = new CarInSingleOfferDto()
+                                           {
+                                               VehicleCategory = o.Car.VehicleCategory.Name,
+                                               Manufacturer = o.Car.Manufacturer.Name,
+                                               Model = o.Car.Manufacturer.Name,
+                                               FuelType = o.Car.FuelType.Name,
+                                               TransmissionType = o.Car.TransmissionType.Name,
+                                               Color = o.Car.Color.Name,
+                                               Year = o.Car.Year,
+                                               Mileage = o.Car.Mileage,
+                                               IsBrandNew = o.Car.IsBrandNew,
+                                               Extras = o.Car.Extras.Select(e => e.Name).ToList(),
+                                           },
+                                           SellerId = o.SellerId,
+                                           SellerName = o.Seller.UserName,
+                                           City = o.City.Name,
+                                           Region = o.Region.Name,
+                                           ContactPhoneNumber = o.ContactPhoneNumber,
+                                           LastEdited = o.LastEdited,
+                                           ThumbnailName = o.OfferThumbnail.Id + o.OfferThumbnail.Extension,
+                                           PictureIds = o.Images.Select(i => i.Id + i.Extension).ToList()
+                                       })
+                                       .FirstOrDefaultAsync(o => o.Id == offerId);
+
+            return offer;
         }
 
         public async Task<OfferDropDownsModel> PopulateViewModelWithDropDownsAsync()
