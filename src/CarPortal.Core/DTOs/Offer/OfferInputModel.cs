@@ -28,6 +28,9 @@ namespace CarPortal.Core.DTOs.Offer
         public string ContactPhoneNumber { get; set; } = null!;
 
         [Required]
+        public IFormFile Thumbnail { get; set; } = null!;
+
+        [Required]
         public IEnumerable<IFormFile> Images { get; set; } = new List<IFormFile>();
 
 

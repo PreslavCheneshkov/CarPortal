@@ -60,6 +60,23 @@ namespace CarPortal.Core.Services
                 ContactPhoneNumber = inputModel.ContactPhoneNumber,
             };
 
+            OfferThumbnail thumbnail = new OfferThumbnail()
+            {
+                Offer = offer,
+                Extension = Path.GetExtension(inputModel.Thumbnail.FileName),
+            };
+            if (!allowedImageExtensions.Contains(thumbnail.Extension))
+            {
+                throw new FormatException("Image extension not allowed");
+            }
+
+            string thumbnailPath = $"{wwwrootPath}/Images/Offers/Thumbnails/{thumbnail.Id}{thumbnail.Extension}";
+
+            using (Stream fileStream = new FileStream(thumbnailPath, FileMode.Create))
+            {
+                await inputModel.Thumbnail.CopyToAsync(fileStream);
+            }
+
             List<CarImage> images = new List<CarImage>();
 
             foreach (var imageInput in inputModel.Images)
@@ -71,11 +88,11 @@ namespace CarPortal.Core.Services
                 };
                 if (!allowedImageExtensions.Contains(image.Extension))
                 {
-                    continue;
+                    throw new FormatException("Image extension not allowed");
                 }
                 images.Add(image);
 
-                string physicalPath = $"{wwwrootPath}/Images/Offer/{image.Id}{image.Extension}";
+                string physicalPath = $"{wwwrootPath}/Images/Offers/{image.Id}{image.Extension}";
                 using (Stream fileStream = new FileStream(physicalPath, FileMode.Create))
                 {
                     await imageInput.CopyToAsync(fileStream);
@@ -83,6 +100,7 @@ namespace CarPortal.Core.Services
             }
 
             offer.Images = images;
+            offer.OfferThumbnail = thumbnail;
             await context.Offers.AddAsync(offer);
             await context.SaveChangesAsync();
         }
@@ -99,7 +117,7 @@ namespace CarPortal.Core.Services
                                           Mileage = o.Car.Mileage,
                                           ContactPhone = o.ContactPhoneNumber,
                                           Price = o.Price,
-                                          ImageUrl = $"/Images/Offer/{o.Images.FirstOrDefault(x => true).Id}{o.Images.FirstOrDefault(x => true).Extension}",
+                                          ThumbnailUrl = $"/Images/Offers/Thumbnails/{o.OfferThumbnail.Id}{o.OfferThumbnail.Extension}",
                                       }).ToArrayAsync();
             
             return offers;

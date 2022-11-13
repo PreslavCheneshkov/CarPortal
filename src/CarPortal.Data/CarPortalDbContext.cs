@@ -58,13 +58,13 @@ namespace CarPortal.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Offer>()
-                .HasOne(o => o.MainPicture)
-                .WithOne(mp => mp.Offer)
+                .HasMany(o => o.Images)
+                .WithOne(i => i.Offer)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Offer>()
-                .HasMany(o => o.Images)
-                .WithOne(i => i.Offer)
+                .HasOne(o => o.OfferThumbnail)
+                .WithOne(ot => ot.Offer)
                 .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);

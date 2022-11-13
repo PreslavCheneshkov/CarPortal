@@ -12,15 +12,25 @@ namespace CarPortal.Web.Models.Offer
 
         [StringLength(AdditionalInfoMaxLength, MinimumLength = AdditionalInfoMinLength)]
         public string? AdditionalInfo { get; set; }
+
         [Required]
         public int RegionId { get; set; }
+
         [Required]
         public int CityId { get; set; }
+
         [Required]
         public string ContactPhoneNumber { get; set; } = null!;
+
         public IEnumerable<RegionDropDown> Regions { get; set; } = new List<RegionDropDown>();
+
         public IEnumerable<CityDropDown> Cities { get; set; } = new List<CityDropDown>();
+
+        [Required]
+        public IFormFile Thumbnail { get; set; } = null!;
+
         public IEnumerable<IFormFile> Images { get; set; } = new List<IFormFile>();
+
         public AddCarViewModel Car { get; set; } = new AddCarViewModel();
     }
 }

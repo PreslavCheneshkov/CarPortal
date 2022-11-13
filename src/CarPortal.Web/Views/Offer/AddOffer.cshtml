@@ -95,6 +95,11 @@
             <hr />
             <h3 class="text-center">Offer info:</h3>
             <div class="mb-3">
+                <label asp-for="@Model.Thumbnail">Thumbnail</label>
+                <input asp-for="@Model.Thumbnail" class="form-control" />
+                <span asp-validation-for="@Model.Thumbnail"></span>
+            </div>
+            <div class="mb-3">
                 <label asp-for="@Model.Images">Images</label>
                 <input asp-for="@Model.Images" class="form-control" multiple />
                 <span asp-validation-for="@Model.Images"></span>
