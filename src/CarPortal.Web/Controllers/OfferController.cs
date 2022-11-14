@@ -103,10 +103,10 @@ namespace CarPortal.Web.Controllers
 
             return View(offers);
         }
-
-        public async Task<IActionResult> GetOfferById(int offerId)
+        [HttpGet]
+        public async Task<IActionResult> GetOffer(int Id)
         {
-            var offer = await offerService.GetOfferByIdAsync(offerId);
+            var offer = await offerService.GetOfferByIdAsync(Id);
 
             if (offer == null)
             {

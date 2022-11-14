@@ -12,7 +12,7 @@
     @foreach (var item in @Model)
     {
         <div class="card col-md-3 m-3">
-            <img class="card-img-top" src="@item.ThumbnailUrl" alt="Car image">
+            <img class="card-img-top p-1" src="@item.ThumbnailUrl" alt="Car image">
             <div class="card-body">
                 <h5 class="card-title">@(item.Manufacturer + @item.Model)</h5>
                 <p class="card-text">Offer Info</p>
