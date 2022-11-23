@@ -150,8 +150,8 @@ namespace CarPortal.Core.Services
                                            Region = o.Region.Name,
                                            ContactPhoneNumber = o.ContactPhoneNumber,
                                            LastEdited = o.LastEdited,
-                                           ThumbnailName = o.OfferThumbnail.Id + o.OfferThumbnail.Extension,
-                                           PictureIds = o.Images.Select(i => i.Id + i.Extension).ToList()
+                                           ThumbnailUrl = $"/Images/Offers/Thumbnails/{o.OfferThumbnail.Id}{o.OfferThumbnail.Extension}",
+                                           PictureIds = o.Images.Select(i => $"/Images/Offers/{ i.Id + i.Extension}").ToList()
                                        })
                                        .FirstOrDefaultAsync(o => o.Id == offerId);
 

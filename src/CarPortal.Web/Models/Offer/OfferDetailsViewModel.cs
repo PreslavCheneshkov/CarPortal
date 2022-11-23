@@ -2,11 +2,11 @@
 #pragma warning disable
 
 {
-    public class GetOfferByIdViewModel
+    public class OfferDetailsViewModel
     {
         public int Id { get; set; }
 
-        public CarInOfferByIdViewModel Car { get; set; }
+        public CarInOfferDetailsViewModel Car { get; set; }
 
         public string SellerId { get; set; }
 
@@ -20,8 +20,8 @@
 
         public string ContactPhoneNumber { get; set; }
 
-        public string ThumbnailName { get; set; }
+        public string ThumbnailUrl { get; set; }
 
-        public IEnumerable<string> PictureIds { get; set; } = new List<string>();
+        public List<string> PictureIds { get; set; } = new List<string>();
     }
 }

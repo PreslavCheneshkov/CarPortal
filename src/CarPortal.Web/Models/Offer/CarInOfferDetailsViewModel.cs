@@ -2,7 +2,7 @@
 #pragma warning disable
 
 {
-    public class CarInOfferByIdViewModel
+    public class CarInOfferDetailsViewModel
     {
         public string VehicleCategory { get; set; }
 

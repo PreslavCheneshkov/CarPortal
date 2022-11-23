@@ -25,7 +25,7 @@ namespace CarPortal.Core.DTOs.Offer
 
         public string ContactPhoneNumber { get; set; }
 
-        public string ThumbnailName { get; set; }
+        public string ThumbnailUrl { get; set; }
 
         public IEnumerable<string> PictureIds { get; set; } = new List<string>();
     }

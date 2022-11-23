@@ -104,16 +104,42 @@ namespace CarPortal.Web.Controllers
             return View(offers);
         }
         [HttpGet]
-        public async Task<IActionResult> GetOffer(int Id)
+        public async Task<IActionResult> OfferDetails(int Id)
         {
-            var offer = await offerService.GetOfferByIdAsync(Id);
+            var offerDto = await offerService.GetOfferByIdAsync(Id);
 
-            if (offer == null)
+            if (offerDto == null)
             {
                 return NotFound();
             }
 
-            return View(offer);
+            OfferDetailsViewModel model = new OfferDetailsViewModel()
+            {
+                Car = new CarInOfferDetailsViewModel()
+                {
+                    Year = offerDto.CarDto.Year,
+                    Model = offerDto.CarDto.Model,
+                    Color = offerDto.CarDto.Color,
+                    Extras = offerDto.CarDto.Extras,
+                    Mileage = offerDto.CarDto.Mileage,
+                    FuelType = offerDto.CarDto.FuelType,
+                    IsBrandNew = offerDto.CarDto.IsBrandNew,
+                    Manufacturer = offerDto.CarDto.Manufacturer,
+                    VehicleCategory = offerDto.CarDto.VehicleCategory,
+                    TransmissionType = offerDto.CarDto.TransmissionType,
+                },
+                Id = offerDto.Id,
+                City = offerDto.City,
+                Region = offerDto.Region,
+                SellerId = offerDto.SellerId,
+                PictureIds = offerDto.PictureIds.ToList(),
+                LastEdited = offerDto.LastEdited,
+                SellerName = offerDto.SellerName,
+                ThumbnailUrl = offerDto.ThumbnailUrl,
+                ContactPhoneNumber = offerDto.ContactPhoneNumber,
+            };
+
+            return View(model);
         }
     }
 }
