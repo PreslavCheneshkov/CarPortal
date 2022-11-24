@@ -112,6 +112,7 @@ namespace CarPortal.Core.Services
             var offers = await context.Offers
                                       .Select(o => new SeeAllOffersDto
                                       {
+                                          OfferId = o.Id,
                                           Manufacturer = o.Car.Manufacturer.Name,
                                           Model = o.Car.Model.Name,
                                           FuelType = o.Car.FuelType.Name,

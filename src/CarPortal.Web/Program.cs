@@ -13,6 +13,7 @@ builder.Services.AddDbContext<CarPortalDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+
 builder.Services.AddDefaultIdentity<CarPortalUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;

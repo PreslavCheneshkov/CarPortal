@@ -9,7 +9,7 @@
 <hr />
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-6 offset-3">
         <form asp-action="AddOffer" method="post" enctype="multipart/form-data">
             <h3 class="text-center">Technical info:</h3>
             <div class="mb-3">
@@ -152,7 +152,7 @@ function GetModels(manufacturerId) = {
     $(document).ready(function() {
             $.ajax({
                 type: "GET",
-                url: "/api/DropDow",
+                url: "/api/DropDown",
                 data: "{3}",
                 success: function(data) {
                     var s = '<option value="-1">Please Select a Model</option>';

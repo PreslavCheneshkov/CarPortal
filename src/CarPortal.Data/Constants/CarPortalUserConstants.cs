@@ -19,6 +19,8 @@ namespace CarPortal.Data.Constants
     }
     public class OfferConstants
     {
+        public const int MaxOfferNameLength = 30;
+
         public const int AdditionalInfoMaxLength = 500;
         public const int AdditionalInfoMinLength = 0;
     }

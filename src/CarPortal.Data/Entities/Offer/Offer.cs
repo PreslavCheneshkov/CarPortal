@@ -17,6 +17,10 @@ namespace CarPortal.Data.Entities.Offer
         public int Id { get; set; }
 
         [Required]
+        [StringLength(MaxOfferNameLength)]
+        public string Name { get; set; } = null!;
+
+        [Required]
         [ForeignKey(nameof(Car))]
         public int CarId { get; set; }
 

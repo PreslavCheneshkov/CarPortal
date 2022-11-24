@@ -2,6 +2,7 @@
 using CarPortal.Core.Services.Contracts;
 using CarPortal.Data.Entities.User;
 using CarPortal.Web.Models.Offer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -86,11 +87,12 @@ namespace CarPortal.Web.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
+        [AllowAnonymous]
         public async Task<IActionResult> SeeAll()
         {
             var offers = (await offerService.GetAllOffers()).Select(o => new SeeAllOffersViewModel() 
             {
+                OfferId = o.OfferId,
                 Manufacturer = o.Manufacturer,
                 Model = o.Model,
                 FuelType = o.FuelType,
@@ -104,9 +106,10 @@ namespace CarPortal.Web.Controllers
             return View(offers);
         }
         [HttpGet]
-        public async Task<IActionResult> OfferDetails(int Id)
+        [AllowAnonymous]
+        public async Task<IActionResult> OfferDetails(int id)
         {
-            var offerDto = await offerService.GetOfferByIdAsync(Id);
+            var offerDto = await offerService.GetOfferByIdAsync(id);
 
             if (offerDto == null)
             {

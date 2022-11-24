@@ -1,6 +1,8 @@
 ﻿using CarPortal.Data;
 using CarPortal.Data.Entities.Car;
 using CarPortal.Data.Entities.Offer;
+using CarPortal.Data.Entities.User;
+using Microsoft.EntityFrameworkCore;
 #pragma warning disable CS8602
 
 namespace CarPortal.DataSeeder
@@ -9,9 +11,13 @@ namespace CarPortal.DataSeeder
     {
         static void Main(string[] args)
         {
-            CarPortalDbContext context = new CarPortalDbContext();
+            DbContextOptionsBuilder<CarPortalDbContext> optionsBuilder = new DbContextOptionsBuilder<CarPortalDbContext>();
 
+            optionsBuilder.UseSqlServer("Server=.;Database=CarPortal;Trusted_Connection=True;MultipleActiveResultSets=true");
             
+            DbContextOptions<CarPortalDbContext> options = optionsBuilder.Options;
+
+            CarPortalDbContext context = new CarPortalDbContext(options); 
 
             SeedColors(context);
             SeedExtras(context);
@@ -22,7 +28,10 @@ namespace CarPortal.DataSeeder
             SeedRegions(context);
             SeedModels(context);
             SeedCities(context);
+
+            Console.WriteLine("Done");
         }
+
         static void SeedColors(CarPortalDbContext context)
         {
             string[] colorStrings = new string[] { "Red", "Blue", "Green", "Black", "White", "Silver", "Grey", "Yellow", "Orange" };

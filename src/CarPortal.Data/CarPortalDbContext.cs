@@ -11,30 +11,40 @@ namespace CarPortal.Data
         public CarPortalDbContext() : base()
         {
         }
+
         public CarPortalDbContext(DbContextOptions<CarPortalDbContext> options)
             : base(options)
         {
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Server=.;Database=CarPortal;Trusted_Connection=True;MultipleActiveResultSets=true");
-            }
             base.OnConfiguring(optionsBuilder);
         }
+
         public DbSet<Car> Cars { get; set; } = null!;
+
         public DbSet<Color> Colors { get; set; } = null!;
+
         public DbSet<FuelType> FuelTypes { get; set; } = null!;
+
         public DbSet<Manufacturer> Manufacturers { get; set; } = null!;
+
         public DbSet<Model> Models { get; set; } = null!;
+
         public DbSet<TransmissionType> TransmissionTypes { get; set; } = null!;
+
         public DbSet<VehicleCategory> VehicleCategories { get; set; } = null!;
+
         public DbSet<Extra> Extras { get; set; } = null!;
+
         public DbSet<City> Cities { get; set; } = null!;
+
         public DbSet<Offer> Offers { get; set; } = null!;
+
         public DbSet<Region> Regions { get; set; } = null!;
+
         public DbSet<OfferComment> OfferComments { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Car>()

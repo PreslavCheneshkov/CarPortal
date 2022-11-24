@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarPortal.Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/DropDown")]
     [ApiController]
     public class DropDownController : ControllerBase
     {

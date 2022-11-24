@@ -4,6 +4,7 @@
 
 public class SeeAllOffersViewModel
 {
+    public int OfferId { get; set; }
     public string ThumbnailUrl { get; set; } = null!;
     public string Manufacturer { get; set; }
     public string Model { get; set; }

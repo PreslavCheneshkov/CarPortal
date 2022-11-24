@@ -8,6 +8,7 @@ namespace CarPortal.Core.DTOs.Offer
 {
     public class SeeAllOffersDto
     {
+        public int OfferId { get; set; }
         public string ThumbnailUrl { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }
