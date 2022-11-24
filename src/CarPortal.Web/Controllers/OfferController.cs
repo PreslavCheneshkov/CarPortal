@@ -91,9 +91,10 @@ namespace CarPortal.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> BrowseRecent(int page = 0)
         {
-            var offers = (await offerService.GetRecentOffersAsync(page)).Select(o => new SeeAllOffersViewModel() 
+            var offers = (await offerService.GetRecentOffersAsync(page)).Select(o => new OfferInCollectionViewModel() 
             {
                 OfferId = o.OfferId,
+                OfferName = o.OfferName,
                 Manufacturer = o.Manufacturer,
                 Model = o.Model,
                 FuelType = o.FuelType,
@@ -124,7 +125,7 @@ namespace CarPortal.Web.Controllers
                     Year = offerDto.CarDto.Year,
                     Model = offerDto.CarDto.Model,
                     Color = offerDto.CarDto.Color,
-                    Extras = offerDto.CarDto.Extras,
+                    Extras = string.Join(", ", offerDto.CarDto.Extras),
                     Mileage = offerDto.CarDto.Mileage,
                     FuelType = offerDto.CarDto.FuelType,
                     IsBrandNew = offerDto.CarDto.IsBrandNew,

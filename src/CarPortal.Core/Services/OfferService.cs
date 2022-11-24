@@ -138,7 +138,7 @@ namespace CarPortal.Core.Services
                                            {
                                                VehicleCategory = o.Car.VehicleCategory.Name,
                                                Manufacturer = o.Car.Manufacturer.Name,
-                                               Model = o.Car.Manufacturer.Name,
+                                               Model = o.Car.Model.Name,
                                                FuelType = o.Car.FuelType.Name,
                                                TransmissionType = o.Car.TransmissionType.Name,
                                                Color = o.Car.Color.Name,

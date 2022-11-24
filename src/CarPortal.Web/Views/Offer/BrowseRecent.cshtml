@@ -1,5 +1,5 @@
 ﻿@using CarPortal.Web.Models.Offer
-@model List<SeeAllOffersViewModel>
+@model List<OfferInCollectionViewModel>
 
 @{
     ViewBag.Title = "Browse all";
@@ -15,15 +15,15 @@
             <img class="card-img-top p-1" src="@item.ThumbnailUrl" alt="Car image">
             <div class="card-body">
                 <h5 class="card-title">@(item.Manufacturer + @item.Model)</h5>
-                <p class="card-text">@Model</p>
+                <p class="card-text">@item.OfferName</p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">@item.Price</li>
-                <li class="list-group-item">@item.FuelType</li>
-                <li class="list-group-item">@item.Year</li>
+                <li class="list-group-item">Price: @item.Price €</li>
+                <li class="list-group-item">Fuel type: @item.FuelType</li>
+                <li class="list-group-item">Year: @item.Year</li>
             </ul>
             <div class="card-body">
-                <a class="btn btn-secondary" asp-route-id="@item.OfferId" asp-controller="Offer" asp-action="OfferDetails" />
+                <a class="btn btn-secondary"  asp-route-id="@item.OfferId" asp-controller="Offer" asp-action="OfferDetails" >Details</a>
                 <a href="#" class="card-link">Another link</a>
             </div>
         </div>

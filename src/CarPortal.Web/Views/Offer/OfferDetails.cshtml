@@ -7,25 +7,75 @@
 <h2>@ViewBag.Title</h2>
 <hr />
 
-<div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="@Model.ThumbnailUrl" alt="Card image cap">
-    <div class="card-body">
-        <h5 class="card-title">@Model.Car.Manufacturer @Model.Car.Model</h5>
-        <p class="card-text">@Model.Name</p>
-    </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">@Model.Car.FuelType</li>
-        <li class="list-group-item">@Model.Car.Mileage km</li>
-        <li class="list-group-item">@Model.Car.TransmissionType</li>
-    </ul>
-    <div class="card-body">
-        <a href="#" class="card-link">Seller profile</a>
-        <a href="#" class="card-link">Browse other simillar models</a>
-    </div>
+<div class="col-lg-8 offset-2">
+    <img class="img-thumbnail row-lg-4" src="@Model.ThumbnailUrl" alt="Card image cap">
+    <table class="table table-striped row-lg-4">
+        <tr>
+            <td>
+                Category:
+            </td>
+            <td>
+                @Model.Car.VehicleCategory
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Car model:
+            </td>
+            <td>
+                @Model.Car.Manufacturer @Model.Car.Model
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Fuel type:
+            </td>
+            <td>
+                @Model.Car.FuelType
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Year:
+            </td>
+            <td>
+                @Model.Car.Year
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Mileage:
+            </td>
+            <td>
+                @Model.Car.Mileage km
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Is vehicle brand new ?
+            </td>
+                @if (Model.Car.IsBrandNew)
+                {
+                    <td>Yes</td>
+                }
+                else
+                {
+                    <td>No</td>
+                }
+        </tr>
+        <tr>
+            <td>
+                Extras:
+            </td>
+           <td>
+               @Model.Car.Extras
+           </td>
+        </tr>
+    </table>
 </div>
 
 
-<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+<div id="carouselExampleControls" class="carousel slide col-lg-8 offset-2" data-bs-ride="carousel">
     <div class="carousel-inner">
         @for (int i = 0; i < Model.PictureIds.Count(); i++)
         {

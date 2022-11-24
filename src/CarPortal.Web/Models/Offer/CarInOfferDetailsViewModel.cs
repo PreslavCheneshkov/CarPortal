@@ -20,7 +20,7 @@
 
         public int Mileage { get; set; }
 
-        public IEnumerable<string> Extras { get; set; } = new List<string>();
+        public string Extras { get; set; }
 
         public bool IsBrandNew { get; set; }
     }
