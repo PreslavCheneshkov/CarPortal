@@ -12,6 +12,10 @@ namespace CarPortal.Core.DTOs.Offer
     public class OfferInputModel
     {
         [Required]
+        [StringLength(MaxOfferNameLength)]
+        public string Name { get; set; } = null!;
+        
+        [Required]
         [Range(0, double.MaxValue)]
         public decimal Price { get; set; }
 

@@ -6,11 +6,8 @@ using CarPortal.Data.Entities.Car;
 using CarPortal.Data.Entities.Offer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using static CarPortal.Data.Constants.OfferConstants;
 
 namespace CarPortal.Core.Services
 {
@@ -51,6 +48,7 @@ namespace CarPortal.Core.Services
 
             Offer offer = new Offer()
             {
+                Name = inputModel.Name,
                 Car = car,
                 CreatedOn = DateTime.UtcNow,
                 LastEdited = DateTime.UtcNow,
@@ -107,11 +105,15 @@ namespace CarPortal.Core.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<SeeAllOffersDto>> GetAllOffers()
+        public async Task<IEnumerable<OfferInCollectionDto>> GetRecentOffersAsync(int page)
         {
             var offers = await context.Offers
-                                      .Select(o => new SeeAllOffersDto
+                                      .OrderByDescending(o => o.CreatedOn)
+                                      .Skip(page * NumberOfDisplayedOffersInBrowse)
+                                      .Take(NumberOfDisplayedOffersInBrowse)
+                                      .Select(o => new OfferInCollectionDto
                                       {
+                                          OfferName = o.Name,
                                           OfferId = o.Id,
                                           Manufacturer = o.Car.Manufacturer.Name,
                                           Model = o.Car.Model.Name,
@@ -145,6 +147,7 @@ namespace CarPortal.Core.Services
                                                IsBrandNew = o.Car.IsBrandNew,
                                                Extras = o.Car.Extras.Select(e => e.Name).ToList(),
                                            },
+                                           Name = o.Name,
                                            SellerId = o.SellerId,
                                            SellerName = o.Seller.UserName,
                                            City = o.City.Name,

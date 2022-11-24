@@ -7,6 +7,10 @@ namespace CarPortal.Web.Models.Offer
     public class AddOfferViewModel
     {
         [Required]
+        [StringLength(MaxOfferNameLength, MinimumLength = MinOfferNameLength)]
+        public string Name { get; set; } = null!;
+
+        [Required]
         [Range(0, double.MaxValue)]
         public decimal Price { get; set; }
 

@@ -59,6 +59,7 @@ namespace CarPortal.Web.Controllers
 
             var offer = new OfferInputModel
             {
+                Name = model.Name,
                 Price = model.Price,
                 CityId = model.CityId,
                 RegionId = model.RegionId,
@@ -88,9 +89,9 @@ namespace CarPortal.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
         [AllowAnonymous]
-        public async Task<IActionResult> SeeAll()
+        public async Task<IActionResult> BrowseRecent(int page = 0)
         {
-            var offers = (await offerService.GetAllOffers()).Select(o => new SeeAllOffersViewModel() 
+            var offers = (await offerService.GetRecentOffersAsync(page)).Select(o => new SeeAllOffersViewModel() 
             {
                 OfferId = o.OfferId,
                 Manufacturer = o.Manufacturer,
@@ -132,6 +133,7 @@ namespace CarPortal.Web.Controllers
                     TransmissionType = offerDto.CarDto.TransmissionType,
                 },
                 Id = offerDto.Id,
+                Name = offerDto.Name,
                 City = offerDto.City,
                 Region = offerDto.Region,
                 SellerId = offerDto.SellerId,
