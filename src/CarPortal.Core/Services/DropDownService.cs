@@ -1,4 +1,4 @@
-﻿using CarPortal.Core.Dtos.Offer.DropDownModels;
+﻿using CarPortal.Core.DTOs.Offer.DropDownModels;
 using CarPortal.Core.Services.Contracts;
 using CarPortal.Data;
 using Microsoft.EntityFrameworkCore;

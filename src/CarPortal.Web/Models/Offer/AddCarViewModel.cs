@@ -1,5 +1,6 @@
 ﻿using CarPortal.Core.Attributes;
-using CarPortal.Core.Dtos.Offer.DropDownModels;
+using CarPortal.Core.DTOs.Offer;
+using CarPortal.Core.DTOs.Offer.DropDownModels;
 using System.ComponentModel.DataAnnotations;
 
 namespace CarPortal.Web.Models.Offer
@@ -27,11 +28,21 @@ namespace CarPortal.Web.Models.Offer
 
         [Required]
         public bool IsBrandNew { get; set; }
+
         public IEnumerable<VehicleCategoryDropDown> VehicleCategories { get; set; } = new List<VehicleCategoryDropDown>();
+
         public IEnumerable<VehicleModelDropDown> VehicleModels { get; set; } = new List<VehicleModelDropDown>();
+
         public IEnumerable<FuelTypeDropDown> FuelTypes { get; set; } = new List<FuelTypeDropDown>();
+
         public IEnumerable<TransmissionTypeDropDown> TransmissionTypes { get; set; } = new List<TransmissionTypeDropDown>();
+
         public IEnumerable<ColorDropDown> Colors { get; set; } = new List<ColorDropDown>();
+
         public IEnumerable<ManufacturerDropDown> Manufacturers { get; set; } = new List<ManufacturerDropDown>();
+
+        public List<CarExtraCheckBox> Extras { get; set; } = new List<CarExtraCheckBox>();
+
+        public List<int> ExtraIds { get; set; } = new List<int>();
     }
 }

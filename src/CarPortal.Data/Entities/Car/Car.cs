@@ -41,6 +41,6 @@ namespace CarPortal.Data.Entities.Car
         public int ColorId { get; set; }
         public Color Color { get; set; } = null!;
         public bool IsBrandNew { get; set; }
-        public ICollection<Extra> Extras { get; set; } = new List<Extra>();
+        public virtual ICollection<CarExtra> Extras { get; set; } = new List<CarExtra>();
     }
 }

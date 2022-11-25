@@ -2,7 +2,7 @@
 @model List<OfferInCollectionViewModel>
 
 @{
-    ViewBag.Title = "Browse all";
+    ViewBag.Title = "Browse recent";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
@@ -11,11 +11,11 @@
 <div class="row">
     @foreach (var item in @Model)
     {
-        <div class="card col-md-3 m-3">
+        <div class="card col-md-3">
             <img class="card-img-top p-1" src="@item.ThumbnailUrl" alt="Car image">
             <div class="card-body">
-                <h5 class="card-title">@(item.Manufacturer + @item.Model)</h5>
-                <p class="card-text">@item.OfferName</p>
+                <h5 class="card-title">@item.OfferName </h5>
+                <p class="card-text">@item.Manufacturer  @item.Model </p>
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Price: @item.Price €</li>
@@ -27,17 +27,5 @@
                 <a href="#" class="card-link">Another link</a>
             </div>
         </div>
-        
-@*         <div class="col-md-6">
-    <label>@item.Manufacturer</label>
-    <label>@item.Model</label>
-    <label>@item.Year</label>
-    <label>@item.FuelType</label>
-    <label>@item.Mileage</label>
-    <label>@item.Price</label>
-    <label>@item.ContactPhone</label>
-    <img src="@item.ImageUrl" />
-    </div>
-    <hr />*@
-    }
+        }
 </div>

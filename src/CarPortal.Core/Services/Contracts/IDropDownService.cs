@@ -1,4 +1,4 @@
-﻿using CarPortal.Core.Dtos.Offer.DropDownModels;
+﻿using CarPortal.Core.DTOs.Offer.DropDownModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

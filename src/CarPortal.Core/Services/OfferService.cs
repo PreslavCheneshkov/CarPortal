@@ -1,5 +1,5 @@
-﻿using CarPortal.Core.Dtos.Offer.DropDownModels;
-using CarPortal.Core.DTOs.Offer;
+﻿using CarPortal.Core.DTOs.Offer;
+using CarPortal.Core.DTOs.Offer.DropDownModels;
 using CarPortal.Core.Services.Contracts;
 using CarPortal.Data;
 using CarPortal.Data.Entities.Car;
@@ -60,6 +60,16 @@ namespace CarPortal.Core.Services
                 ContactPhoneNumber = inputModel.ContactPhoneNumber,
             };
 
+            List<CarExtra> extras = new List<CarExtra>();
+            foreach (var extra in inputModel.Car.Extras.Where(e => e.IsChecked == true))
+            {
+                extras.Add(new CarExtra()
+                {
+                    Car = offer.Car,
+                    ExtraId = extra.Id,
+                });
+            }
+
             OfferThumbnail thumbnail = new OfferThumbnail()
             {
                 Offer = offer,
@@ -101,6 +111,8 @@ namespace CarPortal.Core.Services
 
             offer.Images = images;
             offer.OfferThumbnail = thumbnail;
+
+            await context.CarsExtras.AddRangeAsync(extras);
             await context.Offers.AddAsync(offer);
             await context.SaveChangesAsync();
         }
@@ -145,7 +157,7 @@ namespace CarPortal.Core.Services
                                                Year = o.Car.Year,
                                                Mileage = o.Car.Mileage,
                                                IsBrandNew = o.Car.IsBrandNew,
-                                               Extras = o.Car.Extras.Select(e => e.Name).ToList(),
+                                               Extras = o.Car.Extras.Select(e => e.Extra.Name).ToList(),
                                            },
                                            Name = o.Name,
                                            SellerId = o.SellerId,
@@ -225,6 +237,18 @@ namespace CarPortal.Core.Services
             };
 
             return model;
+        }
+
+        public async Task<List<CarExtraCheckBox>> PopulateVehicleExtrasCheckBoxesAsync()
+        {
+            return await context.Extras
+                                   .Select(e => new CarExtraCheckBox()
+                                   {
+                                       Name = e.Name,
+                                       Id = e.Id,
+                                       IsChecked = false,
+                                   })
+                                   .ToListAsync();
         }
     }
 }

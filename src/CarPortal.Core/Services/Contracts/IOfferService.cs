@@ -13,6 +13,8 @@ namespace CarPortal.Core.Services.Contracts
 
         Task<OfferDropDownsModel> PopulateViewModelWithDropDownsAsync();
 
+        Task<List<CarExtraCheckBox>> PopulateVehicleExtrasCheckBoxesAsync();
+
         Task<IEnumerable<OfferInCollectionDto>> GetRecentOffersAsync(int page);
 
         Task<SingleOfferDto> GetOfferByIdAsync(int offerId);

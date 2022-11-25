@@ -25,6 +25,8 @@ namespace CarPortal.Data
 
         public DbSet<Color> Colors { get; set; } = null!;
 
+        public DbSet<CarExtra> CarsExtras { get; set; }
+
         public DbSet<FuelType> FuelTypes { get; set; } = null!;
 
         public DbSet<Manufacturer> Manufacturers { get; set; } = null!;
@@ -76,6 +78,9 @@ namespace CarPortal.Data
                 .HasOne(o => o.OfferThumbnail)
                 .WithOne(ot => ot.Offer)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<CarExtra>()
+                .HasKey(ce => new { ce.CarId, ce.ExtraId });
 
             base.OnModelCreating(builder);
         }

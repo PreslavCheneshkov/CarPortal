@@ -31,12 +31,14 @@ namespace CarPortal.Web.Controllers
         public async Task<IActionResult> AddOffer()
         {
             var dropdowns = await offerService.PopulateViewModelWithDropDownsAsync();
+            var extras = await offerService.PopulateVehicleExtrasCheckBoxesAsync();
             var model = new AddOfferViewModel()
             {
                 Regions = dropdowns.Regions,
                 Cities = dropdowns.Cities,
                 Car = new AddCarViewModel 
                 {
+                    Extras = extras,
                     VehicleCategories = dropdowns.VehicleCategories,
                     Manufacturers = dropdowns.Manufacturers,
                     VehicleModels = dropdowns.VehicleModels,
@@ -69,6 +71,7 @@ namespace CarPortal.Web.Controllers
                 Images = model.Images,
                 Car = new CarInputModel()
                 {
+                    Extras = model.Car.Extras,
                     VehicleCategoryId = model.Car.VehicleCategoryId,
                     ManufacturerId = model.Car.ManufacturerId,
                     ModelId = model.Car.ModelId,

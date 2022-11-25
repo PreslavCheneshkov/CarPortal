@@ -1,4 +1,4 @@
-﻿namespace CarPortal.Core.Dtos.Offer.DropDownModels
+﻿namespace CarPortal.Core.DTOs.Offer.DropDownModels
 {
     public class VehicleModelDropDown
     {
