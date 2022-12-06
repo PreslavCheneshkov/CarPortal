@@ -11,16 +11,19 @@ namespace CarPortal.Web.Controllers
 {
     public class OfferController : CarPortalController
     {
-        private readonly IOfferService offerService;
         private readonly UserManager<CarPortalUser> userManager;
+        private readonly IOfferService offerService;
+        private readonly IDropDownService dropDownService;
 
         public OfferController(
-            IOfferService _offerService,
-            UserManager<CarPortalUser> _userManager
+            UserManager<CarPortalUser> userManager,
+            IOfferService offerService,
+            IDropDownService dropDownService
             )
         {
-            offerService = _offerService;
-            userManager = _userManager;
+            this.offerService = offerService;
+            this.userManager = userManager;
+            this.dropDownService = dropDownService;
         }
         public IActionResult Index()
         {
@@ -30,8 +33,8 @@ namespace CarPortal.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> AddOffer()
         {
-            var dropdowns = await offerService.PopulateViewModelWithDropDownsAsync();
-            var extras = await offerService.PopulateVehicleExtrasCheckBoxesAsync();
+            var dropdowns = await dropDownService.PopulateViewModelWithDropDownsAsync();
+            var extras = await dropDownService.PopulateVehicleExtrasCheckBoxesAsync();
             var model = new AddOfferViewModel()
             {
                 Regions = dropdowns.Regions,
@@ -52,7 +55,7 @@ namespace CarPortal.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddOffer(AddOfferViewModel model, string[] carExtras)
+        public async Task<IActionResult> AddOffer(AddOfferViewModel model, int[] carExtras)
         {
             if (!ModelState.IsValid)
             {
@@ -145,6 +148,7 @@ namespace CarPortal.Web.Controllers
                 LastEdited = offerDto.LastEdited,
                 SellerName = offerDto.SellerName,
                 ThumbnailUrl = offerDto.ThumbnailUrl,
+                AdditionalInfo = offerDto.AdditionalInfo,
                 ContactPhoneNumber = offerDto.ContactPhoneNumber,
             };
 

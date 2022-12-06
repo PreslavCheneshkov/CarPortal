@@ -25,5 +25,7 @@
         public string ThumbnailUrl { get; set; }
 
         public List<string> PictureIds { get; set; } = new List<string>();
+
+        public string AdditionalInfo { get; set; }
     }
 }

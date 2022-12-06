@@ -30,5 +30,7 @@ namespace CarPortal.Core.DTOs.Offer
         public string ThumbnailUrl { get; set; }
 
         public IEnumerable<string> PictureIds { get; set; } = new List<string>();
+
+        public string AdditionalInfo { get; set; }
     }
 }

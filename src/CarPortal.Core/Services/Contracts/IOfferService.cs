@@ -12,10 +12,6 @@ namespace CarPortal.Core.Services.Contracts
     {
         Task AddOfferAsync(OfferInputModel inputModel, string sellerId);
 
-        Task<OfferDropDownsModel> PopulateViewModelWithDropDownsAsync();
-
-        Task<List<SelectListItem>> PopulateVehicleExtrasCheckBoxesAsync();
-
         Task<IEnumerable<OfferInCollectionDto>> GetRecentOffersAsync(int page);
 
         Task<SingleOfferDto> GetOfferByIdAsync(int offerId);

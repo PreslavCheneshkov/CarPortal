@@ -67,7 +67,7 @@ namespace CarPortal.Core.Services
                 extras.Add(new CarExtra()
                 {
                     Car = offer.Car,
-                    ExtraId = int.Parse(extraId),
+                    ExtraId = extraId,
                 });
             }
 
@@ -160,6 +160,7 @@ namespace CarPortal.Core.Services
                                                IsBrandNew = o.Car.IsBrandNew,
                                                Extras = o.Car.Extras.Select(e => e.Extra.Name).ToList(),
                                            },
+                                           AdditionalInfo = o.AdditionalInfo,
                                            Name = o.Name,
                                            SellerId = o.SellerId,
                                            SellerName = o.Seller.UserName,
@@ -173,83 +174,6 @@ namespace CarPortal.Core.Services
                                        .FirstOrDefaultAsync(o => o.Id == offerId);
 
             return offer;
-        }
-
-        public async Task<OfferDropDownsModel> PopulateViewModelWithDropDownsAsync()
-        {
-            var regions = await context.Regions.Select(r => new RegionDropDown
-            {
-                Name = r.Name,
-                Id = r.Id,
-            }).ToArrayAsync();
-
-            var cities = await context.Cities.Select(r => new CityDropDown
-            {
-                Name = r.Name,
-                Id = r.Id,
-            }).ToArrayAsync();
-
-            var colors = await context.Colors.Select(r => new ColorDropDown
-            {
-                Name = r.Name,
-                Id = r.Id,
-            }).ToArrayAsync();
-
-            var fuelTypes = await context.FuelTypes.Select(r => new FuelTypeDropDown
-            {
-                Name = r.Name,
-                Id = r.Id,
-            }).ToArrayAsync();
-
-            var manufacturers = await context.Manufacturers.Select(r => new ManufacturerDropDown
-            {
-                Name = r.Name,
-                Id = r.Id,
-            }).ToArrayAsync();
-
-            var transmissionTypes = await context.TransmissionTypes.Select(r => new TransmissionTypeDropDown
-            {
-                Name = r.Name,
-                Id = r.Id,
-            }).ToArrayAsync();
-
-            var vehicleCategories = await context.VehicleCategories.Select(r => new VehicleCategoryDropDown
-            {
-                Name = r.Name,
-                Id = r.Id,
-            }).ToArrayAsync();
-
-            var vehicleModels = await context.Models.Select(r => new VehicleModelDropDown
-            {
-                Name = r.Name,
-                Id = r.Id,
-            }).ToArrayAsync();
-
-            OfferDropDownsModel model = new OfferDropDownsModel()
-            {
-                Cities = cities,
-                Colors = colors,
-                FuelTypes = fuelTypes,
-                Manufacturers = manufacturers,
-                TransmissionTypes = transmissionTypes,
-                VehicleCategories = vehicleCategories,
-                VehicleModels = vehicleModels,
-                Regions = regions,
-            };
-
-            return model;
-        }
-
-        public async Task<List<SelectListItem>> PopulateVehicleExtrasCheckBoxesAsync()
-        {
-            return await context.Extras
-                                   .Select(e => new SelectListItem()
-                                   {
-                                       Text = e.Name,
-                                       Value = e.Id.ToString(),
-                                       Selected = false,
-                                   })
-                                   .ToListAsync();
         }
     }
 }
