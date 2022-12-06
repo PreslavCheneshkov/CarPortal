@@ -1,4 +1,5 @@
 ﻿using CarPortal.Core.DTOs.Offer;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace CarPortal.Core.Services.Contracts
 
         Task<OfferDropDownsModel> PopulateViewModelWithDropDownsAsync();
 
-        Task<List<CarExtraCheckBox>> PopulateVehicleExtrasCheckBoxesAsync();
+        Task<List<SelectListItem>> PopulateVehicleExtrasCheckBoxesAsync();
 
         Task<IEnumerable<OfferInCollectionDto>> GetRecentOffersAsync(int page);
 

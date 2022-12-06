@@ -40,6 +40,6 @@ namespace CarPortal.Core.DTOs.Offer
         [Required]
         public bool IsBrandNew { get; set; }
 
-        public List<CarExtraCheckBox> Extras { get; set; } = new List<CarExtraCheckBox>();
+        public List<string> SelectedExtrasIds { get; set; } = new List<string>();
     }
 }

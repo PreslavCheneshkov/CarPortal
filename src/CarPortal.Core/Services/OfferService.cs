@@ -5,6 +5,7 @@ using CarPortal.Data;
 using CarPortal.Data.Entities.Car;
 using CarPortal.Data.Entities.Offer;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 using static CarPortal.Data.Constants.OfferConstants;
@@ -61,12 +62,12 @@ namespace CarPortal.Core.Services
             };
 
             List<CarExtra> extras = new List<CarExtra>();
-            foreach (var extra in inputModel.Car.Extras.Where(e => e.IsChecked == true))
+            foreach (var extraId in inputModel.Car.SelectedExtrasIds)
             {
                 extras.Add(new CarExtra()
                 {
                     Car = offer.Car,
-                    ExtraId = extra.Id,
+                    ExtraId = int.Parse(extraId),
                 });
             }
 
@@ -239,14 +240,14 @@ namespace CarPortal.Core.Services
             return model;
         }
 
-        public async Task<List<CarExtraCheckBox>> PopulateVehicleExtrasCheckBoxesAsync()
+        public async Task<List<SelectListItem>> PopulateVehicleExtrasCheckBoxesAsync()
         {
             return await context.Extras
-                                   .Select(e => new CarExtraCheckBox()
+                                   .Select(e => new SelectListItem()
                                    {
-                                       Name = e.Name,
-                                       Id = e.Id,
-                                       IsChecked = false,
+                                       Text = e.Name,
+                                       Value = e.Id.ToString(),
+                                       Selected = false,
                                    })
                                    .ToListAsync();
         }

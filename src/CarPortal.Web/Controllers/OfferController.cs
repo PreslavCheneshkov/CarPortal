@@ -52,7 +52,7 @@ namespace CarPortal.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddOffer(AddOfferViewModel model)
+        public async Task<IActionResult> AddOffer(AddOfferViewModel model, string[] carExtras)
         {
             if (!ModelState.IsValid)
             {
@@ -71,7 +71,7 @@ namespace CarPortal.Web.Controllers
                 Images = model.Images,
                 Car = new CarInputModel()
                 {
-                    Extras = model.Car.Extras,
+                    SelectedExtrasIds = carExtras.ToList(),
                     VehicleCategoryId = model.Car.VehicleCategoryId,
                     ManufacturerId = model.Car.ManufacturerId,
                     ModelId = model.Car.ModelId,

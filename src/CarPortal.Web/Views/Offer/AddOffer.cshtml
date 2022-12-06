@@ -94,20 +94,15 @@
             </div>
             <hr />
             <div class="row-md-3">
-                <div class="col-md-3">
+                <table class="table table-striped">
                     @foreach (var extra in Model.Car.Extras)
                     {
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" 
-                                   class="custom-control-input" 
-                                   value="@extra.Id" 
-                                   name="ExtraIds"
-                                   id="extra_@extra.Id"
-                                   checked="@extra.IsChecked">
-                            <label class="custom-control-label" for="extra_@extra.Id" >@extra.Name</label>
-                        </div>
+                        <tr>
+                            <td><input id="@extra.Value" type="checkbox" name="carExtras" value="@extra.Value" checked="@extra.Selected" /></td>
+                            <td><label asp-for="@extra.Value" >@extra.Text</label></td>
+                        </tr>
                     }
-                </div>
+                </table>
             </div>
 
 

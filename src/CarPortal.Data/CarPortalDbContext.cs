@@ -55,11 +55,6 @@ namespace CarPortal.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Offer>()
-                .HasOne(o => o.Seller)
-                .WithMany(s => s.PublishedOffers)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Offer>()
                 .HasOne(o => o.City)
                 .WithMany(c => c.Offers)
                 .OnDelete(DeleteBehavior.Restrict);

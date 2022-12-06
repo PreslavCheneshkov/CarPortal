@@ -1,6 +1,7 @@
 ﻿using CarPortal.Core.Attributes;
 using CarPortal.Core.DTOs.Offer;
 using CarPortal.Core.DTOs.Offer.DropDownModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 namespace CarPortal.Web.Models.Offer
@@ -41,8 +42,8 @@ namespace CarPortal.Web.Models.Offer
 
         public IEnumerable<ManufacturerDropDown> Manufacturers { get; set; } = new List<ManufacturerDropDown>();
 
-        public List<CarExtraCheckBox> Extras { get; set; } = new List<CarExtraCheckBox>();
+        public List<SelectListItem> Extras { get; set; } = new List<SelectListItem>();
 
-        public List<int> ExtraIds { get; set; } = new List<int>();
+        //public List<string> ExtraId { get; set; } = new List<string>();
     }
 }
