@@ -13,17 +13,17 @@ namespace CarPortal.Web.Controllers
     {
         private readonly UserManager<CarPortalUser> userManager;
         private readonly IOfferService offerService;
-        private readonly IDropDownService dropDownService;
+        private readonly IPageDataService pageDataService;
 
         public OfferController(
             UserManager<CarPortalUser> userManager,
             IOfferService offerService,
-            IDropDownService dropDownService
+            IPageDataService pageDataService
             )
         {
             this.offerService = offerService;
             this.userManager = userManager;
-            this.dropDownService = dropDownService;
+            this.pageDataService = pageDataService;
         }
         public IActionResult Index()
         {
@@ -33,15 +33,15 @@ namespace CarPortal.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> AddOffer()
         {
-            var dropdowns = await dropDownService.PopulateViewModelWithDropDownsAsync();
-            var extras = await dropDownService.PopulateVehicleExtrasCheckBoxesAsync();
+            var dropdowns = await pageDataService.PopulateViewModelWithDropDownsAsync();
+            
             var model = new AddOfferViewModel()
             {
                 Regions = dropdowns.Regions,
                 Cities = dropdowns.Cities,
                 Car = new AddCarViewModel 
                 {
-                    Extras = extras,
+                    Extras = dropdowns.Extras,
                     VehicleCategories = dropdowns.VehicleCategories,
                     Manufacturers = dropdowns.Manufacturers,
                     VehicleModels = dropdowns.VehicleModels,

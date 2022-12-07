@@ -8,8 +8,8 @@ namespace CarPortal.Web.Controllers
     [ApiController]
     public class DropDownController : ControllerBase
     {
-        private readonly IDropDownService dropDownService;
-        public DropDownController(IDropDownService _dropDownService)
+        private readonly IPageDataService dropDownService;
+        public DropDownController(IPageDataService _dropDownService)
         {
             dropDownService = _dropDownService;
         }

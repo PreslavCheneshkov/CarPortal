@@ -17,14 +17,4 @@ namespace CarPortal.Data.Constants
         public const int MaxPasswordLength = 100;
         public const int MinPasswordLength = 6;
     }
-    public class OfferConstants
-    {
-        public const int MaxOfferNameLength = 30;
-        public const int MinOfferNameLength = 2;
-
-        public const int AdditionalInfoMaxLength = 500;
-        public const int AdditionalInfoMinLength = 0;
-
-        public const int NumberOfDisplayedOffersInBrowse = 20;
-    }
 }

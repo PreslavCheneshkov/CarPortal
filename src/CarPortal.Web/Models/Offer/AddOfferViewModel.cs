@@ -12,6 +12,7 @@ namespace CarPortal.Web.Models.Offer
 
         [Required]
         [Range(0, double.MaxValue)]
+        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
         [StringLength(AdditionalInfoMaxLength, MinimumLength = AdditionalInfoMinLength)]

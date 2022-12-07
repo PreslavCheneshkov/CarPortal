@@ -1,4 +1,5 @@
 ﻿using CarPortal.Core.DTOs.Offer.DropDownModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,6 @@ namespace CarPortal.Core.DTOs.Offer
 
         public IEnumerable<VehicleModelDropDown> VehicleModels { get; set; }
 
-        public IEnumerable<CarExtraCheckBox> Extras { get; set; }
+        public List<SelectListItem> Extras { get; set; }
     }
 }
