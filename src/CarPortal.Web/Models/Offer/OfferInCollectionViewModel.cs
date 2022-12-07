@@ -18,6 +18,8 @@ public class OfferInCollectionViewModel
 
     public int Year { get; set; }
 
+    public int HorsePower { get; set; }
+
     public string FuelType { get; set; }
 
     public int Mileage { get; set; }

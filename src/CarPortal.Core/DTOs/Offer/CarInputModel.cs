@@ -24,6 +24,8 @@ namespace CarPortal.Core.DTOs.Offer
 
         public double? EngineDisplacement { get; set; }
 
+        public int? HorsePower { get; set; }
+
         [Required]
         public int TransmissionTypeId { get; set; }
 

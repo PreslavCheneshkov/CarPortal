@@ -35,6 +35,7 @@ namespace CarPortal.Core.Services
         {
             Car car = new Car()
             {
+                HorsePower = inputModel.Car.HorsePower,
                 VehicleCategoryId = inputModel.Car.VehicleCategoryId,
                 ManufacturerId = inputModel.Car.ManufacturerId,
                 ModelId = inputModel.Car.ModelId,

@@ -82,6 +82,7 @@ namespace CarPortal.Web.Controllers
                     TransmissionTypeId = model.Car.TransmissionTypeId,
                     ColorId = model.Car.ColorId,
                     EngineDisplacement = model.Car.EngineDisplacement,
+                    HorsePower = model.Car.HorsePower,
                     Mileage = model.Car.Mileage,
                     Year = model.Car.Year,
                     IsBrandNew = model.Car.IsBrandNew,
@@ -104,6 +105,7 @@ namespace CarPortal.Web.Controllers
                 Manufacturer = o.Manufacturer,
                 Model = o.Model,
                 FuelType = o.FuelType,
+                HorsePower = o.HorsePower,
                 Year = o.Year,
                 Price = o.Price,
                 Mileage = o.Mileage,
@@ -128,6 +130,8 @@ namespace CarPortal.Web.Controllers
             {
                 Car = new CarInOfferDetailsViewModel()
                 {
+                    HorsePower = offerDto.CarDto.HorsePower,
+                    EngineDisplacement = offerDto.CarDto.EngineDisplacement,
                     Year = offerDto.CarDto.Year,
                     Model = offerDto.CarDto.Model,
                     Color = offerDto.CarDto.Color,

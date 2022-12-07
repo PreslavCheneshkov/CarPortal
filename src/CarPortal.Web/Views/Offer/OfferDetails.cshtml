@@ -36,6 +36,28 @@
                 @Model.Car.FuelType
             </td>
         </tr>
+        @if (@Model.Car.EngineDisplacement != null)
+        {
+            <tr>
+                <td>
+                    Engine displacement:
+                </td>
+                <td>
+                    @Model.Car.EngineDisplacement
+                </td>
+            </tr>
+        }
+        @if (@Model.Car.HorsePower != null)
+        {
+            <tr>
+                <td>
+                    Horsepower:
+                </td>
+                <td>
+                    @Model.Car.HorsePower
+                </td>
+            </tr>
+        }
         <tr>
             <td>
                 Year:
@@ -56,17 +78,17 @@
             <td>
                 Additional info:
             </td>
-                <td>
-                    //TODO
-                </td>
+            <td>
+                //TODO
+            </td>
         </tr>
         <tr>
             <td>
                 Extras:
             </td>
-           <td>
-               @Model.Car.Extras
-           </td>
+            <td>
+                @Model.Car.Extras
+            </td>
         </tr>
     </table>
 </div>
@@ -79,7 +101,7 @@
             var picture = Model.PictureIds[i];
             <div class="carousel-item @(i == 0 ? "active" : string.Empty)">
                 <img class="d-block w-100" style="height:500px"
-                    src="@picture" alt="Picture">
+                 src="@picture" alt="Picture">
             </div>
         }
     </div>

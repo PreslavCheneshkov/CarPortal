@@ -24,6 +24,8 @@ namespace CarPortal.Core.DTOs.Offer
 
         public string FuelType { get; set; }
 
+        public int HorsePower { get; set; }
+
         public int Mileage { get; set; }
 
         public string ContactPhone { get; set; }

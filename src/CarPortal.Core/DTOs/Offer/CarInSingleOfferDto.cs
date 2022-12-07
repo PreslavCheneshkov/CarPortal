@@ -17,6 +17,10 @@ namespace CarPortal.Core.DTOs.Offer
 
         public string FuelType { get; set; }
 
+        public double? EngineDisplacement { get; set; }
+        
+        public int? HorsePower { get; set; }
+
         public string TransmissionType { get; set; }
 
         public string Color { get; set; }

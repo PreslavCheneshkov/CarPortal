@@ -68,6 +68,11 @@
                 <span asp-validation-for="@Model.Car.EngineDisplacement" class="text-danger"></span>
             </div>
             <div class="mb-3">
+                <label asp-for="@Model.Car.HorsePower" class="form-label">Horsepower:</label>
+                <input asp-for="@Model.Car.HorsePower" class="form-control" />
+                <span asp-validation-for="@Model.Car.HorsePower" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
                 <label asp-for="@Model.Car.Year" class="form-label">Year:</label>
                 <input asp-for="@Model.Car.Year" class="form-control" />
                 <span asp-validation-for="@Model.Car.Year" class="text-danger"></span>

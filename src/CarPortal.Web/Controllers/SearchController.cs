@@ -1,4 +1,5 @@
-﻿using CarPortal.Core.Services.Contracts;
+﻿using CarPortal.Core.DTOs.Search;
+using CarPortal.Core.Services.Contracts;
 using CarPortal.Web.Models.Search;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,24 @@ namespace CarPortal.Web.Controllers
             if (!ModelState.IsValid)
             {
                 return View(model);
+            }
+
+            SearchModelDto searchModel = new SearchModelDto()
+            {
+                VehicleCategoryId = model.VehicleCategoryId,
+                ManufacturerId = model.ManufacturerId,
+                ModelId = model.ModelId,
+                MaxEngineDisplacement = model.MaxEngineDisplacement,
+                MinEngineDisplacement = model.MinEngineDisplacement,
+                MaxHorsePower = model.MaxHorsePower,
+                MinHorsePower = model.MinHorsePower,
+                MaxYear = model.MaxYear,
+                MinYear = model.MinYear,
+                MaxMileage = model.MaxMileage,
+                MinMileage = model.MinMileage,
+                MaxPrice = model.MaxPrice,
+                MinPrice = model.MinPrice,
+                ColorIds = colorIds,
             }
 
             throw new NotImplementedException();
