@@ -200,7 +200,7 @@
             </table>
         </div>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-4">
         <table class="table table-striped">
             <h4 class="text-center">Select Extras:</h4>
             <hr />
@@ -208,7 +208,7 @@
                 int extrasCount = Model.Extras.Count;
                 for (int i = 0; i < extrasCount; i += 2)
                 {
-                    <tr class="table-bordered">
+                    <tr>
                         <td class="col-1 table-info"><input id="@Model.Extras[i].Value" type="checkbox" name="extraIds" value="@Model.Extras[i].Value" checked="@Model.Extras[i].Selected" /></td>
                         <td class="col-1 table-info"><label asp-for="@Model.Extras[i].Value">@Model.Extras[i].Text</label></td>
 
@@ -227,7 +227,7 @@
             }
         </table>
     </div>
-    <div>
-        <input class="btn btn-lg btn-primary col-md-4 offset-4" type="submit" value="Search!" />
-    </div>
+        <div>
+            <input class="btn btn-lg btn-primary col-md-4 offset-4" type="submit" value="Search!" />
+        </div>
 </form>
