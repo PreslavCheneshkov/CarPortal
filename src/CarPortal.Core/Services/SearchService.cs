@@ -21,12 +21,19 @@ namespace CarPortal.Core.Services
 
         public Task<List<OfferInCollectionDto>> GetSearchResultsAsync(SearchModelDto inputModel)
         {
-            List<OfferInCollectionDto> results = new List<OfferInCollectionDto>();
+            IQueryable<OfferInCollectionDto> results;
             bool hasInfoFromDb = false;
 
-            if (inputModel)
+            if (inputModel.ManufacturerId != null)
             {
+                if (hasInfoFromDb)
+                {
+                    results = results.Where(x => x.Manufacturer)
+                }
+                else
+                {
 
+                }
             }
 
             throw new NotImplementedException();

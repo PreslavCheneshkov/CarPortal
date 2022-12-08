@@ -64,9 +64,11 @@ namespace CarPortal.Web.Controllers
                 MaxPrice = model.MaxPrice,
                 MinPrice = model.MinPrice,
                 ColorIds = colorIds,
-            }
+            };
 
-            throw new NotImplementedException();
+            var results = await this.searchService.GetSearchResultsAsync(searchModel);
+
+            return View("BrowseRecent", results);
         }
     }
 }

@@ -22,6 +22,12 @@ namespace CarPortal.Web.Models.Search
         [Range(0, double.MaxValue)]
         public double? MaxEngineDisplacement { get; set; }
 
+        [Range(0, int.MaxValue)]
+        public int? MaxHorsePower { get; set; }
+
+        [Range(0, int.MaxValue)]
+        public int? MinHorsePower { get; set; }
+
         [Year]
         public int? MinYear { get; set; }
 
