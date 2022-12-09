@@ -7,45 +7,42 @@ namespace CarPortal.Web.Models.Search
 {
     public class SearchInputViewModel// : IValidatableObject
     {
-        [Range(0, int.MaxValue)]
+        //[Range(0, int.MaxValue)]
         public int? VehicleCategoryId { get; set; }
 
-        [Range(0, int.MaxValue)]
+        //[Range(0, int.MaxValue)]
         public int? ManufacturerId { get; set; }
 
-        [Range(0, int.MaxValue)]
+        //[Range(0, int.MaxValue)]
         public int? ModelId { get; set; }
 
-        [Range(0, double.MaxValue)]
+        //[Range(0, double.MaxValue)]
         public double? MinEngineDisplacement { get; set; }
 
-        [Range(0, double.MaxValue)]
+        //[Range(0, double.MaxValue)]
         public double? MaxEngineDisplacement { get; set; }
 
-        [Range(0, int.MaxValue)]
+        //[Range(0, int.MaxValue)]
         public int? MaxHorsePower { get; set; }
 
-        [Range(0, int.MaxValue)]
+        //[Range(0, int.MaxValue)]
         public int? MinHorsePower { get; set; }
 
-        [Year]
+        //[Year]
         public int? MinYear { get; set; }
 
-        [Year]
+        //[Year]
         public int? MaxYear { get; set; }
 
-        [Range(0, int.MaxValue)]
-        public int? MinMileage { get; set; }
-
-        [Range(0, int.MaxValue)]
+       // [Range(0, int.MaxValue)]
         public int? MaxMileage { get; set; }
 
-        [Range(0, double.MaxValue)]
-        [DataType(DataType.Currency)]
+        //[Range(0, double.MaxValue)]
+        //[DataType(DataType.Currency)]
         public decimal? MinPrice { get; set; }
 
-        [Range(0, double.MaxValue)]
-        [DataType(DataType.Currency)]
+       // [Range(0, double.MaxValue)]
+       // [DataType(DataType.Currency)]
         public decimal? MaxPrice { get; set; }
 
         public List<SelectListItem> Extras { get; set; } = new List<SelectListItem>();

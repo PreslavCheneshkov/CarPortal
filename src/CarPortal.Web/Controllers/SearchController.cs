@@ -1,5 +1,6 @@
 ﻿using CarPortal.Core.DTOs.Search;
 using CarPortal.Core.Services.Contracts;
+using CarPortal.Web.Models.Offer;
 using CarPortal.Web.Models.Search;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -60,7 +61,6 @@ namespace CarPortal.Web.Controllers
                 MaxYear = model.MaxYear,
                 MinYear = model.MinYear,
                 MaxMileage = model.MaxMileage,
-                MinMileage = model.MinMileage,
                 MaxPrice = model.MaxPrice,
                 MinPrice = model.MinPrice,
                 ColorIds = colorIds,
@@ -68,7 +68,22 @@ namespace CarPortal.Web.Controllers
 
             var results = await this.searchService.GetSearchResultsAsync(searchModel);
 
-            return View("BrowseRecent", results);
+            var viewModel = results.Select(o => new OfferInCollectionViewModel()
+            {
+                ContactPhone = o.ContactPhone,
+                FuelType = o.FuelType,
+                HorsePower = o.HorsePower,
+                Manufacturer = o.Manufacturer,
+                Mileage = o.Mileage,
+                Model = o.Model,
+                OfferId = o.OfferId,
+                OfferName = o.OfferName,
+                Price = o.Price,
+                ThumbnailUrl = o.ThumbnailUrl,
+                Year = o.Year,
+            }).ToList();
+
+            return View("SearchResultCollection", viewModel);
         }
     }
 }

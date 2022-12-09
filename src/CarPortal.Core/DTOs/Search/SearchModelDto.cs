@@ -26,8 +26,6 @@ namespace CarPortal.Core.DTOs.Search
 
         public int? MaxYear { get; set; }
 
-        public int? MinMileage { get; set; }
-
         public int? MaxMileage { get; set; }
 
         public decimal? MinPrice { get; set; }
