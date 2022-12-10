@@ -46,7 +46,8 @@ namespace CarPortal.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return BadRequest();
+                //return View(model);
             }
 
             SearchModelDto searchModel = new SearchModelDto()
@@ -58,12 +59,16 @@ namespace CarPortal.Web.Controllers
                 MinEngineDisplacement = model.MinEngineDisplacement,
                 MaxHorsePower = model.MaxHorsePower,
                 MinHorsePower = model.MinHorsePower,
+                FuelTypeIds = fuelTypeIds,
+                TransmissionTypeIds = transmissionTypeIds,
                 MaxYear = model.MaxYear,
                 MinYear = model.MinYear,
                 MaxMileage = model.MaxMileage,
                 MaxPrice = model.MaxPrice,
                 MinPrice = model.MinPrice,
+                ExtraIds = extraIds,
                 ColorIds = colorIds,
+                RegionIds = regionIds,
             };
 
             var results = await this.searchService.GetSearchResultsAsync(searchModel);

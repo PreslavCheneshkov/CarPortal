@@ -6,13 +6,22 @@ namespace CarPortal.Core.Attributes
     {
         public override bool IsValid(object? value)
         {
+            if (value == null)
+            {
+                return true;
+            }
+
             bool result = false;
 
             if (int.TryParse(value?.ToString(), out int year))
             {
                 if (year <= DateTime.UtcNow.Year)
                 {
-                    return true;
+                    if (year >= 1900)
+                    {
+                        return true;
+                    }
+                    return false;
                 }
             }
 

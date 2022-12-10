@@ -113,6 +113,7 @@ namespace CarPortal.Core.Services
                 offers = offers.Where(o => inputModel.RegionIds.Contains(o.RegionId));
             }
 
+            //var data = await offers.Include(o => o.Car).ToListAsync();
             results = await offers.Select(o => new OfferInCollectionDto()
             {
                 OfferName = o.Name,
