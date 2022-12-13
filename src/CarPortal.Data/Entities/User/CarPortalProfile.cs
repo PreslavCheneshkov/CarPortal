@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CarPortal.Data.Entities.User
+{
+    public class CarPortalProfile
+    {
+        public CarPortalProfile()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
+        [Key]
+        public string Id { get; set; }
+
+        [ForeignKey(nameof(CarPortalUser))]
+        public string CarPortalUserId { get; set; }
+        public CarPortalUser CarPortalUser { get; set; }
+
+        [Required]
+        public bool IsDealer { get; set; }
+
+        public string? ProfilePictureAdress { get; set; }
+
+
+        public List<Offer.Offer> PublishedOffers { get; set; } = new List<Offer.Offer>();
+        
+        public List<Offer.Offer> SavedOffers { get; set; } = new List<Offer.Offer>();
+    }
+}

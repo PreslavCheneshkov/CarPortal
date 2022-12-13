@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarPortal.Data.Entities.User
 {
     public class CarPortalUser : IdentityUser
     {
-        public string? ProfilePictureAddress { get; set; }
+        [ForeignKey(nameof(CarPortalProfile))]
+        public string? ProfileId { get; set; }
+
+        public CarPortalProfile? Profile { get; set; }
     }
 }

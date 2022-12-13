@@ -21,6 +21,8 @@ namespace CarPortal.Data
             base.OnConfiguring(optionsBuilder);
         }
 
+        public DbSet<CarPortalProfile> Profiles { get; set; }
+
         public DbSet<Car> Cars { get; set; } = null!;
 
         public DbSet<Color> Colors { get; set; } = null!;

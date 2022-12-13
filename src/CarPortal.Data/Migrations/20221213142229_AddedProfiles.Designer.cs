@@ -4,6 +4,7 @@ using CarPortal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarPortal.Data.Migrations
 {
     [DbContext(typeof(CarPortalDbContext))]
-    partial class CarPortalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221213142229_AddedProfiles")]
+    partial class AddedProfiles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -425,7 +427,7 @@ namespace CarPortal.Data.Migrations
 
                     b.Property<string>("CarPortalUserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDealer")
                         .HasColumnType("bit");
@@ -434,9 +436,6 @@ namespace CarPortal.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CarPortalUserId")
-                        .IsUnique();
 
                     b.ToTable("Profiles");
                 });
@@ -484,6 +483,7 @@ namespace CarPortal.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ProfileId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
@@ -821,17 +821,6 @@ namespace CarPortal.Data.Migrations
                     b.Navigation("Offer");
                 });
 
-            modelBuilder.Entity("CarPortal.Data.Entities.User.CarPortalProfile", b =>
-                {
-                    b.HasOne("CarPortal.Data.Entities.User.CarPortalUser", "CarPortalUser")
-                        .WithOne("Profile")
-                        .HasForeignKey("CarPortal.Data.Entities.User.CarPortalProfile", "CarPortalUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CarPortalUser");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -928,11 +917,6 @@ namespace CarPortal.Data.Migrations
                     b.Navigation("PublishedOffers");
 
                     b.Navigation("SavedOffers");
-                });
-
-            modelBuilder.Entity("CarPortal.Data.Entities.User.CarPortalUser", b =>
-                {
-                    b.Navigation("Profile");
                 });
 #pragma warning restore 612, 618
         }

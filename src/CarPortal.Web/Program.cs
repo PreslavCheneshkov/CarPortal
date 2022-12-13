@@ -30,6 +30,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IOfferService, OfferService>();
 builder.Services.AddTransient<IPageDataService, PageDataService>();
 builder.Services.AddTransient<ISearchService, SearchService>();
+builder.Services.AddTransient<IProfileService, ProfileService>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

@@ -1,2 +1,18 @@
-﻿<h3 class="text-center">Profile</h3>
+﻿@using CarPortal.Web.Models.User
+@model ProfileViewModel
+
+<h3 class="text-center">Profile</h3>
 <hr />
+<div class="row">
+    <img src="/Images/Offers/Thumbnails/2b8ffc30-0fb3-4d03-a067-ff92f0ba1ca3.jpg" class="img-thumbnail col-4" />
+    <table class="table table-striped">
+        <tr>
+            <td>
+                Username: 
+            </td>
+            <td>
+                @Model.UserName
+            </td>
+        </tr>
+    </table>
+</div>

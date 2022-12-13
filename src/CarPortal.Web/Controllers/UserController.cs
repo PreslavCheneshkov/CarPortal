@@ -1,4 +1,5 @@
-﻿using CarPortal.Data.Entities.User;
+﻿using CarPortal.Core.Services.Contracts;
+using CarPortal.Data.Entities.User;
 using CarPortal.Web.Models.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -10,11 +11,13 @@ namespace CarPortal.Web.Controllers
     {
         private readonly SignInManager<CarPortalUser> signInManager;
         private readonly UserManager<CarPortalUser> userManager;
+        private readonly IProfileService profileService;
 
-        public UserController(SignInManager<CarPortalUser> _signInManager, UserManager<CarPortalUser> _userManager)
+        public UserController(SignInManager<CarPortalUser> signInManager, UserManager<CarPortalUser> userManager, IProfileService profileService)
         {
-            signInManager = _signInManager;
-            userManager = _userManager;
+            this.signInManager = signInManager;
+            this.userManager = userManager;
+            this.profileService = profileService;
         }
 
         [HttpGet]
@@ -55,6 +58,8 @@ namespace CarPortal.Web.Controllers
 
             if (result.Succeeded)
             {
+                await this.profileService.CreateProfileAsync(model.UserName, model.IsDealer);
+
                 return RedirectToAction("Login", "User");
             }
 
@@ -114,7 +119,12 @@ namespace CarPortal.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> MyProfile()
         {
-            return View("UserProfile");
+            var model = new ProfileViewModel()
+            {
+                UserName = this.User.Identity.Name
+            };
+
+            return View("UserProfile", model);
         }
     }
 }
