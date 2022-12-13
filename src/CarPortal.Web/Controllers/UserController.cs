@@ -30,6 +30,7 @@ namespace CarPortal.Web.Controllers
 
             return View(model);
         }
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterFormViewModel model)
@@ -59,6 +60,7 @@ namespace CarPortal.Web.Controllers
 
             return View(model);
         }
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Login()
@@ -72,6 +74,7 @@ namespace CarPortal.Web.Controllers
 
             return View(model);
         }
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginFormViewModel model)
@@ -100,11 +103,18 @@ namespace CarPortal.Web.Controllers
 
             return View(model);
         }
+
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MyProfile()
+        {
+            return View("UserProfile");
         }
     }
 }

@@ -11,7 +11,7 @@
     <h3 class="text-center">@Model.Name</h3>
     <hr />
     <img class="img-thumbnail row-lg-4" src="@Model.ThumbnailUrl" alt="Card image cap">
-    <table class="table table-striped row-lg-4">
+    <table class="table table-bordered table-striped row-lg-4">
         <tr>
             <td>
                 Category:
@@ -36,28 +36,30 @@
                 @Model.Car.FuelType
             </td>
         </tr>
-        @if (@Model.Car.EngineDisplacement != null)
-        {
-            <tr>
-                <td>
-                    Engine displacement:
-                </td>
-                <td>
-                    @Model.Car.EngineDisplacement
-                </td>
-            </tr>
-        }
-        @if (@Model.Car.HorsePower != null)
-        {
-            <tr>
-                <td>
-                    Horsepower:
-                </td>
-                <td>
-                    @Model.Car.HorsePower
-                </td>
-            </tr>
-        }
+        <tr>
+            <td>
+                Engine Displacement:
+            </td>
+            <td>
+                @(Model.Car.EngineDisplacement == null ? "Not listed" : (Model.Car.EngineDisplacement.ToString() + " cc"))
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Horsepower:
+            </td>
+            <td>
+                @(Model.Car.HorsePower == null ? "Not listed" : Model.Car.HorsePower)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Transmission type:
+            </td>
+            <td>
+                @Model.Car.TransmissionType
+            </td>
+        </tr>
         <tr>
             <td>
                 Year:
@@ -76,10 +78,18 @@
         </tr>
         <tr>
             <td>
+                Color:
+            </td>
+            <td>
+                @Model.Car.Color
+            </td>
+        </tr>
+        <tr>
+            <td>
                 Additional info:
             </td>
             <td>
-                //TODO
+                @Model.AdditionalInfo
             </td>
         </tr>
         <tr>
@@ -91,6 +101,44 @@
             </td>
         </tr>
     </table>
+    <hr />
+    <table class="table table-bordered table-striped">
+        <tr>
+            <td>
+                Price:
+            </td>
+            <td>
+                @(Model.Price.ToString("f2") + " €")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Location:
+            </td>
+            <td>
+                @(Model.City + ", " + Model.Region + " region")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Contact:
+            </td>
+            <td>
+                @Model.ContactPhoneNumber
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Seller
+            </td>
+            <td>
+                //TODO
+            </td>
+        </tr>
+    </table>
+    <hr />
+    <h4 class="text-center">Pictures</h4>
+    <hr />
 </div>
 
 

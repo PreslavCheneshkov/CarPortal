@@ -75,7 +75,7 @@ namespace CarPortal.Web.Controllers
 
             var viewModel = results.Select(o => new OfferInCollectionViewModel()
             {
-                ContactPhone = o.ContactPhone,
+                TransmissionType = o.TransmissionType,
                 FuelType = o.FuelType,
                 HorsePower = o.HorsePower,
                 Manufacturer = o.Manufacturer,

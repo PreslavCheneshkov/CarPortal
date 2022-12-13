@@ -118,7 +118,7 @@ namespace CarPortal.Core.Services
             {
                 OfferName = o.Name,
                 OfferId = o.Id,
-                ContactPhone = o.ContactPhoneNumber,
+                TransmissionType = o.Car.TransmissionType.Name,
                 Manufacturer = o.Car.Manufacturer.Name,
                 Model = o.Car.Model.Name,
                 HorsePower = o.Car.HorsePower,

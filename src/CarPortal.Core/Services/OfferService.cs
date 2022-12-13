@@ -134,10 +134,10 @@ namespace CarPortal.Core.Services
                                           FuelType = o.Car.FuelType.Name,
                                           Year = o.Car.Year,
                                           Mileage = o.Car.Mileage,
-                                          ContactPhone = o.ContactPhoneNumber,
+                                          TransmissionType = o.Car.TransmissionType.Name,
                                           Price = o.Price,
                                           ThumbnailUrl = $"/Images/Offers/Thumbnails/{o.OfferThumbnail.Id}{o.OfferThumbnail.Extension}",
-                                      }).ToArrayAsync();
+                                      }).Take(20).ToArrayAsync();
             
             return offers;
         }
@@ -155,6 +155,8 @@ namespace CarPortal.Core.Services
                                                Model = o.Car.Model.Name,
                                                FuelType = o.Car.FuelType.Name,
                                                TransmissionType = o.Car.TransmissionType.Name,
+                                               HorsePower = o.Car.HorsePower,
+                                               EngineDisplacement = o.Car.EngineDisplacement,
                                                Color = o.Car.Color.Name,
                                                Year = o.Car.Year,
                                                Mileage = o.Car.Mileage,
@@ -162,6 +164,7 @@ namespace CarPortal.Core.Services
                                                Extras = o.Car.Extras.Select(e => e.Extra.Name).ToList(),
                                            },
                                            AdditionalInfo = o.AdditionalInfo,
+                                           Price = o.Price,
                                            Name = o.Name,
                                            SellerId = o.SellerId,
                                            SellerName = o.Seller.UserName,

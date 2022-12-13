@@ -20,9 +20,10 @@ public class OfferInCollectionViewModel
 
     public int? HorsePower { get; set; }
 
+    public string TransmissionType { get; set; } = null!;
+
     public string FuelType { get; set; }
 
     public int Mileage { get; set; }
 
-    public string ContactPhone { get; set; }
 }

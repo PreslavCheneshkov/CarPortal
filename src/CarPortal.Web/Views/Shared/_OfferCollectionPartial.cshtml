@@ -8,12 +8,14 @@
             <img class="card-img-top p-1" src="@item.ThumbnailUrl" alt="Car image">
             <div class="card-body">
                 <h5 class="card-title">@item.OfferName </h5>
-                <p class="card-text">@item.Manufacturer  @item.Model </p>
             </div>
             <ul class="list-group list-group-flush">
+                <li class="list-group-item">@item.Manufacturer  @item.Model </li>
                 <li class="list-group-item">Price: @item.Price €</li>
                 <li class="list-group-item">Fuel type: @item.FuelType</li>
+                <li class="list-group-item">Transmission type: @item.TransmissionType</li>
                 <li class="list-group-item">Year: @item.Year</li>
+                <li class="list-group-item">Mileage: @item.Mileage</li>
             </ul>
             <div class="card-body">
                 <a class="btn btn-secondary"  asp-route-id="@item.OfferId" asp-controller="Offer" asp-action="OfferDetails" >Details</a>

@@ -109,7 +109,7 @@ namespace CarPortal.Web.Controllers
                 Year = o.Year,
                 Price = o.Price,
                 Mileage = o.Mileage,
-                ContactPhone = o.ContactPhone,
+                TransmissionType = o.TransmissionType,
                 ThumbnailUrl = o.ThumbnailUrl,
             }).ToList();
 
@@ -145,6 +145,7 @@ namespace CarPortal.Web.Controllers
                 },
                 Id = offerDto.Id,
                 Name = offerDto.Name,
+                Price = offerDto.Price,
                 City = offerDto.City,
                 Region = offerDto.Region,
                 SellerId = offerDto.SellerId,

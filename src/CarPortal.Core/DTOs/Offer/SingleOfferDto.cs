@@ -15,6 +15,8 @@ namespace CarPortal.Core.DTOs.Offer
 
         public CarInSingleOfferDto CarDto { get; set; }
 
+        public decimal Price { get; set; }
+
         public string SellerId { get; set; }
 
         public string SellerName { get; set; }
