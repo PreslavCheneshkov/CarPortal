@@ -4,15 +4,40 @@
 <h3 class="text-center">Profile</h3>
 <hr />
 <div class="row">
-    <img src="/Images/Offers/Thumbnails/2b8ffc30-0fb3-4d03-a067-ff92f0ba1ca3.jpg" class="img-thumbnail col-4" />
-    <table class="table table-striped">
+    <table class="table table-striped col-4">
         <tr>
-            <td>
-                Username: 
+            <td class="col-4">
+                <img src="/Images/Offers/Thumbnails/2b8ffc30-0fb3-4d03-a067-ff92f0ba1ca3.jpg" class="img-thumbnail" />
             </td>
-            <td>
-                @Model.UserName
+            <td class="col-4">
+                <table class="table table-hover">
+                    <tr>
+                        <td>
+                            <label asp-for="@Model.UserName">@Model.UserName</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        @if (@Model.IsDealer)
+                        {
+                            <td>
+                                Dealer
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                Not a dealer
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            Registered: @Model.CreatedOn.Value.ToShortDateString()
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
+
     </table>
 </div>

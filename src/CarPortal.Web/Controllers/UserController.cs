@@ -119,9 +119,15 @@ namespace CarPortal.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> MyProfile()
         {
-            var model = new ProfileViewModel()
+            var data = await this.profileService.GetProfileByUsernameAsync(this.User.Identity.Name);
+
+            ProfileViewModel model = new ProfileViewModel()
             {
-                UserName = this.User.Identity.Name
+                ProfilePictureAddress = data.ProfilePictureAddress,
+                UserName = data.UserName,
+                ProfileId = data.ProfileId,
+                IsDealer = data.IsDealer,
+                CreatedOn = data.CreatedOn,
             };
 
             return View("UserProfile", model);

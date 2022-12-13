@@ -13,6 +13,7 @@ namespace CarPortal.Data.Entities.User
         public CarPortalProfile()
         {
             this.Id = Guid.NewGuid().ToString();
+            CreatedDate = DateTime.UtcNow;
         }
 
         [Key]
@@ -27,6 +28,7 @@ namespace CarPortal.Data.Entities.User
 
         public string? ProfilePictureAdress { get; set; }
 
+        public DateTime? CreatedDate { get; set; }
 
         public List<Offer.Offer> PublishedOffers { get; set; } = new List<Offer.Offer>();
         

@@ -1,4 +1,5 @@
-﻿using CarPortal.Core.Services.Contracts;
+﻿using CarPortal.Core.DTOs.Profile;
+using CarPortal.Core.Services.Contracts;
 using CarPortal.Data;
 using CarPortal.Data.Entities.User;
 using Microsoft.EntityFrameworkCore;
@@ -19,12 +20,6 @@ namespace CarPortal.Core.Services
             this.context = context;
         }
 
-        /// <summary>
-        /// Creates a profile and returns profileId
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="isDealer"></param>
-        /// <returns>ProfileId</returns>
         public async Task<string> CreateProfileAsync(string username, bool isDealer)
         {
             var user = await context.Users.FirstOrDefaultAsync(u => u.UserName == username);
@@ -46,6 +41,25 @@ namespace CarPortal.Core.Services
             await context.SaveChangesAsync();
 
             return profile.Id;
+        }
+
+        public async Task<ProfileDto> GetProfileByUsernameAsync(string username)
+        {
+            ProfileDto? profile = await context.Users.Select(u => new ProfileDto()
+            {
+                ProfilePictureAddress = u.Profile.ProfilePictureAdress,
+                IsDealer = u.Profile.IsDealer,
+                ProfileId = u.ProfileId,
+                UserName = u.UserName,
+                CreatedOn = u.Profile.CreatedDate,
+            }).FirstOrDefaultAsync(p => p.UserName == username);
+
+            if (profile == null)
+            {
+                throw new NullReferenceException("There is no such profile.");
+            }
+
+            return profile;
         }
     }
 }

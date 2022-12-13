@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarPortal.Core.DTOs.Profile;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +10,7 @@ namespace CarPortal.Core.Services.Contracts
     public interface IProfileService
     {
         Task<string> CreateProfileAsync(string username, bool isDealer);
+
+        Task<ProfileDto> GetProfileByUsernameAsync(string username);
     }
 }
