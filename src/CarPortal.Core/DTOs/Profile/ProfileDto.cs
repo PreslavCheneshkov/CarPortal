@@ -19,7 +19,9 @@ namespace CarPortal.Core.DTOs.Profile
 
         public string? ProfilePictureAddress { get; set; }
 
-        public List<OfferInCollectionDto> PublishedOffers { get; set; }
+        public string UserId { get; set; }
+
+        public List<OfferInCollectionDto> UploadedOffers { get; set; }
 
         public List<OfferInCollectionDto> SavedOffers { get; set; }
     }

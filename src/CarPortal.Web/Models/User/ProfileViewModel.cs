@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CarPortal.Web.Models.Offer;
+using System.ComponentModel.DataAnnotations;
 
 namespace CarPortal.Web.Models.User
 {
@@ -14,5 +15,9 @@ namespace CarPortal.Web.Models.User
         public DateTime? CreatedOn { get; set; }
 
         public string? ProfilePictureAddress { get; set; }
+
+        public List<OfferInCollectionViewModel> UploadedOffers { get; set; } = new List<OfferInCollectionViewModel>();
+
+        public List<OfferInCollectionViewModel> SavedOffers { get; set; } = new List<OfferInCollectionViewModel>();
     }
 }

@@ -1,5 +1,7 @@
-﻿using CarPortal.Core.Services.Contracts;
+﻿using CarPortal.Core.DTOs.Profile;
+using CarPortal.Core.Services.Contracts;
 using CarPortal.Data.Entities.User;
+using CarPortal.Web.Models.Offer;
 using CarPortal.Web.Models.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -128,6 +130,34 @@ namespace CarPortal.Web.Controllers
                 ProfileId = data.ProfileId,
                 IsDealer = data.IsDealer,
                 CreatedOn = data.CreatedOn,
+                //SavedOffers = data.SavedOffers.Select(so => new OfferInCollectionViewModel()
+                //{
+                //    FuelType = so.FuelType,
+                //    HorsePower = so.HorsePower,
+                //    Manufacturer = so.Manufacturer,
+                //    Mileage = so.Mileage,
+                //    Model = so.Model,
+                //    OfferId = so.OfferId,
+                //    OfferName = so.OfferName,
+                //    Price = so.Price,
+                //    ThumbnailUrl = so.ThumbnailUrl,
+                //    TransmissionType = so.TransmissionType,
+                //    Year = so.Year,
+                //}).ToList(),
+                UploadedOffers = data.UploadedOffers.Select(uo => new OfferInCollectionViewModel()
+                {
+                    FuelType = uo.FuelType,
+                    HorsePower = uo.HorsePower,
+                    Manufacturer = uo.Manufacturer,
+                    Mileage = uo.Mileage,
+                    Model = uo.Model,
+                    OfferId = uo.OfferId,
+                    OfferName = uo.OfferName,
+                    Price = uo.Price,
+                    ThumbnailUrl = uo.ThumbnailUrl,
+                    TransmissionType = uo.TransmissionType,
+                    Year = uo.Year,
+                }).ToList(),
             };
 
             return View("UserProfile", model);

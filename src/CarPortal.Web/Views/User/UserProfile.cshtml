@@ -38,6 +38,35 @@
                 </table>
             </td>
         </tr>
-
     </table>
+</div>
+
+<div class="row">
+    <h4 class="text-center">Uploaded offers</h4>
+    <hr />
+    @if (@Model.UploadedOffers.Count == 0)
+    {
+        <text>There are no offers, uploaded by this user.</text>
+    }
+    else
+    {
+        @*@foreach (var offer in @Model.UploadedOffers)
+        {
+            <partial name="_OfferCollectionPartial" model="@offer" />
+        }*@
+        <partial name="_OfferCollectionPartial" model="@Model.UploadedOffers" />
+    }
+    <h4 class="text-center">Interested in:</h4>
+    <hr />
+    @if (@Model.SavedOffers.Count == 0)
+    {
+        <text>This user is not interested in any offers yet.</text>
+    }
+    else
+    {
+        @foreach (var offer in @Model.SavedOffers)
+        {
+            <partial name="_OfferCollectionPartial" , model="offer" />
+        }
+    }
 </div>
