@@ -69,6 +69,7 @@ namespace CarPortal.Web.Controllers
                 ExtraIds = extraIds,
                 ColorIds = colorIds,
                 RegionIds = regionIds,
+                Keyword = model.Keyword,
             };
 
             var results = await this.searchService.GetSearchResultsAsync(searchModel);

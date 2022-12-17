@@ -58,18 +58,19 @@
                     <td>
                         <label class="form-label col-4">Engine displacement:</label>
                     </td>
-                    <td>
+                    <td class="input-group">
                         <input asp-for="@Model.MinEngineDisplacement" placeholder="Min" class="form-control" />
                         <span asp-validation-for="@Model.MinEngineDisplacement"></span>
                         <input asp-for="@Model.MaxEngineDisplacement" placeholder="Max" class="form-control" />
                         <span asp-validation-for="@Model.MaxEngineDisplacement"></span>
+                        <span class="input-group-text">cc</span>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label class="form-label col-4">Year:</label>
                     </td>
-                    <td>
+                    <td class="input-group">
                         <input asp-for="@Model.MinYear" placeholder="Min" class="form-control" />
                         <input asp-for="@Model.MaxYear" placeholder="Max" class="form-control" />
                     </td>
@@ -87,11 +88,21 @@
                     <td>
                         <label class="form-label col-4">Price:</label>
                     </td>
-                    <td>
+                    <td class="input-group">
                         <input asp-for="@Model.MinPrice" placeholder="Min" class="form-control" />
                         <span asp-validation-for="@Model.MinPrice"></span>
                         <input asp-for="@Model.MaxPrice" placeholder="Max" class="form-control" />
+                        <span class="input-group-text">€</span>
                         <span asp-validation-for="@Model.MaxPrice"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="form-label">Keyword:</label>
+                    </td>
+                    <td>
+                        <input asp-for="@Model.Keyword" class="form-control" />
+                        <span asp-validation-for="@Model.Keyword"></span>
                     </td>
                 </tr>
             </table>
@@ -205,31 +216,61 @@
         </div>
     </div>
     <div class="col-md-4">
-        <table class="table table-striped">
-            <h4 class="text-center">Select Extras:</h4>
-            <hr />
-            @{
-                int extrasCount = Model.Extras.Count;
-                for (int i = 0; i < extrasCount; i += 2)
-                {
-                        <tr>
-                            <td class="col-1 table-info"><input id="@Model.Extras[i].Value" type="checkbox" name="extraIds" value="@Model.Extras[i].Value" checked="@Model.Extras[i].Selected" /></td>
-                            <td class="col-1 table-info"><label asp-for="@Model.Extras[i].Value">@Model.Extras[i].Text</label></td>
+        @*<table class="table table-striped">
+        <h4 class="text-center">Select Extras:</h4>
+        <hr />
+        @{
+        int extrasCount = Model.Extras.Count;
+        for (int i = 0; i < extrasCount; i += 2)
+        {
+        <tr>
+        <td class="col-1 table-info"><input id="@Model.Extras[i].Value" type="checkbox" name="extraIds" value="@Model.Extras[i].Value" checked="@Model.Extras[i].Selected" /></td>
+        <td class="col-1 table-info"><label asp-for="@Model.Extras[i].Value">@Model.Extras[i].Text</label></td>
 
-                            <td class="col-1"><input id="@Model.Extras[i + 1].Value" type="checkbox" name="extraIds" value="@Model.Extras[i + 1].Value" checked="@Model.Extras[i + 1].Selected" /></td>
-                            <td class="col-1"><label asp-for="@Model.Extras[i + 1].Value">@Model.Extras[i + 1].Text</label></td>
-                        </tr>
-                    if (i + 2 == extrasCount - 1)
-                    {
-                            <tr>
-                                <td class="col-1 table-info"><input id="@Model.Extras[i + 2].Value" type="checkbox" name="extraIds" value="@Model.Extras[i + 2].Value" checked="@Model.Extras[i + 2].Selected" /></td>
-                                <td class="col-1 table-info"><label asp-for="@Model.Extras[i + 2].Value">@Model.Extras[i + 2].Text</label></td>
-                            </tr>
-                        break;
-                    }
+        <td class="col-1"><input id="@Model.Extras[i + 1].Value" type="checkbox" name="extraIds" value="@Model.Extras[i + 1].Value" checked="@Model.Extras[i + 1].Selected" /></td>
+        <td class="col-1"><label asp-for="@Model.Extras[i + 1].Value">@Model.Extras[i + 1].Text</label></td>
+        </tr>
+        if (i + 2 == extrasCount - 1)
+        {
+        <tr>
+        <td class="col-1 table-info"><input id="@Model.Extras[i + 2].Value" type="checkbox" name="extraIds" value="@Model.Extras[i + 2].Value" checked="@Model.Extras[i + 2].Selected" /></td>
+        <td class="col-1 table-info"><label asp-for="@Model.Extras[i + 2].Value">@Model.Extras[i + 2].Text</label></td>
+        </tr>
+        break;
+        }
+        }
+        }
+        </table>*@
+         <h4 class="text-center">Select Extras:</h4>
+        <hr />
+
+        @{
+            int extrasCount = Model.Extras.Count;
+            for (int i = 0; i < extrasCount; i += 2)
+            {
+
+                    <div class="input-group-text">
+                        <input class="form-check-input" id="@Model.Extras[i].Value" type="checkbox" name="extraIds" value="@Model.Extras[i].Value" checked="@Model.Extras[i].Selected" />
+                        <label class="form-check-label" asp-for="@Model.Extras[i].Value"> @Model.Extras[i].Text</label>
+                    </div>
+                    <div class="input-group-text">
+                        <input class="form-check-input" id="@Model.Extras[i + 1].Value" type="checkbox" name="extraIds" value="@Model.Extras[i + 1].Value" checked="@Model.Extras[i + 1].Selected" />
+                        <label class="form-check-label" asp-for="@Model.Extras[i + 1].Value"> @Model.Extras[i + 1].Text</label>
+                    </div>
+
+                if (i + 2 == extrasCount - 1)
+                {
+
+                        <div class="input-group-text">
+                            <input class="form-check-input" id="@Model.Extras[i + 2].Value" type="checkbox" name="extraIds" value="@Model.Extras[i + 2].Value" checked="@Model.Extras[i + 2].Selected" />
+                            <label class="form-check-label" asp-for="@Model.Extras[i + 2].Value">@Model.Extras[i + 2].Text</label>
+                        </div>
+
+                    break;
                 }
             }
-        </table>
+        }
+
     </div>
     <div>
         <input class="btn btn-lg btn-primary col-md-4 offset-4" type="submit" value="Search!" />

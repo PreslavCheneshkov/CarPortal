@@ -32,6 +32,8 @@ namespace CarPortal.Core.DTOs.Search
 
         public decimal? MaxPrice { get; set; }
 
+        public string? Keyword { get; set; }
+
         public int[]? ExtraIds { get; set; }
 
         public int[]? ColorIds { get; set; }

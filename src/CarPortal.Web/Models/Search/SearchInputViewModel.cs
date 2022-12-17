@@ -45,6 +45,9 @@ namespace CarPortal.Web.Models.Search
         [DataType(DataType.Currency)]
         public decimal? MaxPrice { get; set; }
 
+        [StringLength(100)]
+        public string? Keyword { get; set; }
+
         public List<SelectListItem> Extras { get; set; } = new List<SelectListItem>();
 
         public List<SelectListItem> Colors { get; set; } = new List<SelectListItem>();

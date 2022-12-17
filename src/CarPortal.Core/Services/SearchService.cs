@@ -113,6 +113,11 @@ namespace CarPortal.Core.Services
                 offers = offers.Where(o => inputModel.RegionIds.Contains(o.RegionId));
             }
 
+            if (!string.IsNullOrEmpty(inputModel.Keyword))
+            {
+                offers = offers.Where(o => EF.Functions.Like(o.AdditionalInfo, $"%{inputModel.Keyword}%") || EF.Functions.Like(o.Name, $"%{inputModel.Keyword}%"));
+            }
+
             //var data = await offers.Include(o => o.Car).ToListAsync();
             results = await offers.Select(o => new OfferInCollectionDto()
             {
