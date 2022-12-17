@@ -34,6 +34,10 @@ namespace CarPortal.Core.DTOs.Search
 
         public string? Keyword { get; set; }
 
+        public bool? FromDealer { get; set; }
+
+        public string? OrderBy { get; set; }
+
         public int[]? ExtraIds { get; set; }
 
         public int[]? ColorIds { get; set; }

@@ -28,6 +28,8 @@ namespace CarPortal.Core.DTOs.Offer
 
         public int Mileage { get; set; }
 
+        public DateTime AddedOn { get; set; }
+
         public string TransmissionType { get; set; }
     }
 }

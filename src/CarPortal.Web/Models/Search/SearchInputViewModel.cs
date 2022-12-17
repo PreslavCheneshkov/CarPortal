@@ -48,6 +48,10 @@ namespace CarPortal.Web.Models.Search
         [StringLength(100)]
         public string? Keyword { get; set; }
 
+        public bool? FromDealer { get; set; }
+
+        public string? OrderBy { get; set; }
+
         public List<SelectListItem> Extras { get; set; } = new List<SelectListItem>();
 
         public List<SelectListItem> Colors { get; set; } = new List<SelectListItem>();

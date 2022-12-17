@@ -118,7 +118,11 @@ namespace CarPortal.Core.Services
                 offers = offers.Where(o => EF.Functions.Like(o.AdditionalInfo, $"%{inputModel.Keyword}%") || EF.Functions.Like(o.Name, $"%{inputModel.Keyword}%"));
             }
 
-            //var data = await offers.Include(o => o.Car).ToListAsync();
+            if (inputModel.FromDealer != null)
+            {
+                offers = offers.Where(o => o.Seller.Profile.IsDealer == (bool)inputModel.FromDealer);
+            }
+
             results = await offers.Select(o => new OfferInCollectionDto()
             {
                 OfferName = o.Name,
@@ -131,8 +135,23 @@ namespace CarPortal.Core.Services
                 Mileage = o.Car.Mileage,
                 Year = o.Car.Year,
                 Price = o.Price,
+                AddedOn = o.CreatedOn,
                 ThumbnailUrl = $"/Images/Offers/Thumbnails/{o.OfferThumbnail.Id}{o.OfferThumbnail.Extension}",
             }).ToListAsync();
+
+            if (!string.IsNullOrEmpty(inputModel.OrderBy))
+            {
+                switch (inputModel.OrderBy)
+                {
+                    case "Price Ascending": results = results.OrderBy(r => r.Price).ToList(); break;
+                    case "Price Descending": results = results.OrderByDescending(r => r.Price).ToList(); break;
+                    case "Most recently added": results = results.OrderByDescending(r => r.AddedOn).ToList(); break;
+                    case "Year Ascending": results = results.OrderBy(r => r.Year).ToList(); break;
+                    case "Year Descending": results = results.OrderByDescending(r => r.Year).ToList(); break;
+                    default:
+                        break;
+                }
+            }
 
             //todo: pagination and order
 
