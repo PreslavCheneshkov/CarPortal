@@ -13,12 +13,17 @@ namespace CarPortal.Web.Controllers
     {
         private readonly SignInManager<CarPortalUser> signInManager;
         private readonly UserManager<CarPortalUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly IProfileService profileService;
 
-        public UserController(SignInManager<CarPortalUser> signInManager, UserManager<CarPortalUser> userManager, IProfileService profileService)
+        public UserController(SignInManager<CarPortalUser> signInManager,
+            UserManager<CarPortalUser> userManager,
+            RoleManager<IdentityRole> roleManager,
+            IProfileService profileService)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
+            this.roleManager = roleManager;
             this.profileService = profileService;
         }
 
@@ -104,6 +109,10 @@ namespace CarPortal.Web.Controllers
 
                 if (result.Succeeded)
                 {
+                    if (await userManager.IsInRoleAsync(user, "Administrator"))
+                    {
+                        return RedirectToAction("AdministratorIndex", "Admin", new { area = "Administration"});
+                    }
                     return RedirectToAction("Index", "Home");
                 }
             }
