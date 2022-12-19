@@ -25,6 +25,8 @@ namespace CarPortal.Data.EntityConfigurations.CarConfiguration
             this.manufacturersModels= new Dictionary<int, string[]>();
             this.models = new List<Model>();
 
+            int index = 1;
+
             for (int i = 1; i <= 20; i++)
             {
                 switch (i)
@@ -51,13 +53,15 @@ namespace CarPortal.Data.EntityConfigurations.CarConfiguration
                     case 20: manufacturersModels.Add(i, new string[] { "Tuscon", "i30", "i20", "i10" }); break;
                 }
 
-                foreach (var model in manufacturersModels[i])
+                for(int j = 1; j <= manufacturersModels[i].Count(); j++)
                 {
                     this.models.Add(new Model()
                     {
+                        Id = index,
                         ManufacturerId = i,
-                        Name = model
-                    });
+                        Name = manufacturersModels[i][j - 1]
+                    }) ;
+                    index++;
                 }
             }
         }

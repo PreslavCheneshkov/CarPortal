@@ -30,6 +30,8 @@ namespace CarPortal.Data.EntityConfigurations.OfferConfigurations
             this.regionsCities = new Dictionary<int, string[]>();
             this.cities = new List<City>();
 
+            int index = 1;
+
             for (int i = 1; i <= 7; i++)
             {
                 switch (i)
@@ -42,13 +44,15 @@ namespace CarPortal.Data.EntityConfigurations.OfferConfigurations
                     case 6: regionsCities.Add(i, new string[] { "Veliko Turnovo", "Svishtov", "Gorna Oryahovica" }); break;
                     case 7: regionsCities.Add(i, new string[] { "Ruse", "Byala", "Tsar Kaloyan" }); break;
                 }
-                foreach (var city in regionsCities[i])
+                for (int j = 1; j <= regionsCities[i].Count(); j++)
                 {
                     this.cities.Add(new City()
                     {
+                        Id = index,
                         RegionId = i,
-                        Name = city,
+                        Name = regionsCities[i][j - 1],
                     });
+                    index++;
                 }
             }
         }

@@ -73,13 +73,13 @@ namespace CarPortal.Data
             new ExtraConfiguration().Configure(builder.Entity<Extra>());
             new FuelTypeEntityConfiguration().Configure(builder.Entity<FuelType>());
             new ManufacturerEntityConfiguration().Configure(builder.Entity<Manufacturer>());
-            //new VehicleModelEntityConfiguration().Configure(builder.Entity<Model>());
+            new VehicleModelEntityConfiguration().Configure(builder.Entity<Model>());
             new TransmissionTypeEntityConfiguration().Configure(builder.Entity<TransmissionType>());
             new VehicleCategoryEntityConfiguration().Configure(builder.Entity<VehicleCategory>());
 
             // offer helper data configs
             new RegionEntityConfiguration().Configure(builder.Entity<Region>());
-            new CityEntityConfiguration().Equals(builder.Entity<City>());
+            new CityEntityConfiguration().Configure(builder.Entity<City>());
 
 
             builder.Entity<Car>()
