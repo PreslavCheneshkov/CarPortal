@@ -10,15 +10,11 @@ namespace CarPortal.Data.Entities.User
 {
     public class ProfileInterestedOffers
     {
-        [Key]
-        [Required]
-        public int Id { get; set; }
-
         [Required]
         [ForeignKey(nameof(CarPortalProfile))]
         public string CarPortalProfileId { get; set; } = null!;
 
-        public CarPortalProfile Profile { get; set; } = null!;
+        public CarPortalProfile CarPortalProfile { get; set; } = null!;
 
         [Required]
         [ForeignKey(nameof(Entities.Offer.Offer))]

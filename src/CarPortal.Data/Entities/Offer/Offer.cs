@@ -70,6 +70,8 @@ namespace CarPortal.Data.Entities.Offer
 
         public IEnumerable<CarImage> Images { get; set; } = new List<CarImage>();
 
+        public IEnumerable<ProfileInterestedOffers> UsersInterested { get; set; } = new List<ProfileInterestedOffers>();
+
         public bool IsActive { get; set; } = true;
     }
 }

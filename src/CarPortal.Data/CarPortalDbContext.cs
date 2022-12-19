@@ -2,6 +2,10 @@
 using CarPortal.Data.Entities.Offer;
 using CarPortal.Data.Entities.User;
 using CarPortal.Data.EntityConfigurations;
+using CarPortal.Data.EntityConfigurations.CarConfiguration;
+using CarPortal.Data.EntityConfigurations.MappingTables;
+using CarPortal.Data.EntityConfigurations.OfferConfigurations;
+using CarPortal.Data.EntityConfigurations.User;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
@@ -56,7 +60,26 @@ namespace CarPortal.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            //user configs
             new CarPortalUserEntityConfiguration().Configure(builder.Entity<CarPortalUser>());
+            new CarPortalProfileEntityConfiguration().Configure(builder.Entity<CarPortalProfile>());
+
+            //mapping table configs
+            new ProfileInterestedOffersEntityConfiguration().Configure(builder.Entity<ProfileInterestedOffers>());
+            new CarExtraEntityConfiguration().Configure(builder.Entity<CarExtra>());
+
+            // car helper data configs
+            new ColorEntityConfiguration().Configure(builder.Entity<Color>());
+            new ExtraConfiguration().Configure(builder.Entity<Extra>());
+            new FuelTypeEntityConfiguration().Configure(builder.Entity<FuelType>());
+            new ManufacturerEntityConfiguration().Configure(builder.Entity<Manufacturer>());
+            //new VehicleModelEntityConfiguration().Configure(builder.Entity<Model>());
+            new TransmissionTypeEntityConfiguration().Configure(builder.Entity<TransmissionType>());
+            new VehicleCategoryEntityConfiguration().Configure(builder.Entity<VehicleCategory>());
+
+            // offer helper data configs
+            new RegionEntityConfiguration().Configure(builder.Entity<Region>());
+            new CityEntityConfiguration().Equals(builder.Entity<City>());
 
 
             builder.Entity<Car>()
@@ -69,11 +92,6 @@ namespace CarPortal.Data
                 .WithMany(c => c.Offers)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<City>()
-                .HasOne(c => c.Region)
-                .WithMany(r => r.Cities)
-                .OnDelete(DeleteBehavior.Restrict);
-
             builder.Entity<Offer>()
                 .HasMany(o => o.Images)
                 .WithOne(i => i.Offer)
@@ -84,8 +102,7 @@ namespace CarPortal.Data
                 .WithOne(ot => ot.Offer)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<CarExtra>()
-                .HasKey(ce => new { ce.CarId, ce.ExtraId });
+
 
             base.OnModelCreating(builder);
         }

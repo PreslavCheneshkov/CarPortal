@@ -32,6 +32,6 @@ namespace CarPortal.Data.Entities.User
 
         public List<Offer.Offer> PublishedOffers { get; set; } = new List<Offer.Offer>();
         
-        public List<Offer.Offer> SavedOffers { get; set; } = new List<Offer.Offer>();
+        public List<ProfileInterestedOffers> SavedOffers { get; set; } = new List<ProfileInterestedOffers>();
     }
 }
