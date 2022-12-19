@@ -15,5 +15,7 @@ namespace CarPortal.Core.Services.Contracts
         Task<IEnumerable<OfferInCollectionDto>> GetRecentOffersAsync(int page);
 
         Task<SingleOfferDto> GetOfferByIdAsync(int offerId);
+
+        Task AddToInterestedIn(int offerId, string userId);
     }
 }

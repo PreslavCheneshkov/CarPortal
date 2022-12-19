@@ -125,6 +125,7 @@ namespace CarPortal.Core.Services
                                       .OrderByDescending(o => o.CreatedOn)
                                       .Skip(page * NumberOfDisplayedOffersInBrowse)
                                       .Take(NumberOfDisplayedOffersInBrowse)
+                                      .Where(o => o.IsActive)
                                       .Select(o => new OfferInCollectionDto
                                       {
                                           OfferName = o.Name,
@@ -178,6 +179,11 @@ namespace CarPortal.Core.Services
                                        .FirstOrDefaultAsync(o => o.Id == offerId);
 
             return offer;
+        }
+
+        public Task AddToInterestedIn(int offerId, string userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

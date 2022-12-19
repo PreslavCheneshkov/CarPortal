@@ -34,12 +34,12 @@ namespace CarPortal.Web.Controllers
         public async Task<IActionResult> AddOffer()
         {
             var dropdowns = await pageDataService.PopulateViewModelWithDropDownsAsync();
-            
+
             var model = new AddOfferViewModel()
             {
                 Regions = dropdowns.Regions,
                 Cities = dropdowns.Cities,
-                Car = new AddCarViewModel 
+                Car = new AddCarViewModel
                 {
                     Extras = dropdowns.Extras,
                     VehicleCategories = dropdowns.VehicleCategories,
@@ -95,10 +95,11 @@ namespace CarPortal.Web.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
         [AllowAnonymous]
         public async Task<IActionResult> BrowseRecent(int page = 0)
         {
-            var offers = (await offerService.GetRecentOffersAsync(page)).Select(o => new OfferInCollectionViewModel() 
+            var offers = (await offerService.GetRecentOffersAsync(page)).Select(o => new OfferInCollectionViewModel()
             {
                 OfferId = o.OfferId,
                 OfferName = o.OfferName,
@@ -115,6 +116,7 @@ namespace CarPortal.Web.Controllers
 
             return View(offers);
         }
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> OfferDetails(int id)
@@ -158,6 +160,11 @@ namespace CarPortal.Web.Controllers
             };
 
             return View(model);
+        }
+
+        public async Task<IActionResult> AddToInterestedIn(int id)
+        {
+            return NoContent();
         }
     }
 }

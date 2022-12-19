@@ -20,7 +20,10 @@ namespace CarPortal.Core.Services
             this.context = context;
         }
 
-        public async Task<List<OfferInCollectionDto>> GetSearchResultsAsync(SearchModelDto inputModel)
+        public async Task<List<string>> GetDealerSearchResultsAsync(string username)
+            => await context.Users.Where(u => (EF.Functions.Like(u.UserName, $"%{username}%")) && u.Profile.IsDealer).Select(u => u.UserName).ToListAsync();
+
+        public async Task<List<OfferInCollectionDto>> GetOfferSearchResultsAsync(SearchModelDto inputModel)
         {
             var offers = context.Offers.AsQueryable();
             List<OfferInCollectionDto> results = new List<OfferInCollectionDto>();

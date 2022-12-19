@@ -1,8 +1,11 @@
 ﻿using CarPortal.Data.Entities.Car;
 using CarPortal.Data.Entities.Offer;
 using CarPortal.Data.Entities.User;
+using CarPortal.Data.EntityConfigurations;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
+using System.Reflection.Metadata;
 
 namespace CarPortal.Data
 {
@@ -20,6 +23,8 @@ namespace CarPortal.Data
         {
             base.OnConfiguring(optionsBuilder);
         }
+
+        public DbSet<ProfileInterestedOffers> ProfilesInterestedOffers { get; set; }
 
         public DbSet<CarPortalProfile> Profiles { get; set; }
 
@@ -51,6 +56,9 @@ namespace CarPortal.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            new CarPortalUserEntityConfiguration().Configure(builder.Entity<CarPortalUser>());
+
+
             builder.Entity<Car>()
                 .HasOne(c => c.Manufacturer)
                 .WithMany(c => c.Cars)

@@ -20,7 +20,7 @@ namespace CarPortal.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> CustomSearch()
+        public async Task<IActionResult> Offers()
         {
             var pageData = await this.pageDataService.PopulateSearchModelAsync();
             var model = new SearchInputViewModel()
@@ -42,7 +42,7 @@ namespace CarPortal.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> CustomSearch(SearchInputViewModel model, int[] extraIds, int[] colorIds, int[] fuelTypeIds, int[] transmissionTypeIds, int[] regionIds)
+        public async Task<IActionResult> Offers(SearchInputViewModel model, int[] extraIds, int[] colorIds, int[] fuelTypeIds, int[] transmissionTypeIds, int[] regionIds)
         {
             if (!ModelState.IsValid)
             {
@@ -74,7 +74,7 @@ namespace CarPortal.Web.Controllers
                 OrderBy= model.OrderBy,
             };
 
-            var results = await this.searchService.GetSearchResultsAsync(searchModel);
+            var results = await this.searchService.GetOfferSearchResultsAsync(searchModel);
 
             var viewModel = results.Select(o => new OfferInCollectionViewModel()
             {
@@ -92,6 +92,25 @@ namespace CarPortal.Web.Controllers
             }).ToList();
 
             return View("SearchResultCollection", viewModel);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Dealers()
+        {
+            var model = new DealerSearchViewModel();
+            model.Dealers = await this.searchService.GetDealerSearchResultsAsync("");
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Dealers(DealerSearchViewModel model)
+        {
+            model.Dealers = await this.searchService.GetDealerSearchResultsAsync(model.Name);
+
+            return View(model);
         }
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarPortal.Data.Migrations
 {
     [DbContext(typeof(CarPortalDbContext))]
-    [Migration("20221113125748_Innitial")]
-    partial class Innitial
+    [Migration("20221219143840_fixedMappingTable")]
+    partial class fixedMappingTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,6 +39,9 @@ namespace CarPortal.Data.Migrations
                         .HasColumnType("float");
 
                     b.Property<int>("FuelTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HorsePower")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsBrandNew")
@@ -79,6 +82,21 @@ namespace CarPortal.Data.Migrations
                     b.ToTable("Cars");
                 });
 
+            modelBuilder.Entity("CarPortal.Data.Entities.Car.CarExtra", b =>
+                {
+                    b.Property<int>("CarId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ExtraId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CarId", "ExtraId");
+
+                    b.HasIndex("ExtraId");
+
+                    b.ToTable("CarsExtras");
+                });
+
             modelBuilder.Entity("CarPortal.Data.Entities.Car.Color", b =>
                 {
                     b.Property<int>("Id")
@@ -105,17 +123,12 @@ namespace CarPortal.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("CarId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(80)
                         .HasColumnType("nvarchar(80)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CarId");
 
                     b.ToTable("Extras");
                 });
@@ -272,7 +285,10 @@ namespace CarPortal.Data.Migrations
                     b.Property<int>("CarId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CarPortalUserId")
+                    b.Property<string>("CarPortalProfileId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CarPortalProfileId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CityId")
@@ -285,8 +301,16 @@ namespace CarPortal.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("LastEdited")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("OfferThumbnailId")
                         .IsRequired()
@@ -306,7 +330,9 @@ namespace CarPortal.Data.Migrations
 
                     b.HasIndex("CarId");
 
-                    b.HasIndex("CarPortalUserId");
+                    b.HasIndex("CarPortalProfileId");
+
+                    b.HasIndex("CarPortalProfileId1");
 
                     b.HasIndex("CityId");
 
@@ -397,6 +423,32 @@ namespace CarPortal.Data.Migrations
                     b.ToTable("Regions");
                 });
 
+            modelBuilder.Entity("CarPortal.Data.Entities.User.CarPortalProfile", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CarPortalUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDealer")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ProfilePictureAdress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CarPortalUserId")
+                        .IsUnique();
+
+                    b.ToTable("Profiles");
+                });
+
             modelBuilder.Entity("CarPortal.Data.Entities.User.CarPortalUser", b =>
                 {
                     b.Property<string>("Id")
@@ -439,7 +491,7 @@ namespace CarPortal.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ProfilePictureAddress")
+                    b.Property<string>("ProfileId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
@@ -463,6 +515,33 @@ namespace CarPortal.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("CarPortal.Data.Entities.User.ProfileInterestedOffers", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CarPortalProfileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("OfferId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CarPortalProfileId");
+
+                    b.HasIndex("OfferId");
+
+                    b.ToTable("ProfilesInterestedOffers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -653,11 +732,23 @@ namespace CarPortal.Data.Migrations
                     b.Navigation("VehicleCategory");
                 });
 
-            modelBuilder.Entity("CarPortal.Data.Entities.Car.Extra", b =>
+            modelBuilder.Entity("CarPortal.Data.Entities.Car.CarExtra", b =>
                 {
-                    b.HasOne("CarPortal.Data.Entities.Car.Car", null)
+                    b.HasOne("CarPortal.Data.Entities.Car.Car", "Car")
                         .WithMany("Extras")
-                        .HasForeignKey("CarId");
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CarPortal.Data.Entities.Car.Extra", "Extra")
+                        .WithMany()
+                        .HasForeignKey("ExtraId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Car");
+
+                    b.Navigation("Extra");
                 });
 
             modelBuilder.Entity("CarPortal.Data.Entities.Car.Model", b =>
@@ -701,9 +792,13 @@ namespace CarPortal.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CarPortal.Data.Entities.User.CarPortalUser", null)
+                    b.HasOne("CarPortal.Data.Entities.User.CarPortalProfile", null)
+                        .WithMany("PublishedOffers")
+                        .HasForeignKey("CarPortalProfileId");
+
+                    b.HasOne("CarPortal.Data.Entities.User.CarPortalProfile", null)
                         .WithMany("SavedOffers")
-                        .HasForeignKey("CarPortalUserId");
+                        .HasForeignKey("CarPortalProfileId1");
 
                     b.HasOne("CarPortal.Data.Entities.Offer.City", "City")
                         .WithMany("Offers")
@@ -724,9 +819,9 @@ namespace CarPortal.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("CarPortal.Data.Entities.User.CarPortalUser", "Seller")
-                        .WithMany("PublishedOffers")
+                        .WithMany()
                         .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Car");
@@ -759,6 +854,36 @@ namespace CarPortal.Data.Migrations
                     b.Navigation("Author");
 
                     b.Navigation("Offer");
+                });
+
+            modelBuilder.Entity("CarPortal.Data.Entities.User.CarPortalProfile", b =>
+                {
+                    b.HasOne("CarPortal.Data.Entities.User.CarPortalUser", "CarPortalUser")
+                        .WithOne("Profile")
+                        .HasForeignKey("CarPortal.Data.Entities.User.CarPortalProfile", "CarPortalUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CarPortalUser");
+                });
+
+            modelBuilder.Entity("CarPortal.Data.Entities.User.ProfileInterestedOffers", b =>
+                {
+                    b.HasOne("CarPortal.Data.Entities.User.CarPortalProfile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("CarPortalProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CarPortal.Data.Entities.Offer.Offer", "Offer")
+                        .WithMany()
+                        .HasForeignKey("OfferId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Offer");
+
+                    b.Navigation("Profile");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -852,11 +977,16 @@ namespace CarPortal.Data.Migrations
                     b.Navigation("Offers");
                 });
 
-            modelBuilder.Entity("CarPortal.Data.Entities.User.CarPortalUser", b =>
+            modelBuilder.Entity("CarPortal.Data.Entities.User.CarPortalProfile", b =>
                 {
                     b.Navigation("PublishedOffers");
 
                     b.Navigation("SavedOffers");
+                });
+
+            modelBuilder.Entity("CarPortal.Data.Entities.User.CarPortalUser", b =>
+                {
+                    b.Navigation("Profile");
                 });
 #pragma warning restore 612, 618
         }

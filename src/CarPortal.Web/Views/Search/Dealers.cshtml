@@ -1,0 +1,35 @@
+﻿@using CarPortal.Web.Models.Search;
+@model DealerSearchViewModel;
+
+<h3 class="text-center">Search dealers</h3>
+<hr />
+
+<form asp-action="Dealers" method="post" enctype="multipart/form-data">
+    <div class="">
+        <label class="form-label">Name:</label>
+        <input class="form-control" asp-for="@Model.Name" />
+    </div>
+
+    <input class="btn btn-primary" type="submit" value="Search" />
+</form>
+
+<h3 class="text-center">Dealers: @Model.Dealers.Count</h3>
+<hr />
+
+@if (Model.Dealers.Count == 0)
+{
+        <h4 class="text-center">No dealers matching your search</h4>
+}
+else
+{
+        <table class="table table-hover">
+        @foreach (var result in @Model.Dealers)
+        {
+                    <tr>
+                        <td>
+                    @result
+                        </td>
+                    </tr>
+        }
+        </table>
+}

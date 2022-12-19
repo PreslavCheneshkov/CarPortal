@@ -69,5 +69,7 @@ namespace CarPortal.Data.Entities.Offer
         public OfferThumbnail OfferThumbnail { get; set; } = null!;
 
         public IEnumerable<CarImage> Images { get; set; } = new List<CarImage>();
+
+        public bool IsActive { get; set; } = true;
     }
 }

@@ -10,6 +10,8 @@ namespace CarPortal.Core.Services.Contracts
 {
     public interface ISearchService
     {
-        Task<List<OfferInCollectionDto>> GetSearchResultsAsync(SearchModelDto inputModel);
+        Task<List<OfferInCollectionDto>> GetOfferSearchResultsAsync(SearchModelDto inputModel);
+
+        Task<List<string>> GetDealerSearchResultsAsync(string username);
     }
 }

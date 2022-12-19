@@ -299,6 +299,9 @@ namespace CarPortal.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("LastEdited")
                         .HasColumnType("datetime2");
 
@@ -510,6 +513,33 @@ namespace CarPortal.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("CarPortal.Data.Entities.User.ProfileInterestedOffers", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CarPortalProfileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("OfferId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CarPortalProfileId");
+
+                    b.HasIndex("OfferId");
+
+                    b.ToTable("ProfilesInterestedOffers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -833,6 +863,25 @@ namespace CarPortal.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("CarPortalUser");
+                });
+
+            modelBuilder.Entity("CarPortal.Data.Entities.User.ProfileInterestedOffers", b =>
+                {
+                    b.HasOne("CarPortal.Data.Entities.User.CarPortalProfile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("CarPortalProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CarPortal.Data.Entities.Offer.Offer", "Offer")
+                        .WithMany()
+                        .HasForeignKey("OfferId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Offer");
+
+                    b.Navigation("Profile");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

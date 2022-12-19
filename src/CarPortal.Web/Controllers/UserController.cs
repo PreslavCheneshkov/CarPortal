@@ -6,6 +6,7 @@ using CarPortal.Web.Models.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Operations;
 
 namespace CarPortal.Web.Controllers
 {
@@ -111,7 +112,7 @@ namespace CarPortal.Web.Controllers
                 {
                     if (await userManager.IsInRoleAsync(user, "Administrator"))
                     {
-                        return RedirectToAction("AdministratorIndex", "Admin", new { area = "Administration"});
+                        return RedirectToAction("Index", "Home", new { area = "Administration"});
                     }
                     return RedirectToAction("Index", "Home");
                 }
@@ -131,6 +132,11 @@ namespace CarPortal.Web.Controllers
         public async Task<IActionResult> MyProfile()
         {
             var data = await this.profileService.GetProfileByUsernameAsync(this.User.Identity.Name);
+
+            if (data == null)
+            {
+                return NotFound();
+            }
 
             ProfileViewModel model = new ProfileViewModel()
             {
@@ -170,6 +176,59 @@ namespace CarPortal.Web.Controllers
             };
 
             return View("UserProfile", model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Profile(string id)
+        {
+            try
+            {
+                var profile = await profileService.GetProfileByUsernameAsync(id);
+
+                ProfileViewModel model = new ProfileViewModel()
+                {
+                    ProfilePictureAddress = profile.ProfilePictureAddress,
+                    UserName = profile.UserName,
+                    ProfileId = profile.ProfileId,
+                    IsDealer = profile.IsDealer,
+                    CreatedOn = profile.CreatedOn,
+                    //SavedOffers = data.SavedOffers.Select(so => new OfferInCollectionViewModel()
+                    //{
+                    //    FuelType = so.FuelType,
+                    //    HorsePower = so.HorsePower,
+                    //    Manufacturer = so.Manufacturer,
+                    //    Mileage = so.Mileage,
+                    //    Model = so.Model,
+                    //    OfferId = so.OfferId,
+                    //    OfferName = so.OfferName,
+                    //    Price = so.Price,
+                    //    ThumbnailUrl = so.ThumbnailUrl,
+                    //    TransmissionType = so.TransmissionType,
+                    //    Year = so.Year,
+                    //}).ToList(),
+                    UploadedOffers = profile.UploadedOffers.Select(uo => new OfferInCollectionViewModel()
+                    {
+                        FuelType = uo.FuelType,
+                        HorsePower = uo.HorsePower,
+                        Manufacturer = uo.Manufacturer,
+                        Mileage = uo.Mileage,
+                        Model = uo.Model,
+                        OfferId = uo.OfferId,
+                        OfferName = uo.OfferName,
+                        Price = uo.Price,
+                        ThumbnailUrl = uo.ThumbnailUrl,
+                        TransmissionType = uo.TransmissionType,
+                        Year = uo.Year,
+                    }).ToList(),
+                };
+
+                return View("UserProfile", model);
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
         }
     }
 }

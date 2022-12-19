@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CarPortal.Data.Migrations
 {
-    public partial class Innitial : Migration
+    public partial class fixedMappingTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,7 +28,7 @@ namespace CarPortal.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProfilePictureAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProfileId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -60,6 +60,19 @@ namespace CarPortal.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Colors", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Extras",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Extras", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -247,6 +260,27 @@ namespace CarPortal.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Profiles",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CarPortalUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsDealer = table.Column<bool>(type: "bit", nullable: false),
+                    ProfilePictureAdress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Profiles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Profiles_AspNetUsers_CarPortalUserId",
+                        column: x => x.CarPortalUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Models",
                 columns: table => new
                 {
@@ -297,6 +331,7 @@ namespace CarPortal.Data.Migrations
                     ManufacturerId = table.Column<int>(type: "int", nullable: false),
                     FuelTypeId = table.Column<int>(type: "int", nullable: false),
                     EngineDisplacement = table.Column<double>(type: "float", nullable: true),
+                    HorsePower = table.Column<int>(type: "int", nullable: true),
                     TransmissionTypeId = table.Column<int>(type: "int", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
                     Mileage = table.Column<int>(type: "int", nullable: false),
@@ -345,22 +380,27 @@ namespace CarPortal.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Extras",
+                name: "CarsExtras",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
-                    CarId = table.Column<int>(type: "int", nullable: true)
+                    CarId = table.Column<int>(type: "int", nullable: false),
+                    ExtraId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Extras", x => x.Id);
+                    table.PrimaryKey("PK_CarsExtras", x => new { x.CarId, x.ExtraId });
                     table.ForeignKey(
-                        name: "FK_Extras_Cars_CarId",
+                        name: "FK_CarsExtras_Cars_CarId",
                         column: x => x.CarId,
                         principalTable: "Cars",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CarsExtras_Extras_ExtraId",
+                        column: x => x.ExtraId,
+                        principalTable: "Extras",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -369,6 +409,7 @@ namespace CarPortal.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     CarId = table.Column<int>(type: "int", nullable: false),
                     SellerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -379,22 +420,19 @@ namespace CarPortal.Data.Migrations
                     RegionId = table.Column<int>(type: "int", nullable: false),
                     ContactPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OfferThumbnailId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CarPortalUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CarPortalProfileId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CarPortalProfileId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Offers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Offers_AspNetUsers_CarPortalUserId",
-                        column: x => x.CarPortalUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_Offers_AspNetUsers_SellerId",
                         column: x => x.SellerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Offers_Cars_CarId",
                         column: x => x.CarId,
@@ -413,6 +451,16 @@ namespace CarPortal.Data.Migrations
                         principalTable: "OfferThumbnail",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Offers_Profiles_CarPortalProfileId",
+                        column: x => x.CarPortalProfileId,
+                        principalTable: "Profiles",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Offers_Profiles_CarPortalProfileId1",
+                        column: x => x.CarPortalProfileId1,
+                        principalTable: "Profiles",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Offers_Regions_RegionId",
                         column: x => x.RegionId,
@@ -471,6 +519,33 @@ namespace CarPortal.Data.Migrations
                         name: "FK_OfferComments_Offers_OfferId",
                         column: x => x.OfferId,
                         principalTable: "Offers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProfilesInterestedOffers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CarPortalProfileId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    OfferId = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProfilesInterestedOffers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProfilesInterestedOffers_Offers_OfferId",
+                        column: x => x.OfferId,
+                        principalTable: "Offers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProfilesInterestedOffers_Profiles_CarPortalProfileId",
+                        column: x => x.CarPortalProfileId,
+                        principalTable: "Profiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -550,14 +625,14 @@ namespace CarPortal.Data.Migrations
                 column: "VehicleCategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CarsExtras_ExtraId",
+                table: "CarsExtras",
+                column: "ExtraId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Cities_RegionId",
                 table: "Cities",
                 column: "RegionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Extras_CarId",
-                table: "Extras",
-                column: "CarId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Models_ManufacturerId",
@@ -585,9 +660,14 @@ namespace CarPortal.Data.Migrations
                 column: "CarId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Offers_CarPortalUserId",
+                name: "IX_Offers_CarPortalProfileId",
                 table: "Offers",
-                column: "CarPortalUserId");
+                column: "CarPortalProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Offers_CarPortalProfileId1",
+                table: "Offers",
+                column: "CarPortalProfileId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Offers_CityId",
@@ -609,6 +689,22 @@ namespace CarPortal.Data.Migrations
                 name: "IX_Offers_SellerId",
                 table: "Offers",
                 column: "SellerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Profiles_CarPortalUserId",
+                table: "Profiles",
+                column: "CarPortalUserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProfilesInterestedOffers_CarPortalProfileId",
+                table: "ProfilesInterestedOffers",
+                column: "CarPortalProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProfilesInterestedOffers_OfferId",
+                table: "ProfilesInterestedOffers",
+                column: "OfferId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -632,19 +728,22 @@ namespace CarPortal.Data.Migrations
                 name: "CarImage");
 
             migrationBuilder.DropTable(
-                name: "Extras");
+                name: "CarsExtras");
 
             migrationBuilder.DropTable(
                 name: "OfferComments");
 
             migrationBuilder.DropTable(
+                name: "ProfilesInterestedOffers");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Offers");
+                name: "Extras");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Offers");
 
             migrationBuilder.DropTable(
                 name: "Cars");
@@ -654,6 +753,9 @@ namespace CarPortal.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "OfferThumbnail");
+
+            migrationBuilder.DropTable(
+                name: "Profiles");
 
             migrationBuilder.DropTable(
                 name: "Colors");
@@ -672,6 +774,9 @@ namespace CarPortal.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Regions");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Manufacturers");
