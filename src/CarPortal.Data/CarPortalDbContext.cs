@@ -81,28 +81,14 @@ namespace CarPortal.Data
             new RegionEntityConfiguration().Configure(builder.Entity<Region>());
             new CityEntityConfiguration().Configure(builder.Entity<City>());
 
+            //car
+            new CarEntityConfiguration().Configure(builder.Entity<Car>());
+            //carExtras
 
-            builder.Entity<Car>()
-                .HasOne(c => c.Manufacturer)
-                .WithMany(c => c.Cars)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Offer>()
-                .HasOne(o => o.City)
-                .WithMany(c => c.Offers)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Offer>()
-                .HasMany(o => o.Images)
-                .WithOne(i => i.Offer)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Offer>()
-                .HasOne(o => o.OfferThumbnail)
-                .WithOne(ot => ot.Offer)
-                .OnDelete(DeleteBehavior.Restrict);
-
-
+            //offer
+            new OfferEntityConfiguration().Configure(builder.Entity<Offer>());
+            //images
+            new OfferThumbnailEntityConfiguration().Configure(builder.Entity<OfferThumbnail>());
 
             base.OnModelCreating(builder);
         }

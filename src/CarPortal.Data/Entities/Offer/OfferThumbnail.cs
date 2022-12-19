@@ -18,9 +18,9 @@ namespace CarPortal.Data.Entities.Offer
         [Key]
         public string Id { get; set; }
 
-        [Required]
+
         [ForeignKey(nameof(Offer))]
-        public int OfferId { get; set; }
+        public int? OfferId { get; set; }
 
         public virtual Offer Offer { get; set; } = null!;
 

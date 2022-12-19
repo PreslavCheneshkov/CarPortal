@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarPortal.Data", "CarPortal
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarPortal.Core", "CarPortal.Core\CarPortal.Core.csproj", "{6D883EE2-3EBF-4623-BBF4-033D26F8F2E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarPortal.DataSeeder", "CarPortal.DataSeeder\CarPortal.DataSeeder.csproj", "{31888EAB-8777-4BEE-8867-53B2EEC936EE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{6D883EE2-3EBF-4623-BBF4-033D26F8F2E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D883EE2-3EBF-4623-BBF4-033D26F8F2E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D883EE2-3EBF-4623-BBF4-033D26F8F2E2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{31888EAB-8777-4BEE-8867-53B2EEC936EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31888EAB-8777-4BEE-8867-53B2EEC936EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31888EAB-8777-4BEE-8867-53B2EEC936EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31888EAB-8777-4BEE-8867-53B2EEC936EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
