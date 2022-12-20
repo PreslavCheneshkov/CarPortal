@@ -25,7 +25,11 @@ namespace CarPortal.Data.EntityConfigurations.OfferConfigurations
                 .WithOne(i => i.Offer)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Property(o => o.OfferThumbnailId).HasDefaultValue("firstSeedThumbnail");
+            builder
+                .HasOne(o => o.OfferThumbnail)
+                .WithOne(t => t.Offer);
+
+            //builder.Property(o => o.OfferThumbnailId).HasDefaultValue("firstSeedThumbnail");
 
             SeedOffers();
             builder.HasData(offers);
@@ -52,6 +56,7 @@ namespace CarPortal.Data.EntityConfigurations.OfferConfigurations
                     CityId = 1,
                     ContactPhoneNumber = i % 2 == 0 ? "0123123123" : "0789789789",
                     IsActive = true,
+                    OfferThumbnailId = null
                 });
             }
         }

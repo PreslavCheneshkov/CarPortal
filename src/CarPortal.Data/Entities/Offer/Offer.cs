@@ -61,12 +61,10 @@ namespace CarPortal.Data.Entities.Offer
         [DataType(DataType.PhoneNumber)]
         public string ContactPhoneNumber { get; set; } = null!;
 
-        [Required]
         [ForeignKey(nameof(OfferThumbnail))]
-        public string OfferThumbnailId { get; set; } = null!;
+        public string? OfferThumbnailId { get; set; } = null!;
 
-        [Required]
-        public OfferThumbnail OfferThumbnail { get; set; } = null!;
+        public OfferThumbnail? OfferThumbnail { get; set; } = null!;
 
         public IEnumerable<CarImage> Images { get; set; } = new List<CarImage>();
 
