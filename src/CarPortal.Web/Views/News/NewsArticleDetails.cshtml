@@ -1,0 +1,34 @@
+﻿@using CarPortal.Web.Models.News;
+@model NewsArticleDetailsViewModel
+
+<div class="card text-center">
+    <div class="card-header">
+        <i>
+            @Model.Author - @Model.CreatedOn
+        </i>
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">@Model.Title</h4>
+        <hr />
+        <p class="card-text">@Model.Content</p>
+    </div>
+    <hr />
+    <h4 class="text-center">Comments</h4>
+    @if (Model.Comments.Count > 0)
+    {
+        <partial name="_CommentsPartial"></partial>
+    }
+    else
+    {
+        <h5 class="text-center">No comments yet!</h5>
+        <h6 class="text-center">Be the first one to comment!</h6>
+    }
+    <form asp-action="AddComment" asp-controller="News" asp-route-newsArticleId="@Model.Id" method="post" enctype="multipart/form-data">
+        <hr />
+        <h6 class="text-center">Your comment:</h6>
+        <div class="row-cols-2">
+            <textarea class="form-control" asp-for="@Model.NewComment.Content" rows="4"></textarea>
+            <button class="btn btn-primary" type="submit">Comment!</button>
+        </div>
+    </form>
+</div>

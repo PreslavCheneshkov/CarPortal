@@ -1,9 +1,11 @@
 ﻿using CarPortal.Data.Entities.Car;
+using CarPortal.Data.Entities.News;
 using CarPortal.Data.Entities.Offer;
 using CarPortal.Data.Entities.User;
 using CarPortal.Data.EntityConfigurations;
 using CarPortal.Data.EntityConfigurations.CarConfiguration;
 using CarPortal.Data.EntityConfigurations.MappingTables;
+using CarPortal.Data.EntityConfigurations.NewsArticleConfigurations;
 using CarPortal.Data.EntityConfigurations.OfferConfigurations;
 using CarPortal.Data.EntityConfigurations.User;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -28,6 +30,10 @@ namespace CarPortal.Data
             base.OnConfiguring(optionsBuilder);
         }
 
+        public DbSet<NewsArticle> NewsArticles { get; set; }
+
+        public DbSet<NewsArticleComment> NewsArticleComments { get; set; }
+        
         public DbSet<ProfileInterestedOffers> ProfilesInterestedOffers { get; set; }
 
         public DbSet<CarPortalProfile> Profiles { get; set; }
@@ -89,6 +95,10 @@ namespace CarPortal.Data
             new OfferEntityConfiguration().Configure(builder.Entity<Offer>());
             //images
             new OfferThumbnailEntityConfiguration().Configure(builder.Entity<OfferThumbnail>());
+
+            //news articles
+            new NewsArticleEntityConfiguration().Configure(builder.Entity<NewsArticle>());
+            new NewsArticleCommentEntityConfiguration().Configure(builder.Entity<NewsArticleComment>());
 
             base.OnModelCreating(builder);
         }

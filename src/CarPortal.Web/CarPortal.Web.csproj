@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Forum\**" />
+    <Content Remove="Areas\Forum\**" />
+    <EmbeddedResource Remove="Areas\Forum\**" />
+    <None Remove="Areas\Forum\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.7" />
@@ -23,10 +30,6 @@
   <ItemGroup>
     <Folder Include="Areas\Administration\Data\" />
     <Folder Include="Areas\Administration\Models\" />
-    <Folder Include="Areas\Forum\Controllers\" />
-    <Folder Include="Areas\Forum\Data\" />
-    <Folder Include="Areas\Forum\Models\" />
-    <Folder Include="Areas\Forum\Views\" />
     <Folder Include="wwwroot\Images\Offers\Thumbnails\" />
     <Folder Include="wwwroot\Images\User\" />
     <Folder Include="wwwroot\Images\Offers\Thumbnails\" />

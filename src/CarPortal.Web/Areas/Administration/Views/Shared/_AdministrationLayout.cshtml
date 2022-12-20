@@ -22,6 +22,25 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Administration" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Administration" asp-controller="Home" asp-action="Index">User management</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Add data
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                <li><a class="dropdown-item" asp-area="" asp-action="Dealers" asp-controller="Search">Vehicle categories</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-action="Dealers" asp-controller="Search">Manufacturers</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-action="Dealers" asp-controller="Search">Models</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-action="Dealers" asp-controller="Search">Transmission types</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-action="Dealers" asp-controller="Search">Fuel types</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-action="Dealers" asp-controller="Search">Vehicle extras</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-action="Offers" asp-controller="Search">Colors</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-action="Offers" asp-controller="Search">Regions</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-action="Offers" asp-controller="Search">Cities</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
                 <div class="nav-item">
