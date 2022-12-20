@@ -46,9 +46,9 @@ namespace CarPortal.Data.EntityConfigurations.CarConfiguration
                     case 13: manufacturersModels.Add(i, new string[] { "Clio", "Megane", "Laguna", "Twingo" }); break;
                     case 14: manufacturersModels.Add(i, new string[] { "Panda", "500", "124", "Albea " }); break;
                     case 15: manufacturersModels.Add(i, new string[] { "156", "147", "159", "GT" }); break;
-                    case 16: manufacturersModels.Add(i, new string[] { "Duster", "Sandero", "Logan", "Dokker" }); break;
-                    case 17: manufacturersModels.Add(i, new string[] { "Ibiza", "Toledo", "Leon", "Ateca" }); break;
-                    case 18: manufacturersModels.Add(i, new string[] { "Focus", "Fiesta", "F-150", "Mondeo" }); break;
+                    case 16: manufacturersModels.Add(i, new string[] { "Focus", "Fiesta", "F-150", "Mondeo" }); break;
+                    case 17: manufacturersModels.Add(i, new string[] { "Duster", "Sandero", "Logan", "Dokker" }); break;
+                    case 18: manufacturersModels.Add(i, new string[] { "Ibiza", "Toledo", "Leon", "Ateca" }); break;
                     case 19: manufacturersModels.Add(i, new string[] { "Stinger", "Ceed", "Sportage", "K5" }); break;
                     case 20: manufacturersModels.Add(i, new string[] { "Tuscon", "i30", "i20", "i10" }); break;
                 }

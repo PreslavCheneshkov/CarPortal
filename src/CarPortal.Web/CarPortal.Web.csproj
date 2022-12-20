@@ -29,6 +29,8 @@
     <Folder Include="Areas\Forum\Views\" />
     <Folder Include="wwwroot\Images\Offers\Thumbnails\" />
     <Folder Include="wwwroot\Images\User\" />
+    <Folder Include="wwwroot\Images\Offers\Thumbnails\" />
+    <Folder Include="wwwroot\Images\User\" />
   </ItemGroup>
 
 </Project>
