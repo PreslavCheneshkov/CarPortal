@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CarPortal.Data.Constants.OfferConstants;
 
 namespace CarPortal.Data.Entities.Offer
 {
@@ -13,21 +14,26 @@ namespace CarPortal.Data.Entities.Offer
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
         [ForeignKey(nameof(Offer))]
         public int OfferId { get; set; }
+
         public Offer Offer { get; set; } = null!;
+
         [Required]
-        [ForeignKey(nameof(CarPortalUser))]
-        public int CarPortalUserId { get; set; }
-        public CarPortalUser Author { get; set; } = null!;
+        [ForeignKey(nameof(CarPortalProfile))]
+        public string CarPortalProfileId { get; set; }
+
+        public CarPortalProfile CarPortalProfile { get; set; } = null!;
+
         [Required]
-        [StringLength(300)]
+        [StringLength(OfferCommentMaxLength, MinimumLength = OfferCommentMinLength, ErrorMessage = "Comment length should be between 2 and 200 characters.")]
         public string Content { get; set; } = null!;
+
         [Required]
         public DateTime CreatedOn { get; set; }
-        [Required]
-        public int Likes { get; set; }
-        public ICollection<OfferComment> Replies { get; set; } = new List<OfferComment>();
+
+        public bool IsActive { get; set; }
     }
 }

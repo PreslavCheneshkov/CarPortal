@@ -15,5 +15,8 @@ namespace CarPortal.Data.Constants
         public const int AdditionalInfoMinLength = 0;
 
         public const int NumberOfDisplayedOffersInBrowse = 20;
+
+        public const int OfferCommentMaxLength = 200;
+        public const int OfferCommentMinLength = 2;
     }
 }

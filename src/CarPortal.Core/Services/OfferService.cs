@@ -3,6 +3,7 @@ using CarPortal.Core.DTOs.Offer.DropDownModels;
 using CarPortal.Core.Services.Contracts;
 using CarPortal.Data;
 using CarPortal.Data.Entities.Car;
+using CarPortal.Data.Entities.News;
 using CarPortal.Data.Entities.Offer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -174,7 +175,14 @@ namespace CarPortal.Core.Services
                                            ContactPhoneNumber = o.ContactPhoneNumber,
                                            LastEdited = o.LastEdited,
                                            ThumbnailUrl = $"/Images/Offers/Thumbnails/{o.OfferThumbnail.Id}{o.OfferThumbnail.Extension}",
-                                           PictureIds = o.Images.Select(i => $"/Images/Offers/{ i.Id + i.Extension}").ToList()
+                                           PictureIds = o.Images.Select(i => $"/Images/Offers/{ i.Id + i.Extension}").ToList(),
+                                           Comments = o.Comments.Select(c => new OfferCommentDTO()
+                                           {
+                                               Id = c.Id,
+                                               Author = c.CarPortalProfile.CarPortalUser.UserName,
+                                               Content = c.Content,
+                                               CreatedOn = c.CreatedOn.ToShortDateString(),
+                                           }).ToList(),
                                        })
                                        .FirstOrDefaultAsync(o => o.Id == offerId);
 
@@ -184,6 +192,30 @@ namespace CarPortal.Core.Services
         public Task AddToInterestedIn(int offerId, string userId)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task AddCommentToOffer(string content, string authorUserId, int offerId)
+        {
+            string authorProfileId = await context.Users
+                                                    .Where(u => u.Id == authorUserId)
+                                                    .Select(u => u.ProfileId)
+                                                    .FirstOrDefaultAsync();
+
+            if (string.IsNullOrEmpty(authorProfileId) || string.IsNullOrEmpty(content))
+            {
+                throw new ArgumentNullException();
+            }
+
+            OfferComment comment = new OfferComment()
+            {
+                CarPortalProfileId = authorProfileId,
+                Content = content,
+                OfferId = offerId,
+                CreatedOn = DateTime.Now,
+            };
+
+            await context.OfferComments.AddAsync(comment);
+            await context.SaveChangesAsync();
         }
     }
 }

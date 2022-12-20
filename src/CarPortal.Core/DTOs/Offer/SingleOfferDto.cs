@@ -34,5 +34,7 @@ namespace CarPortal.Core.DTOs.Offer
         public IEnumerable<string> PictureIds { get; set; } = new List<string>();
 
         public string AdditionalInfo { get; set; }
+
+        public List<OfferCommentDTO> Comments { get; set; }
     }
 }

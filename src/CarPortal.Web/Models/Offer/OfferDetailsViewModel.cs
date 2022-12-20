@@ -29,5 +29,9 @@
         public List<string> PictureIds { get; set; } = new List<string>();
 
         public string AdditionalInfo { get; set; }
+
+        public List<OfferCommentViewModel> Comments { get; set; } = new List<OfferCommentViewModel>();
+
+        public OfferCommentInputModel NewComment { get; set; }
     }
 }

@@ -29,6 +29,11 @@ namespace CarPortal.Data.EntityConfigurations.OfferConfigurations
                 .HasOne(o => o.OfferThumbnail)
                 .WithOne(t => t.Offer);
 
+            builder
+                .HasMany(o => o.Comments)
+                .WithOne(c => c.Offer)
+                .OnDelete(DeleteBehavior.Restrict);
+
             //builder.Property(o => o.OfferThumbnailId).HasDefaultValue("firstSeedThumbnail");
 
             SeedOffers();

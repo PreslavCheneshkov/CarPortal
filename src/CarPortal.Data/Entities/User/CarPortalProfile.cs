@@ -1,4 +1,5 @@
 ﻿using CarPortal.Data.Entities.News;
+using CarPortal.Data.Entities.Offer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -38,5 +39,7 @@ namespace CarPortal.Data.Entities.User
         public List<NewsArticle> NewsArticles { get; set; } = new List<NewsArticle>();
         
         public List<NewsArticleComment> NewsArticleComments { get; set;} = new List<NewsArticleComment>();
+
+        public List<OfferComment> OfferComments { get; set; } = new List<OfferComment>();
     }
 }

@@ -70,6 +70,8 @@ namespace CarPortal.Data.Entities.Offer
 
         public IEnumerable<ProfileInterestedOffers> UsersInterested { get; set; } = new List<ProfileInterestedOffers>();
 
+        public List<OfferComment> Comments { get; set; } = new List<OfferComment>();
+
         public bool IsActive { get; set; } = true;
     }
 }

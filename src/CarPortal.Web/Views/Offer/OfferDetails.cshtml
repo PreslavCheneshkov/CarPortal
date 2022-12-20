@@ -163,3 +163,24 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
+<div class="text-center">
+    <hr />
+    <h4 class="text-center">Comments</h4>
+    @if (Model.Comments.Count > 0)
+    {
+        <partial name="_CommentsPartial"></partial>
+    }
+    else
+    {
+        <h5 class="text-center">No comments yet!</h5>
+        <h6 class="text-center">Be the first one to comment!</h6>
+    }
+    <form asp-action="AddComment" asp-controller="Offer" asp-route-offerId="@Model.Id" method="post" enctype="multipart/form-data">
+        <hr />
+        <h6 class="text-center">Your comment:</h6>
+        <div class="row-cols-2">
+            <textarea class="form-control" asp-for="@Model.NewComment.Content" rows="4"></textarea>
+            <button class="btn btn-primary" type="submit">Comment!</button>
+        </div>
+    </form>
+</div>

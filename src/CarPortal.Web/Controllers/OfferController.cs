@@ -1,6 +1,7 @@
 ﻿using CarPortal.Core.DTOs.Offer;
 using CarPortal.Core.Services.Contracts;
 using CarPortal.Data.Entities.User;
+using CarPortal.Web.Models.News;
 using CarPortal.Web.Models.Offer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -157,9 +158,37 @@ namespace CarPortal.Web.Controllers
                 ThumbnailUrl = offerDto.ThumbnailUrl,
                 AdditionalInfo = offerDto.AdditionalInfo,
                 ContactPhoneNumber = offerDto.ContactPhoneNumber,
+                Comments = offerDto.Comments.Select(c => new OfferCommentViewModel()
+                {
+                    Id = c.Id,
+                    Author = c.Author,
+                    Content = c.Content,
+                    CreatedOn = c.CreatedOn,
+                }).ToList(),
+                NewComment = new OfferCommentInputModel(),
             };
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddComment(OfferDetailsViewModel model, int offerId)
+        {
+            if (model.NewComment.Content == null || offerId == null)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await this.offerService.AddCommentToOffer(model.NewComment.Content, this.User.FindFirstValue(ClaimTypes.NameIdentifier), offerId);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+            return RedirectToAction(nameof(OfferDetails), "Offer", new { id = offerId });
         }
 
         public async Task<IActionResult> AddToInterestedIn(int id)
