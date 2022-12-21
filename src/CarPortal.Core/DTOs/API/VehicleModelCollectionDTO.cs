@@ -1,0 +1,14 @@
+﻿using CarPortal.Core.DTOs.Offer.DropDownModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CarPortal.Core.DTOs.API
+{
+    public class VehicleModelCollectionDTO
+    {
+        public List<VehicleModelDropDown> ModelCollection { get; set; } = new List<VehicleModelDropDown>();
+    }
+}

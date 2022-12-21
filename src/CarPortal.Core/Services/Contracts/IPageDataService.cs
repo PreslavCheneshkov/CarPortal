@@ -12,7 +12,7 @@ namespace CarPortal.Core.Services.Contracts
 {
     public interface IPageDataService
     {
-        Task<IEnumerable<VehicleModelDropDown>> GetModelsAsync(int manufacturerId);
+        Task<List<VehicleModelDropDown>> GetModelsAsync(int manufacturerId);
 
         Task<OfferDropDownsModel> PopulateViewModelWithDropDownsAsync();
 

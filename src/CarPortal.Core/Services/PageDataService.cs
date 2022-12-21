@@ -20,21 +20,19 @@ namespace CarPortal.Core.Services
         {
             context = _context;
         }
-        public async Task<IEnumerable<VehicleModelDropDown>> GetModelsAsync(int manufacturerId)
+        public async Task<List<VehicleModelDropDown>> GetModelsAsync(int manufacturerId)
         {
-            var manufacturer = await context.Manufacturers
-                                            .Include(m => m.Models)
-                                            .Select(m => new
-                                            {
-                                                Id = m.Id,
-                                                Models = m.Models.Select(x => new VehicleModelDropDown()
-                                                {
-                                                    Id = x.Id,
-                                                    Name = x.Name,
-                                                })
-                                            })
-                                            .FirstOrDefaultAsync(m => m.Id == manufacturerId);
-            return manufacturer.Models;
+            var models = await this.context.Models
+                                    .Where(m => m.ManufacturerId == manufacturerId)
+                                    .Select(m => new VehicleModelDropDown()
+                                    {
+                                        Id = m.Id,
+                                        Name = m.Name,
+                                        ManufacturerId = m.ManufacturerId,
+                                    })
+                                    .ToListAsync();
+
+            return models;
         }
 
         private async Task<IEnumerable<RegionDropDown>> GetRegionsDropDownsAsync()
