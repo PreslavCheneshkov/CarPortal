@@ -3,6 +3,7 @@ using CarPortal.Core.Services.Contracts;
 using CarPortal.Data.Entities.User;
 using CarPortal.Web.Models.Offer;
 using CarPortal.Web.Models.User;
+using Ganss.Xss;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,7 @@ namespace CarPortal.Web.Controllers
         private readonly UserManager<CarPortalUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IProfileService profileService;
+        private readonly HtmlSanitizer sanitizer;
 
         public UserController(SignInManager<CarPortalUser> signInManager,
             UserManager<CarPortalUser> userManager,
@@ -26,6 +28,7 @@ namespace CarPortal.Web.Controllers
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.profileService = profileService;
+            this.sanitizer = new HtmlSanitizer();
         }
 
         [HttpGet]
@@ -58,8 +61,8 @@ namespace CarPortal.Web.Controllers
 
             var user = new CarPortalUser()
             {
-                UserName = model.UserName,
-                Email = model.Email,
+                UserName = this.sanitizer.Sanitize(model.UserName),
+                Email = this.sanitizer.Sanitize(model.Email),
             };
 
             var result = await userManager.CreateAsync(user, model.Password);
@@ -102,7 +105,7 @@ namespace CarPortal.Web.Controllers
                 return View(model);
             }
 
-            var user = await userManager.FindByNameAsync(model.UserName);
+            var user = await userManager.FindByNameAsync(this.sanitizer.Sanitize(model.UserName));
 
             if (user != null)
             {
@@ -145,20 +148,6 @@ namespace CarPortal.Web.Controllers
                 ProfileId = data.ProfileId,
                 IsDealer = data.IsDealer,
                 CreatedOn = data.CreatedOn,
-                //SavedOffers = data.SavedOffers.Select(so => new OfferInCollectionViewModel()
-                //{
-                //    FuelType = so.FuelType,
-                //    HorsePower = so.HorsePower,
-                //    Manufacturer = so.Manufacturer,
-                //    Mileage = so.Mileage,
-                //    Model = so.Model,
-                //    OfferId = so.OfferId,
-                //    OfferName = so.OfferName,
-                //    Price = so.Price,
-                //    ThumbnailUrl = so.ThumbnailUrl,
-                //    TransmissionType = so.TransmissionType,
-                //    Year = so.Year,
-                //}).ToList(),
                 UploadedOffers = data.UploadedOffers.Select(uo => new OfferInCollectionViewModel()
                 {
                     FuelType = uo.FuelType,
@@ -193,20 +182,6 @@ namespace CarPortal.Web.Controllers
                     ProfileId = profile.ProfileId,
                     IsDealer = profile.IsDealer,
                     CreatedOn = profile.CreatedOn,
-                    //SavedOffers = data.SavedOffers.Select(so => new OfferInCollectionViewModel()
-                    //{
-                    //    FuelType = so.FuelType,
-                    //    HorsePower = so.HorsePower,
-                    //    Manufacturer = so.Manufacturer,
-                    //    Mileage = so.Mileage,
-                    //    Model = so.Model,
-                    //    OfferId = so.OfferId,
-                    //    OfferName = so.OfferName,
-                    //    Price = so.Price,
-                    //    ThumbnailUrl = so.ThumbnailUrl,
-                    //    TransmissionType = so.TransmissionType,
-                    //    Year = so.Year,
-                    //}).ToList(),
                     UploadedOffers = profile.UploadedOffers.Select(uo => new OfferInCollectionViewModel()
                     {
                         FuelType = uo.FuelType,

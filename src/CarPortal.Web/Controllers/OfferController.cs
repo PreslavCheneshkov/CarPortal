@@ -3,6 +3,7 @@ using CarPortal.Core.Services.Contracts;
 using CarPortal.Data.Entities.User;
 using CarPortal.Web.Models.News;
 using CarPortal.Web.Models.Offer;
+using Ganss.Xss;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ namespace CarPortal.Web.Controllers
         private readonly UserManager<CarPortalUser> userManager;
         private readonly IOfferService offerService;
         private readonly IPageDataService pageDataService;
+        private readonly HtmlSanitizer sanitizer;
 
         public OfferController(
             UserManager<CarPortalUser> userManager,
@@ -25,6 +27,7 @@ namespace CarPortal.Web.Controllers
             this.offerService = offerService;
             this.userManager = userManager;
             this.pageDataService = pageDataService;
+            this.sanitizer = new HtmlSanitizer();
         }
         public IActionResult Index()
         {
@@ -39,13 +42,11 @@ namespace CarPortal.Web.Controllers
             var model = new AddOfferViewModel()
             {
                 Regions = dropdowns.Regions,
-                Cities = dropdowns.Cities,
                 Car = new AddCarViewModel
                 {
                     Extras = dropdowns.Extras,
                     VehicleCategories = dropdowns.VehicleCategories,
                     Manufacturers = dropdowns.Manufacturers,
-                    VehicleModels = dropdowns.VehicleModels,
                     FuelTypes = dropdowns.FuelTypes,
                     TransmissionTypes = dropdowns.TransmissionTypes,
                     Colors = dropdowns.Colors,
@@ -60,17 +61,32 @@ namespace CarPortal.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
+                var dropdowns = await pageDataService.PopulateViewModelWithDropDownsAsync();
+                model = new AddOfferViewModel()
+                {
+                    Regions = dropdowns.Regions,
+                    Car = new AddCarViewModel
+                    {
+                        Extras = dropdowns.Extras,
+                        VehicleCategories = dropdowns.VehicleCategories,
+                        Manufacturers = dropdowns.Manufacturers,
+                        FuelTypes = dropdowns.FuelTypes,
+                        TransmissionTypes = dropdowns.TransmissionTypes,
+                        Colors = dropdowns.Colors,
+                    }
+                };
+
                 return View(model);
             }
 
             var offer = new OfferInputModel
             {
-                Name = model.Name,
+                Name = this.sanitizer.Sanitize(model.Name),
                 Price = model.Price,
                 CityId = model.CityId,
                 RegionId = model.RegionId,
-                AdditionalInfo = model.AdditionalInfo,
-                ContactPhoneNumber = model.ContactPhoneNumber,
+                AdditionalInfo = this.sanitizer.Sanitize(model.AdditionalInfo),
+                ContactPhoneNumber = this.sanitizer.Sanitize(model.ContactPhoneNumber),
                 Thumbnail = model.Thumbnail,
                 Images = model.Images,
                 Car = new CarInputModel()
@@ -92,7 +108,14 @@ namespace CarPortal.Web.Controllers
 
             var user = await userManager.GetUserAsync(this.User);
 
-            await offerService.AddOfferAsync(offer, user.Id);
+            try
+            {
+                await offerService.AddOfferAsync(offer, user.Id);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
 
             return RedirectToAction("Index", "Home");
         }
@@ -181,7 +204,7 @@ namespace CarPortal.Web.Controllers
 
             try
             {
-                await this.offerService.AddCommentToOffer(model.NewComment.Content, this.User.FindFirstValue(ClaimTypes.NameIdentifier), offerId);
+                await this.offerService.AddCommentToOffer(this.sanitizer.Sanitize(model.NewComment.Content), this.User.FindFirstValue(ClaimTypes.NameIdentifier), offerId);
             }
             catch (Exception)
             {
@@ -189,11 +212,6 @@ namespace CarPortal.Web.Controllers
             }
 
             return RedirectToAction(nameof(OfferDetails), "Offer", new { id = offerId });
-        }
-
-        public async Task<IActionResult> AddToInterestedIn(int id)
-        {
-            return NoContent();
         }
     }
 }

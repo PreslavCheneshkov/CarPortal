@@ -2,6 +2,7 @@
 using CarPortal.Core.Services;
 using CarPortal.Core.Services.Contracts;
 using CarPortal.Web.Models.News;
+using Ganss.Xss;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -11,10 +12,12 @@ namespace CarPortal.Web.Controllers
     public class NewsController : CarPortalController
     {
         private readonly INewsService newsService;
+        private readonly HtmlSanitizer sanitizer;
 
         public NewsController(INewsService newsService)
         {
             this.newsService = newsService;
+            this.sanitizer = new HtmlSanitizer();
         }
 
         [AllowAnonymous]
@@ -55,8 +58,8 @@ namespace CarPortal.Web.Controllers
             {
                 await this.newsService.CreateArticleAsync(new NewsArticleInputDTO()
                 {
-                    Title = model.Title,
-                    Content = model.Content,
+                    Title = sanitizer.Sanitize(model.Title),
+                    Content = sanitizer.Sanitize(model.Content),
                 }, this.User.FindFirstValue(ClaimTypes.NameIdentifier));
             }
             catch (Exception)
@@ -99,14 +102,14 @@ namespace CarPortal.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddComment(NewsArticleDetailsViewModel model, int newsArticleId)
         {
-            if (model.NewComment.Content == null || newsArticleId == null)
+            if (model.NewComment.Content == null || newsArticleId <= 0)
             {
                 return BadRequest();
             }
 
             try
             {
-                await this.newsService.AddCommentToNewsArticle(model.NewComment.Content, this.User.FindFirstValue(ClaimTypes.NameIdentifier), newsArticleId);
+                await this.newsService.AddCommentToNewsArticle(sanitizer.Sanitize(model.NewComment.Content), this.User.FindFirstValue(ClaimTypes.NameIdentifier), newsArticleId);
             }
             catch (Exception)
             {
