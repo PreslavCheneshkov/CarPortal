@@ -188,26 +188,34 @@
         //            );)
 
 
-                $('#manufacturerSelect').change(function GetModelsForManufacturer() {
-                    var selected = $(this).val();
-                    $.ajax({
-                        url: 'https://localhost:7287/api/PageData',
-                        data: { id: $('#manufacturerSelect option:selected').val() },
-                        type: "get",
-                        cache: true,
-            }).done(function (modelCollection) {
-                        var modelSelect = $('#modelSelect');
-                        modelSelect.empty();
-                        $.each(data["modelCollection"], function (index, model) {
-                            modelSelect.append(
-                                $('<option>', {
-                                    value: model.id
-                                }).text(model.name)
-                            );
-                        });
-                    }).fail(function (error) {
-                        //Do something with the error response
-                    });
+        //fetch("https://localhost:7287/api/PageData?id=6")
+        //    .then((data) => {
+        //        console.log(data);
+        //    })
+        //    .catch((err) => {
+        //        // handle error
+        //    });
+
+        $('#manufacturerSelect').change(function GetModelsForManufacturer() {
+            var selected = $(this).val();
+            $.ajax({
+                url: 'https://localhost:7287/api/PageData',
+                data: { id: $('#manufacturerSelect option:selected').val() },
+                type: "get",
+                cache: true,
+            }).done(function (data) {
+                var modelSelect = $('#modelSelect');
+                modelSelect.empty();
+                $.each(data["modelCollection"], function (index, model) {
+                    modelSelect.append(
+                        $('<option>', {
+                            value: model.id
+                        }).text(model.name)
+                    );
                 });
+            }).fail(function (error) {
+                //Do something with the error response
+            });
+        });
     </script>
 }
