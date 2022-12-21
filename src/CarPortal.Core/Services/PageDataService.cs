@@ -3,6 +3,7 @@ using CarPortal.Core.DTOs.Offer.DropDownModels;
 using CarPortal.Core.DTOs.Search;
 using CarPortal.Core.Services.Contracts;
 using CarPortal.Data;
+using CarPortal.Data.Entities.Car;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -30,6 +31,7 @@ namespace CarPortal.Core.Services
                                         Name = m.Name,
                                         ManufacturerId = m.ManufacturerId,
                                     })
+                                    .OrderBy(m => m.Name)
                                     .ToListAsync();
 
             return models;
@@ -232,14 +234,14 @@ namespace CarPortal.Core.Services
             //dropdowns
             var vehicleCategories = await this.GetVehicleCategoryDropDownsAsync();
             var manufacturers = await this.GetManufacturerDropDownsAsync();
-            var vehicleModels = await this.GetVehicleModelDropDownsAsync();
+            //var vehicleModels = await this.GetVehicleModelDropDownsAsync();
 
             var model = new SearchInputModel()
             {
                 //dropdowns
                 VehicleCategories = vehicleCategories,
                 Manufacturers = manufacturers,
-                VehicleModels = vehicleModels,
+                //VehicleModels = vehicleModels,
                 //checkboxes
                 Extras = checkboxes.Extras,
                 Colors = checkboxes.Colors,
@@ -249,6 +251,21 @@ namespace CarPortal.Core.Services
             };
 
             return model;
+        }
+
+        public async Task<List<CityDropDown>> GetCitiesAsync(int regionId)
+        {
+            var cities = await this.context.Cities
+                                    .Where(c => c.RegionId == regionId)
+                                    .Select(c => new CityDropDown()
+                                    {
+                                        Id = c.Id,
+                                        Name = c.Name,
+                                    })
+                                    .OrderBy(c => c.Name)
+                                    .ToListAsync();
+
+            return cities;
         }
     }
 }

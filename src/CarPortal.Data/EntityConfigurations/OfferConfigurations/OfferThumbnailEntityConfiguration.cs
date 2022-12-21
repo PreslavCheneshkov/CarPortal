@@ -15,6 +15,11 @@ namespace CarPortal.Data.EntityConfigurations.OfferConfigurations
 
         public void Configure(EntityTypeBuilder<OfferThumbnail> builder)
         {
+            builder
+                .HasOne(t => t.Offer)
+                .WithOne(o => o.OfferThumbnail)
+                .OnDelete(DeleteBehavior.Restrict);
+
             SeedThumbnails();
             builder.HasData(this.thumbnails);
         }

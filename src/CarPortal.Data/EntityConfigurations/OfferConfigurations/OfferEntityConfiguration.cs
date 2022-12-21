@@ -27,7 +27,8 @@ namespace CarPortal.Data.EntityConfigurations.OfferConfigurations
 
             builder
                 .HasOne(o => o.OfferThumbnail)
-                .WithOne(t => t.Offer);
+                .WithOne(t => t.Offer)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasMany(o => o.Comments)

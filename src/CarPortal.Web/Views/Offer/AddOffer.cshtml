@@ -35,12 +35,6 @@
             <div class="mb-3">
                 <label asp-for="@Model.Car.ModelId" class="form-label">Model</label>
                 <select id="modelSelect" asp-for="@Model.Car.ModelId" class="form-control">
-                    @*<option value="null"></option>*@
-                    @*@foreach (var vehicleModel in @Model.Car.VehicleModels)
-                    {
-                    <option value="@vehicleModel.Id">@vehicleModel.Name</option>
-                    }*@
-
                 </select>
             </div>
             <div class="mb-3">
@@ -136,7 +130,7 @@
             </div>
             <div class="mb-3">
                 <label asp-for="@Model.RegionId" class="form-label">Region</label>
-                <select asp-for="@Model.RegionId" class="form-control">
+                <select id="regionSelect" asp-for="@Model.RegionId" class="form-control">
                     <option value="null"></option>
                     @foreach (var region in @Model.Regions)
                     {
@@ -146,12 +140,12 @@
             </div>
             <div class="mb-3">
                 <label asp-for="@Model.CityId" class="form-label">City</label>
-                <select asp-for="@Model.CityId" class="form-control">
+                <select id="citySelect" asp-for="@Model.CityId" class="form-control">
                     <option value="null"></option>
-                    @foreach (var city in @Model.Cities)
+                    @*@foreach (var city in @Model.Cities)
                     {
-                        <option value="@city.Id">@city.Name</option>
-                    }
+                    <option value="@city.Id">@city.Name</option>
+                    }*@
                 </select>
             </div>
             <div class="mb-3">
@@ -174,32 +168,10 @@
 @section Scripts{
     <partial name="_ValidationScriptsPartial"></partial>
     <script>
-        //$('#manufacturerSelect').change(function GetModelsForManufacturer()
-        //            var selected = $(this).val();
-        //$.post("https://localhost:7287/api/PageData", {
-        //    id: $('#manufacturerSelect option:selected').val(), function(data) {
-        //        var modelSelect = $('#modelSelect');
-        //        modelSelect.empty();
-        //        $.each(data["modelCollection"], function (index, model) {
-        //            modelSelect.append(
-        //                $('<option>', {
-        //                    value: model.id
-        //                }).text(model.name)
-        //            );)
-
-
-        //fetch("https://localhost:7287/api/PageData?id=6")
-        //    .then((data) => {
-        //        console.log(data);
-        //    })
-        //    .catch((err) => {
-        //        // handle error
-        //    });
-
         $('#manufacturerSelect').change(function GetModelsForManufacturer() {
             var selected = $(this).val();
             $.ajax({
-                url: 'https://localhost:7287/api/PageData',
+                url: 'https://localhost:7232/api/PageData/models',
                 data: { id: $('#manufacturerSelect option:selected').val() },
                 type: "get",
                 cache: true,
@@ -207,6 +179,29 @@
                 var modelSelect = $('#modelSelect');
                 modelSelect.empty();
                 $.each(data["modelCollection"], function (index, model) {
+                    modelSelect.append(
+                        $('<option>', {
+                            value: model.id
+                        }).text(model.name)
+                    );
+                });
+            }).fail(function (error) {
+                //Do something with the error response
+            });
+        });
+    </script>
+    <script>
+        $('#regionSelect').change(function GetCitiesForRegion() {
+            var selected = $(this).val();
+            $.ajax({
+                url: 'https://localhost:7232/api/PageData/cities',
+                data: { id: $('#regionSelect option:selected').val() },
+                type: "get",
+                cache: true,
+            }).done(function (data) {
+                var modelSelect = $('#citySelect');
+                modelSelect.empty();
+                $.each(data["cityCollection"], function (index, model) {
                     modelSelect.append(
                         $('<option>', {
                             value: model.id

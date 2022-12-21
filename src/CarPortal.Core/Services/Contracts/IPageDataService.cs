@@ -17,5 +17,7 @@ namespace CarPortal.Core.Services.Contracts
         Task<OfferDropDownsModel> PopulateViewModelWithDropDownsAsync();
 
         Task<SearchInputModel> PopulateSearchModelAsync();
+
+        Task<List<CityDropDown>> GetCitiesAsync(int regionId);
     }
 }
