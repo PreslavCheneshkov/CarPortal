@@ -36,5 +36,7 @@ namespace CarPortal.Core.DTOs.Offer
         public string AdditionalInfo { get; set; }
 
         public List<OfferCommentDTO> Comments { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

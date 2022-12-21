@@ -1,12 +1,9 @@
 ﻿using CarPortal.Core.DTOs.Offer;
-using CarPortal.Core.DTOs.Offer.DropDownModels;
 using CarPortal.Core.Services.Contracts;
 using CarPortal.Data;
 using CarPortal.Data.Entities.Car;
-using CarPortal.Data.Entities.News;
 using CarPortal.Data.Entities.Offer;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 using static CarPortal.Data.Constants.OfferConstants;
@@ -22,12 +19,12 @@ namespace CarPortal.Core.Services
         private string wwwrootPath;
 
         public OfferService(
-            CarPortalDbContext _context,
-            IWebHostEnvironment _environment
+            CarPortalDbContext context,
+            IWebHostEnvironment environment
             )
         {
-            environment = _environment;
-            context = _context;
+            this.environment = environment;
+            this.context = context;
             wwwrootPath = environment.WebRootPath;
             Directory.CreateDirectory($"{wwwrootPath}/Images/Offer");
         }
@@ -165,6 +162,7 @@ namespace CarPortal.Core.Services
                                                IsBrandNew = o.Car.IsBrandNew,
                                                Extras = o.Car.Extras.Select(e => e.Extra.Name).ToList(),
                                            },
+                                           IsActive = o.IsActive,
                                            AdditionalInfo = o.AdditionalInfo,
                                            Price = o.Price,
                                            Name = o.Name,
@@ -189,11 +187,6 @@ namespace CarPortal.Core.Services
             return offer;
         }
 
-        public Task AddToInterestedIn(int offerId, string userId)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task AddCommentToOffer(string content, string authorUserId, int offerId)
         {
             string authorProfileId = await context.Users
@@ -215,6 +208,15 @@ namespace CarPortal.Core.Services
             };
 
             await context.OfferComments.AddAsync(comment);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task Delete(int offerId)
+        {
+            var offer = this.context.Offers.FirstOrDefault(o => o.Id == offerId);
+
+            offer.IsActive = false;
+
             await context.SaveChangesAsync();
         }
     }

@@ -63,6 +63,7 @@ namespace CarPortal.Core.Services
 
             profile.UploadedOffers = await context.Offers
                                                    .Where(o => o.SellerId == profile.UserId)
+                                                   .Where(o => o.IsActive)
                                                    .Select(o => new OfferInCollectionDto()
                                                    {
                                                        FuelType = o.Car.FuelType.Name,

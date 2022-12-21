@@ -1,7 +1,4 @@
-﻿<h2 class="text-center">@ViewBag.Title</h2>
-<hr />
-
-<div class="row">
+﻿<div class="row">
     @foreach (var item in @Model)
     {
         <div class="card col-md-3">
@@ -18,7 +15,7 @@
                 <li class="list-group-item">Mileage: @item.Mileage</li>
             </ul>
             <div class="card-body">
-                <a class="btn btn-secondary"  asp-route-id="@item.OfferId" asp-controller="Offer" asp-action="OfferDetails" >Details</a>
+                <a class="btn btn-secondary"  asp-route-id="@item.OfferId" asp-controller="Offer" asp-action="Details" >Details</a>
             </div>
         </div>
         }

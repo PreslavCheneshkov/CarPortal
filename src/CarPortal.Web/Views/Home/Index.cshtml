@@ -1,6 +1,15 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using CarPortal.Web.Models.Home;
+@model HomePageViewModel
+
+@{
+    ViewData["Title"] = "HomePage";
 }
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+<hr />
+
+<partial name="_OfferCollectionPartial" model="@Model.RecentOffers"></partial> 
+<partial name="_NewsCollectionPartial" model="@Model.RecentNewsArticles"></partial> 
 
 <div class="text-center">
     <h1 class="display-4">Welcome to the Car Portal!</h1>

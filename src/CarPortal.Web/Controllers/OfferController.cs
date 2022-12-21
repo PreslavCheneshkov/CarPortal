@@ -35,7 +35,7 @@ namespace CarPortal.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddOffer()
+        public async Task<IActionResult> Add()
         {
             var dropdowns = await pageDataService.PopulateViewModelWithDropDownsAsync();
 
@@ -57,7 +57,7 @@ namespace CarPortal.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddOffer(AddOfferViewModel model, int[] carExtras)
+        public async Task<IActionResult> Add(AddOfferViewModel model, int[] carExtras)
         {
             if (!ModelState.IsValid)
             {
@@ -143,11 +143,16 @@ namespace CarPortal.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> OfferDetails(int id)
+        public async Task<IActionResult> Details(int id)
         {
             var offerDto = await offerService.GetOfferByIdAsync(id);
 
             if (offerDto == null)
+            {
+                return NotFound();
+            }
+
+            if (!offerDto.IsActive)
             {
                 return NotFound();
             }
@@ -211,7 +216,35 @@ namespace CarPortal.Web.Controllers
                 return BadRequest();
             }
 
-            return RedirectToAction(nameof(OfferDetails), "Offer", new { id = offerId });
+            return RedirectToAction(nameof(Details), "Offer", new { id = offerId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            SingleOfferDto offer;
+            try
+            {
+                offer = await this.offerService.GetOfferByIdAsync(id);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+            if (offer == null)
+            {
+                return NotFound();
+            }
+
+            if (offer.SellerId != this.User.FindFirstValue(ClaimTypes.NameIdentifier) && !this.User.IsInRole("Administrator"))
+            {
+                return Forbid();
+            }
+
+            await this.offerService.Delete(id);
+
+            return RedirectToAction("MyProfile", "User");
         }
     }
 }
