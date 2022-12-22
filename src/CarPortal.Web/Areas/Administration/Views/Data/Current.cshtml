@@ -8,65 +8,195 @@
 <h1 class="text-center">@ViewData["Title"]</h1>
 <hr />
 
-<div class="col-4">
-    <table id="VehicleCategories" class="table table-bordered table-hover">
-        <tr>
-            <th>
-                Vehicle Categories:
-            </th>
-        </tr>
-        @foreach (var cat in Model.VehicleCategories)
-        {
-            <tr>
-                <td>
-                    @cat
-                </td>
-            </tr>
-        }
-        <tr>
-            <td>
-                <form asp-action="Add" asp-route-dataType="vehicleCategory" method="post" enctype="multipart/form-data">
+
+<div class="align-content-lg-center">
+    <form asp-action="Add" asp-route-dataType="vehicleCategory" method="post" enctype="multipart/form-data">
+        <h5 class="form-label">Vehicle categories:</h5>
+        <div class="input-group mb-3">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Available</button>
+            <ul class="dropdown-menu">
+                @foreach (var category in Model.VehicleCategories)
+                {
+                    <li class="dropdown-item">@category</li>
+                }
+
+            </ul>
+            <input type="text" class="form-control" asp-for="@Model.NewCategory" placeholder="Enter new vehicle category">
+            <button class="btn btn-primary col-4" type="submit">Add Category</button>
+        </div>
+    </form>
+</div>
+
+<div class="align-content-lg-center">
+    <form asp-action="Add" asp-route-dataType="manufacturer" method="post" enctype="multipart/form-data">
+        <h5 class="form-label">Manufacturers:</h5>
+        <div class="input-group mb-3">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Available</button>
+            <ul class="dropdown-menu">
+                @foreach (var manufacturer in Model.Manufacturers)
+                {
+                    <li class="dropdown-item">@manufacturer.Name</li>
+                }
+
+            </ul>
+            <input type="text" class="form-control" asp-for="@Model.NewManufacturer" placeholder="Enter new manufacturer">
+            <button class="btn btn-primary col-4" type="submit">Add Manufacturer</button>
+        </div>
+    </form>
+</div>
+
+
+<div class="border border-2 align-content-center">
+    <h5 class="form-label mt-2 ms-2">Models</h5>
+    <form asp-action="Add" asp-route-dataType="model" method="post" enctype="multipart/form-data">
+        <div class="ms-2">
+
+            <div class="mb-3">
+                <label class="form-label">Select manufacturer:</label>
+                <select id="manufacturerSelect" onselect="GetModelsForManufacturer" asp-for="@Model.NewModelManufacturerId" class="form-control">
+                    <option value="null"></option>
+                    @foreach (var manufacturer in @Model.Manufacturers)
+                    {
+                        <option value="@manufacturer.Id">@manufacturer.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="col">
+                <form asp-action="Add" asp-route-dataType="model" method="post" enctype="multipart/form-data">
+                    <h5 class="form-label">Models:</h5>
                     <div class="input-group mb-3">
-                        <input class="form-control" asp-for="@Model.NewCategory" />
-                        <button class="btn btn-primary" type="submit">Add</button>
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Available</button>
+                        <ul id="modelSelect" class="dropdown-menu">
+                        </ul>
+                        <input type="text" class="form-control" asp-for="@Model.NewModel" placeholder="Enter new model">
+                        <button class="btn btn-primary col-4" type="submit">Add Model</button>
                     </div>
                 </form>
-            </td>
-        </tr>
-    </table>
+            </div>
+        </div>
+    </form>
 </div>
 
-<div class="row">
-    <div class="col-4">
+<div class="align-content-center">
+    <form asp-action="Add" asp-route-dataType="transmissionType" method="post" enctype="multipart/form-data">
+        <h5 class="form-label mt-3">Transmission types:</h5>
+        <div class="input-group mb-3">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Available</button>
+            <ul class="dropdown-menu">
+                @foreach (var transmissionType in Model.TransmissionTypes)
+                {
+                    <li class="dropdown-item">@transmissionType</li>
+                }
 
-        <table id="Manufacturers" class="table table-bordered table-hover">
-            <tr>
-                <th>
-                    Manufacturers:
-                </th>
-            </tr>
-            @foreach (var manufacturer in Model.Manufacturers)
-            {
-                <tr>
-                    <td>
-                        @manufacturer.Name
-                    </td>
-                </tr>
-            }
-            <tr>
-                <td>
-                    <form asp-action="AddData" asp-route-type="manufacturer" method="post" enctype="multipart/form-data">
-                        <div class="input-group mb-3">
-                            <input class="form-control" asp-for="@Model.NewCategory" />
-                            <button class="btn btn-primary" type="submit">Add</button>
-                        </div>
-                    </form>
-                </td>
-            </tr>
-        </table>
-    </div>
-
+            </ul>
+            <input type="text" class="form-control" asp-for="@Model.NewTransmissionType" placeholder="Enter new transmission type">
+            <button class="btn btn-primary col-4" type="submit">Add transmission type</button>
+        </div>
+    </form>
 </div>
+
+<div class="align-content-center">
+    <form asp-action="Add" asp-route-dataType="fuelType" method="post" enctype="multipart/form-data">
+        <h5 class="form-label mt-3">Fuel types:</h5>
+        <div class="input-group mb-3">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Available</button>
+            <ul class="dropdown-menu">
+                @foreach (var fuelType in Model.FuelTypes)
+                {
+                    <li class="dropdown-item">@fuelType</li>
+                }
+
+            </ul>
+            <input type="text" class="form-control" asp-for="@Model.NewFuelType" placeholder="Enter new fuel type">
+            <button class="btn btn-primary col-4" type="submit">Add fuel type</button>
+        </div>
+    </form>
+</div>
+
+<div class="align-content-center">
+    <form asp-action="Add" asp-route-dataType="color" method="post" enctype="multipart/form-data">
+        <h5 class="form-label mt-3">Colors:</h5>
+        <div class="input-group mb-3">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Available</button>
+            <ul class="dropdown-menu">
+                @foreach (var color in Model.Colors)
+                {
+                    <li class="dropdown-item">@color</li>
+                }
+
+            </ul>
+            <input type="text" class="form-control" asp-for="@Model.NewColor" placeholder="Enter new color">
+            <button class="btn btn-primary col-4" type="submit">Add color</button>
+        </div>
+    </form>
+</div>
+
+<div class="align-content-center">
+    <form asp-action="Add" asp-route-dataType="extra" method="post" enctype="multipart/form-data">
+        <h5 class="form-label mt-3">Extras:</h5>
+        <div class="input-group mb-3">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Available</button>
+            <ul class="dropdown-menu">
+                @foreach (var extra in Model.Extras)
+                {
+                    <li class="dropdown-item">@extra</li>
+                }
+
+            </ul>
+            <input type="text" class="form-control" asp-for="@Model.NewExtra" placeholder="Enter new extra">
+            <button class="btn btn-primary col-4" type="submit">Add extra</button>
+        </div>
+    </form>
+</div>
+
+<div class="align-content-center">
+    <form asp-action="Add" asp-route-dataType="region" method="post" enctype="multipart/form-data">
+        <h5 class="form-label mt-3">Regions:</h5>
+        <div class="input-group mb-3">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Available</button>
+            <ul class="dropdown-menu">
+                @foreach (var region in Model.RegionDropDowns)
+                {
+                    <li class="dropdown-item">@region.Name</li>
+                }
+
+            </ul>
+            <input type="text" class="form-control" asp-for="@Model.NewRegion" placeholder="Enter new region">
+            <button class="btn btn-primary col-4" type="submit">Add region</button>
+        </div>
+    </form>
+</div>
+<div class="border border-2 align-content-center">
+    <h5 class="form-label mt-2 ms-2">Cities</h5>
+    <form asp-action="Add" asp-route-dataType="city" method="post" enctype="multipart/form-data">
+        <div class="ms-2">
+
+            <div class="mb-3">
+                <label class="form-label">Select region:</label>
+                <select id="regionSelect" onselect="GetCitiesForRegion" asp-for="@Model.NewCityRegionId" class="form-control">
+                    <option value="null"></option>
+                    @foreach (var region in @Model.RegionDropDowns)
+                    {
+                        <option value="@region.Id">@region.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="col">
+                <form asp-action="Add" asp-route-dataType="city" method="post" enctype="multipart/form-data">
+                    <h5 class="form-label">Cities:</h5>
+                    <div class="input-group mb-3">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Available</button>
+                        <ul id="citySelect" class="dropdown-menu">
+                        </ul>
+                        <input type="text" class="form-control" asp-for="@Model.NewCityName" placeholder="Enter new city">
+                        <button class="btn btn-primary col-4" type="submit">Add city</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </form>
+</div>
+
 @section Scripts{
     <partial name="_ValidationScriptsPartial"></partial>
     <script>
@@ -82,7 +212,7 @@
                 modelSelect.empty();
                 $.each(data["modelCollection"], function (index, model) {
                     modelSelect.append(
-                        $('<option>', {
+                        $('<li class="dropdown-item">', {
                             value: model.id
                         }).text(model.name)
                     );
@@ -105,7 +235,7 @@
                 modelSelect.empty();
                 $.each(data["cityCollection"], function (index, model) {
                     modelSelect.append(
-                        $('<option>', {
+                        $('<li class="dropdown-item">', {
                             value: model.id
                         }).text(model.name)
                     );

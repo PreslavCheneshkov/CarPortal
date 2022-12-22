@@ -36,7 +36,7 @@ namespace CarPortal.Web.Controllers
 
             var model = new VehicleModelCollectionDTO()
             {
-                ModelCollection = models,
+                ModelCollection = models.OrderBy(x => x.Name).ToList(),
             };
 
             return Ok(model);

@@ -47,10 +47,6 @@
                     <td>
                         <select id="modelSelect" asp-for="@Model.ModelId" class="form-control col-4">
                             <option value=""></option>
-                            @*@foreach (var vehicleModel in @Model.VehicleModels)
-                            {
-                                <option value="@vehicleModel.Id">@vehicleModel.Name</option>
-                            }*@
                         </select>
                     </td>
                 </tr>
@@ -263,20 +259,22 @@
         }
 
     </div>
-    <div class="input-group mb-3">
-        <label class="input-group-text" asp-for="@Model.OrderBy">Sort</label>
-        <select class="form-select" asp-for="@Model.OrderBy">
-            <option selected>Choose...</option>
-            <option asp-for="@Model.OrderBy" value="Price Ascending">Price Ascending</option>
-            <option asp-for="@Model.OrderBy" value="Price Descending">Price Descending</option>
-            <option asp-for="@Model.OrderBy" value="Year Ascending">Year Ascending</option>
-            <option asp-for="@Model.OrderBy" value="Year Descending">Year Descending</option>
-            <option asp-for="@Model.OrderBy" value="Most recently added">Most recently added</option>
+    <div class="text-center col-4 offset-4 mt-3">
+        <div class="input-group mb-3">
+            <label class="input-group-text" asp-for="@Model.OrderBy">Sort</label>
+            <select class="form-select" asp-for="@Model.OrderBy">
+                <option selected>Choose...</option>
+                <option asp-for="@Model.OrderBy" value="Price Ascending">Price Ascending</option>
+                <option asp-for="@Model.OrderBy" value="Price Descending">Price Descending</option>
+                <option asp-for="@Model.OrderBy" value="Year Ascending">Year Ascending</option>
+                <option asp-for="@Model.OrderBy" value="Year Descending">Year Descending</option>
+                <option asp-for="@Model.OrderBy" value="Most recently added">Most recently added</option>
 
-        </select>
+            </select>
+        </div>
+        <input class="btn btn-lg btn-primary" type="submit" value="Search!" />
     </div>
-    <div>
-        <input class="btn btn-lg btn-primary col-md-4 offset-4" type="submit" value="Search!" />
+    <div class="text-center">
     </div>
 </form>
 

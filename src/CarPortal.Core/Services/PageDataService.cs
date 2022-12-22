@@ -142,7 +142,7 @@ namespace CarPortal.Core.Services
                 Cities = cities,
                 Colors = colors,
                 FuelTypes = fuelTypes,
-                Manufacturers = manufacturers,
+                Manufacturers = manufacturers.OrderBy(x => x.Name).ToList(),
                 TransmissionTypes = transmissionTypes,
                 VehicleCategories = vehicleCategories,
                 VehicleModels = vehicleModels,
@@ -266,6 +266,12 @@ namespace CarPortal.Core.Services
                                     .ToListAsync();
 
             return cities;
+        }
+
+        public async Task AddData<T>(T item) where T : class
+        {
+            await context.AddAsync<T>(item);
+            await context.SaveChangesAsync();
         }
     }
 }

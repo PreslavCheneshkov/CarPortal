@@ -1,5 +1,4 @@
-﻿using CarPortal.Data.Entities.User;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +8,6 @@ namespace CarPortal.Core.Services.Contracts
 {
     public interface IAdminService
     {
-        
+        public Task<Tuple<int, int>> GetIndexPageData();
     }
 }

@@ -155,6 +155,8 @@ namespace CarPortal.Core.Services
                 offers = offers.Where(o => o.Seller.Profile.IsDealer == (bool)inputModel.FromDealer);
             }
 
+            offers = offers.Where(x => x.IsActive);
+
             results = await offers.Select(o => new OfferInCollectionDto()
             {
                 OfferName = o.Name,
