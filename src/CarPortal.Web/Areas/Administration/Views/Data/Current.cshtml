@@ -1,0 +1,118 @@
+﻿@using CarPortal.Web.Areas.Administration.Models;
+@model DataViewModel
+
+@{
+    ViewData["Title"] = "Current data";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+<hr />
+
+<div class="col-4">
+    <table id="VehicleCategories" class="table table-bordered table-hover">
+        <tr>
+            <th>
+                Vehicle Categories:
+            </th>
+        </tr>
+        @foreach (var cat in Model.VehicleCategories)
+        {
+            <tr>
+                <td>
+                    @cat
+                </td>
+            </tr>
+        }
+        <tr>
+            <td>
+                <form asp-action="Add" asp-route-dataType="vehicleCategory" method="post" enctype="multipart/form-data">
+                    <div class="input-group mb-3">
+                        <input class="form-control" asp-for="@Model.NewCategory" />
+                        <button class="btn btn-primary" type="submit">Add</button>
+                    </div>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-4">
+
+        <table id="Manufacturers" class="table table-bordered table-hover">
+            <tr>
+                <th>
+                    Manufacturers:
+                </th>
+            </tr>
+            @foreach (var manufacturer in Model.Manufacturers)
+            {
+                <tr>
+                    <td>
+                        @manufacturer.Name
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td>
+                    <form asp-action="AddData" asp-route-type="manufacturer" method="post" enctype="multipart/form-data">
+                        <div class="input-group mb-3">
+                            <input class="form-control" asp-for="@Model.NewCategory" />
+                            <button class="btn btn-primary" type="submit">Add</button>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"></partial>
+    <script>
+        $('#manufacturerSelect').change(function GetModelsForManufacturer() {
+            var selected = $(this).val();
+            $.ajax({
+                url: 'https://localhost:7232/api/PageData/models',
+                data: { id: $('#manufacturerSelect option:selected').val() },
+                type: "get",
+                cache: true,
+            }).done(function (data) {
+                var modelSelect = $('#modelSelect');
+                modelSelect.empty();
+                $.each(data["modelCollection"], function (index, model) {
+                    modelSelect.append(
+                        $('<option>', {
+                            value: model.id
+                        }).text(model.name)
+                    );
+                });
+            }).fail(function (error) {
+                //Do something with the error response
+            });
+        });
+    </script>
+    <script>
+        $('#regionSelect').change(function GetCitiesForRegion() {
+            var selected = $(this).val();
+            $.ajax({
+                url: 'https://localhost:7232/api/PageData/cities',
+                data: { id: $('#regionSelect option:selected').val() },
+                type: "get",
+                cache: true,
+            }).done(function (data) {
+                var modelSelect = $('#citySelect');
+                modelSelect.empty();
+                $.each(data["cityCollection"], function (index, model) {
+                    modelSelect.append(
+                        $('<option>', {
+                            value: model.id
+                        }).text(model.name)
+                    );
+                });
+            }).fail(function (error) {
+                //Do something with the error response
+            });
+        });
+    </script>
+}

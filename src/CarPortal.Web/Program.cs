@@ -33,6 +33,7 @@ builder.Services.AddTransient<IPageDataService, PageDataService>();
 builder.Services.AddTransient<ISearchService, SearchService>();
 builder.Services.AddTransient<IProfileService, ProfileService>();
 builder.Services.AddTransient<INewsService, NewsService>();
+builder.Services.AddTransient<IAdminService, AdminService>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

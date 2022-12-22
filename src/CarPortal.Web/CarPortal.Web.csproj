@@ -8,9 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Administration\Data\**" />
     <Compile Remove="Areas\Forum\**" />
+    <Content Remove="Areas\Administration\Data\**" />
     <Content Remove="Areas\Forum\**" />
+    <EmbeddedResource Remove="Areas\Administration\Data\**" />
     <EmbeddedResource Remove="Areas\Forum\**" />
+    <None Remove="Areas\Administration\Data\**" />
     <None Remove="Areas\Forum\**" />
   </ItemGroup>
 
@@ -29,8 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Administration\Data\" />
-    <Folder Include="Areas\Administration\Models\" />
     <Folder Include="wwwroot\Images\Offers\Thumbnails\" />
     <Folder Include="wwwroot\Images\User\" />
     <Folder Include="wwwroot\Images\Offers\Thumbnails\" />

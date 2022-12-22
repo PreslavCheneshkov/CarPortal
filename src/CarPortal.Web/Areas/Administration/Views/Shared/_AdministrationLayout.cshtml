@@ -15,7 +15,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-primary bg-opacity-50 border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-danger bg-opacity-75 border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="Administration" asp-controller="Home" asp-action="Index">CarPortal Administration</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -25,26 +25,13 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Administration" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Administration" asp-controller="Home" asp-action="Index">User management</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Add data
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" asp-area="" asp-action="Dealers" asp-controller="Search">Vehicle categories</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-action="Dealers" asp-controller="Search">Manufacturers</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-action="Dealers" asp-controller="Search">Models</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-action="Dealers" asp-controller="Search">Transmission types</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-action="Dealers" asp-controller="Search">Fuel types</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-action="Dealers" asp-controller="Search">Vehicle extras</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-action="Offers" asp-controller="Search">Colors</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-action="Offers" asp-controller="Search">Regions</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-action="Offers" asp-controller="Search">Cities</a></li>
-                            </ul>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Administration" asp-controller="Data" asp-action="Current">Data</a>
                         </li>
                     </ul>
                 </div>
@@ -64,7 +51,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - CarPortal.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - CarPortal
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
