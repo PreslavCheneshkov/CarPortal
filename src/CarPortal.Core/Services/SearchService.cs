@@ -180,8 +180,7 @@ namespace CarPortal.Core.Services
                     case "Most recently added": results = results.OrderByDescending(r => r.AddedOn).ToList(); break;
                     case "Year Ascending": results = results.OrderBy(r => r.Year).ToList(); break;
                     case "Year Descending": results = results.OrderByDescending(r => r.Year).ToList(); break;
-                    default:
-                        break;
+                    default: results = results.OrderByDescending(r => r.AddedOn).ToList(); break;
                 }
             }
 
