@@ -67,6 +67,21 @@ namespace CarPortal.Core.Services
             await this.context.SaveChangesAsync();
         }
 
+        public async Task EditArticleAsync(NewsArticleInputDTO input, int id)
+        {
+            var article = await context.NewsArticles.FirstOrDefaultAsync(a => a.Id == id);
+
+            if (article == null) 
+            {
+                throw new ArgumentNullException();
+            }
+
+            article.Title = input.Title;
+            article.Content = input.Content;
+
+            await this.context.SaveChangesAsync();
+        }
+
         public async Task<List<NewsArticleInCollectionDTO>> GetMostRecentArticles()
         {
             return await this.context.NewsArticles
@@ -79,6 +94,7 @@ namespace CarPortal.Core.Services
                                                 CreatedOn = a.CreatedOn.ToShortDateString(),
                                                 Id = a.Id,
                                             })
+                                            .Take(5)
                                             .ToListAsync();
         }
 

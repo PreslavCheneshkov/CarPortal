@@ -1,4 +1,5 @@
 ﻿@using CarPortal.Web.Models.News;
+@using System.Security.Claims;
 @model NewsArticleDetailsViewModel
 
 <div class="card text-center">
@@ -12,6 +13,12 @@
         <hr />
         <p class="card-text">@Model.Content</p>
     </div>
+    @if (Model.Author == this.User.Identity.Name)
+    {
+        <div class="text-center">
+            <a class="btn btn-success col-2" asp-controller="News" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        </div>
+    }
     <hr />
     <h4 class="text-center">Comments</h4>
     @if (Model.Comments.Count > 0)

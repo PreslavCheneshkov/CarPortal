@@ -117,11 +117,10 @@ namespace CarPortal.Core.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<OfferInCollectionDto>> GetRecentOffersAsync(int page)
+        public async Task<IEnumerable<OfferInCollectionDto>> GetRecentOffersAsync()
         {
             var offers = await context.Offers
                                       .OrderByDescending(o => o.CreatedOn)
-                                      .Skip(page * NumberOfDisplayedOffersInBrowse)
                                       .Take(NumberOfDisplayedOffersInBrowse)
                                       .Where(o => o.IsActive)
                                       .Select(o => new OfferInCollectionDto
@@ -136,7 +135,7 @@ namespace CarPortal.Core.Services
                                           TransmissionType = o.Car.TransmissionType.Name,
                                           Price = o.Price,
                                           ThumbnailUrl = $"/Images/Offers/Thumbnails/{o.OfferThumbnail.Id}{o.OfferThumbnail.Extension}",
-                                      }).Take(20).ToArrayAsync();
+                                      }).Take(12).ToArrayAsync();
             
             return offers;
         }

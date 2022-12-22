@@ -20,8 +20,37 @@ namespace CarPortal.Core.Services
             this.context = context;
         }
 
-        public async Task<List<string>> GetDealerSearchResultsAsync(string username)
-            => await context.Users.Where(u => (EF.Functions.Like(u.UserName, $"%{username}%")) && u.Profile.IsDealer).Select(u => u.UserName).ToListAsync();
+        public async Task<List<DealerSearchResultDTO>> GetDealerSearchResultsAsync(string username)
+        {
+            var results =  await context.Users
+                                .Where(u => (EF.Functions.Like(u.UserName, $"%{username}%")) && u.Profile.IsDealer)
+                                .Select(u => new DealerSearchResultDTO()
+                                {
+                                    Username = u.UserName,
+                                })
+                                .ToListAsync();
+
+            foreach (var result in results)
+            {
+                result.OfferCount = await context.Offers.Where(o => o.Seller.UserName == result.Username).CountAsync();
+            }
+
+            return results.OrderBy(u => u.OfferCount).ToList();
+        }
+
+        public async Task<List<NewsArticleSearchResultDTO>> GetNewsArticlesSearchResultsAsync(string keyword)
+        {
+            return await context.NewsArticles
+                                            .Where(a => (EF.Functions.Like(a.Title, $"%{keyword}%") || (EF.Functions.Like(a.Content, $"%{keyword}%"))))
+                                            .OrderByDescending(a => a.CreatedOn)
+                                            .Select(a => new NewsArticleSearchResultDTO()
+                                            {
+                                                ArticleId = a.Id,
+                                                Author = a.Author.CarPortalUser.UserName,
+                                                Title = a.Title,
+                                            })
+                                            .ToListAsync();
+        }
 
         public async Task<List<OfferInCollectionDto>> GetOfferSearchResultsAsync(SearchModelDto inputModel)
         {

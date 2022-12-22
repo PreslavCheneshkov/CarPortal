@@ -113,7 +113,13 @@ namespace CarPortal.Web.Controllers
         public async Task<IActionResult> Dealers()
         {
             var model = new DealerSearchViewModel();
-            model.Dealers = await this.searchService.GetDealerSearchResultsAsync(string.Empty);
+            model.Dealers = (await this.searchService.GetDealerSearchResultsAsync(string.Empty))
+                                                    .Select(d => new DealerSearchResultViewModel()
+                                                    {
+                                                        OfferCount = d.OfferCount,
+                                                        Username = d.Username,
+                                                    })
+                                                    .ToList();
 
             return View(model);
         }
@@ -122,7 +128,84 @@ namespace CarPortal.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Dealers(DealerSearchViewModel model)
         {
-            model.Dealers = await this.searchService.GetDealerSearchResultsAsync(this.sanitizer.Sanitize(model.Name));
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            List<DealerSearchResultDTO> data;
+
+            try
+            {
+                data = await this.searchService.GetDealerSearchResultsAsync(this.sanitizer.Sanitize(model.Name));
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+            
+            if (data == null)
+            {
+                return NotFound();
+            }
+
+            model.Dealers = data.Select(d => new DealerSearchResultViewModel()
+            {
+                OfferCount = d.OfferCount,
+                Username = d.Username,
+            }).ToList();
+
+            return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> NewsAndArticles()
+        {
+            var model = new NewsArticlesSearchViewModel();
+            model.Articles = (await this.searchService.GetNewsArticlesSearchResultsAsync(string.Empty))
+                                                    .Select(d => new NewsArticleSearchResultViewModel()
+                                                    {
+                                                        ArticleId = d.ArticleId,
+                                                        Author = d.Author,
+                                                        Title = d.Title,
+                                                    })
+                                                    .ToList();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> NewsAndArticles(NewsArticlesSearchViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            List<NewsArticleSearchResultDTO> data;
+
+            try
+            {
+                data = await this.searchService.GetNewsArticlesSearchResultsAsync(this.sanitizer.Sanitize(model.Name));
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+
+            if (data == null)
+            {
+                return NotFound();
+            }
+
+            model.Articles = data.Select(d => new NewsArticleSearchResultViewModel()
+            {
+                ArticleId = d.ArticleId,
+                Author = d.Author,
+                Title = d.Title,
+            }).ToList();
 
             return View(model);
         }

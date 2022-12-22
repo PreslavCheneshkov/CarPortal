@@ -16,5 +16,7 @@ namespace CarPortal.Core.Services.Contracts
         Task<NewsArticleDetailsDTO> GetNewsArticleDetailsAsync(int id);
 
         Task AddCommentToNewsArticle(string content, string authorUserId, int newsArticleId);
+
+        Task EditArticleAsync(NewsArticleInputDTO article, int id);
     }
 }

@@ -1,0 +1,33 @@
+﻿@using CarPortal.Web.Models.News;
+@model NewsArticleInputViewModel
+
+@{
+    ViewData["Title"] = "Edit article";
+}
+
+<h1 class="text-center">Edit article</h1>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <div class="col-8 offset-2">
+        <div class="row">
+            <label class="form-label">Enter title:</label>
+            <input class="form-control" asp-for="@Model.Title" value="@Model.Title" />
+            <span asp-validation-for="@Model.Title"></span>
+        </div>
+
+        <div class="row">
+        <label class="form-label">Content:</label>
+        <textarea asp-for="@Model.Content" value="@Model.Content" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="@Model.Content"></span>
+        </div>
+        <hr />
+        <div class="mb-3">
+            <input class="btn btn-success" type="submit" value="Save changes" />
+        </div>
+    </div>
+</form>
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"></partial>
+}

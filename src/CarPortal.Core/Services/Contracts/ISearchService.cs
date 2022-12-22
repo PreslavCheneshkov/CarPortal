@@ -12,6 +12,8 @@ namespace CarPortal.Core.Services.Contracts
     {
         Task<List<OfferInCollectionDto>> GetOfferSearchResultsAsync(SearchModelDto inputModel);
 
-        Task<List<string>> GetDealerSearchResultsAsync(string username);
+        Task<List<DealerSearchResultDTO>> GetDealerSearchResultsAsync(string username);
+
+        Task<List<NewsArticleSearchResultDTO>> GetNewsArticlesSearchResultsAsync(string keyword);
     }
 }

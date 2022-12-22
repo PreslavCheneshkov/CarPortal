@@ -23,22 +23,26 @@ namespace CarPortal.Core.Services
 
         public async Task<string> CreateProfileAsync(string username, bool isDealer)
         {
-            var user = await context.Users.FirstOrDefaultAsync(u => u.UserName == username);
-            string? userId = user.Id;
+            bool userExists = await context.Users.AnyAsync(u => u.UserName == username);
+            CarPortalUser user;
 
-            if (string.IsNullOrEmpty(userId))
+            if (userExists)
+            {
+                user = await context.Users.FirstAsync(u => u.UserName == username);
+            }
+            else 
             {
                 throw new NullReferenceException("Such a user does not exist.");
             }
 
             CarPortalProfile profile = new CarPortalProfile()
             {
-                CarPortalUserId = userId,
+                CarPortalUserId = user.Id,
                 IsDealer = isDealer,
             };
 
-            user.Profile = profile;
             await context.Profiles.AddAsync(profile);
+            user.ProfileId = profile.Id;
             await context.SaveChangesAsync();
 
             return profile.Id;

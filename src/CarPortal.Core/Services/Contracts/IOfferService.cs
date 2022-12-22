@@ -12,7 +12,7 @@ namespace CarPortal.Core.Services.Contracts
     {
         Task AddOfferAsync(OfferInputModel inputModel, string sellerId);
 
-        Task<IEnumerable<OfferInCollectionDto>> GetRecentOffersAsync(int page);
+        Task<IEnumerable<OfferInCollectionDto>> GetRecentOffersAsync();
 
         Task<SingleOfferDto> GetOfferByIdAsync(int offerId);
 

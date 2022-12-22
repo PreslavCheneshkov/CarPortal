@@ -1,6 +1,7 @@
 ﻿using CarPortal.Core.DTOs.News;
 using CarPortal.Core.Services;
 using CarPortal.Core.Services.Contracts;
+using CarPortal.Data.EntityConfigurations.NewsArticleConfigurations;
 using CarPortal.Web.Models.News;
 using Ganss.Xss;
 using Microsoft.AspNetCore.Authorization;
@@ -70,6 +71,7 @@ namespace CarPortal.Web.Controllers
             return RedirectToAction("Index", "News");
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> NewsArticleDetails(int id)
         {
             var article = await this.newsService.GetNewsArticleDetailsAsync(id);
@@ -117,6 +119,68 @@ namespace CarPortal.Web.Controllers
             }
 
             return RedirectToAction(nameof(NewsArticleDetails), "News", new { id = newsArticleId});
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var article = await this.newsService.GetNewsArticleDetailsAsync(id);
+
+            if (article == null)
+            {
+                return NotFound();
+            }
+
+            if (article.Author != this.User.Identity.Name)
+            {
+                return Forbid();
+            }
+
+            NewsArticleInputViewModel model = new NewsArticleInputViewModel()
+            {
+                Content = article.Content,
+                Title = article.Title,
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(NewsArticleInputViewModel model, int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var article = await this.newsService.GetNewsArticleDetailsAsync(id);
+
+            if (article == null)
+            {
+                return NotFound();
+            }
+
+            if (article.Author != this.User.Identity.Name)
+            {
+                return Forbid();
+            }
+
+            NewsArticleInputDTO dto = new NewsArticleInputDTO()
+            {
+                Content = this.sanitizer.Sanitize(model.Content),
+                Title = sanitizer.Sanitize(model.Title),
+            };
+
+            try
+            {
+                await this.newsService.EditArticleAsync(dto, id);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+            return RedirectToAction("NewsArticleDetails", new { id = id});
         }
     }
 }

@@ -121,9 +121,9 @@ namespace CarPortal.Web.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> BrowseRecent(int page = 0)
+        public async Task<IActionResult> BrowseRecent()
         {
-            var offers = (await offerService.GetRecentOffersAsync(page)).Select(o => new OfferInCollectionViewModel()
+            var offers = (await offerService.GetRecentOffersAsync()).Select(o => new OfferInCollectionViewModel()
             {
                 OfferId = o.OfferId,
                 OfferName = o.OfferName,
@@ -243,6 +243,11 @@ namespace CarPortal.Web.Controllers
             }
 
             await this.offerService.Delete(id);
+
+            if (this.User.IsInRole("Administrator"))
+            {
+                return RedirectToAction("Index", "Home", new { area = "Administration" });
+            }
 
             return RedirectToAction("MyProfile", "User");
         }

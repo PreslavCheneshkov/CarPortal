@@ -2,12 +2,12 @@
 
 namespace CarPortal.Web.Models.Search
 {
-    public class DealerSearchViewModel
+    public class NewsArticlesSearchViewModel
     {
         [Required]
         [StringLength(60, MinimumLength = 2)]
         public string Name { get; set; } = null!;
 
-        public List<DealerSearchResultViewModel> Dealers { get; set; } = new List<DealerSearchResultViewModel>();
+        public List<NewsArticleSearchResultViewModel> Articles { get; set; } = new List<NewsArticleSearchResultViewModel>();
     }
 }

@@ -2,24 +2,31 @@
 @model HomePageViewModel
 
 @{
-    ViewData["Title"] = "HomePage";
+    ViewData["Title"] = "Welcome";
 }
 
 <h1 class="text-center">@ViewData["Title"]</h1>
-<hr />
-
-<partial name="_OfferCollectionPartial" model="@Model.RecentOffers"></partial> 
-<partial name="_NewsCollectionPartial" model="@Model.RecentNewsArticles"></partial> 
-
-<div class="text-center">
-    <h1 class="display-4">Welcome to the Car Portal!</h1>
-    <div class="row">
-        <a class="btn btn-primary col-4 offset-4 mt-1" asp-controller="Offer" asp-action="BrowseRecent">Browse recent offers</a>
-
-        <a class="btn btn-primary col-4 offset-4 mt-1" asp-controller="Offer" asp-action="AddOffer" >Add offer!</a>
-
-        <a class="btn btn-secondary col-4 offset-4 mt-1" asp-controller="Search" asp-action="CustomSearch">Search</a>
-
-        <a class="btn btn-info col-4 offset-4 mt-1" asp-controller="Offer" asp-action="SeeAll">Forum</a>
+<p class="text-center">This is a website for trading and discussing about cars.</p>
+<br />
+<div class="container border border-2 bg-light">
+    <h4 class="text-center mt-3">Here are some of the most recently uploaded offers:</h4>
+    <hr />
+    <partial name="_OfferCollectionPartial" model="@Model.RecentOffers"></partial>
+    <br />
+    <div class="text-center">
+        <div class="btn-group btn-group-lg" role="group">
+            <a class="btn btn-primary" asp-action="BrowseRecent" asp-controller="Offer" >Browse more recent offers</a>
+            <br />
+            <a class="btn btn-outline-primary" asp-action="Offers" asp-controller="Search" >Search for a specific car</a>
+            <br />
+            <a class="btn btn-primary" asp-action="Add" asp-controller="Offer" >Sell your car!</a>
+        </div>
     </div>
+    <br />
+</div>
+<br />
+<div class="border border-2 bg-light text-center">
+    <h4 class="text-center mt-3">Here are some of the most recent news and articles:</h4>
+    <partial name="_NewsCollectionPartial" model="@Model.RecentNewsArticles"></partial>
+    <a class="btn btn-secondary mb-2" asp-action="Index" asp-controller="News">Read more here!</a>
 </div>

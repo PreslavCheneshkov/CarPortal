@@ -4,5 +4,15 @@
 @{
     ViewBag.Title = "Browse recent";
 }
+<div class="text-center">
+    <h1>@ViewBag.Title</h1>
+    <hr />
+</div>
 
 <partial name="_OfferCollectionPartial"></partial>
+
+<div class="text-center">
+    <hr />
+    <p>These are just the most recent offers, you can browse many more here:</p>
+    <a class="btn btn-primary" asp-action="Offers" asp-controller="Search">Search for more offers</a>
+</div>
