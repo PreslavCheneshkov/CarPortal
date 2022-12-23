@@ -3,11 +3,6 @@ using CarPortal.Core.DTOs.Search;
 using CarPortal.Core.Services.Contracts;
 using CarPortal.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarPortal.Core.Services
 {

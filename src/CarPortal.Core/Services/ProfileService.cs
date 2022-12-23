@@ -4,11 +4,6 @@ using CarPortal.Core.Services.Contracts;
 using CarPortal.Data;
 using CarPortal.Data.Entities.User;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarPortal.Core.Services
 {
@@ -68,6 +63,7 @@ namespace CarPortal.Core.Services
             profile.UploadedOffers = await context.Offers
                                                    .Where(o => o.SellerId == profile.UserId)
                                                    .Where(o => o.IsActive)
+                                                   .OrderByDescending(x => x.CreatedOn)
                                                    .Select(o => new OfferInCollectionDto()
                                                    {
                                                        FuelType = o.Car.FuelType.Name,

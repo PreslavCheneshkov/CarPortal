@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarPortal.Core.Services.Contracts
+﻿namespace CarPortal.Core.Services.Contracts
 {
     public interface IAdminService
     {
-        public Task<Tuple<int, int>> GetIndexPageData();
+        public Task<Tuple<int, int>> GetIndexPageDataAsync();
+
+        public Task<List<string>> GetRolesAsync();
+
+        public Task GiveRole(string roleName, string username);
     }
 }

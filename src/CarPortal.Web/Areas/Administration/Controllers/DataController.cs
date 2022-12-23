@@ -122,8 +122,7 @@ namespace CarPortal.Web.Areas.Administration.Controllers
                         await this.pageDataService.AddData<City>(new City() { Name = this.sanitizer.Sanitize(model.NewCityName), RegionId = (int)model.NewCityRegionId });
                     }
                     break;
-                default:
-                    break;
+                default: return BadRequest();
             }
 
             return RedirectToAction("Current", "Data", new { area = "Administration" });

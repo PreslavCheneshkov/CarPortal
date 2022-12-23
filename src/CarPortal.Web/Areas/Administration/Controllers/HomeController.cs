@@ -19,7 +19,7 @@ namespace CarPortal.Web.Areas.Administration.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var data = await this.adminService.GetIndexPageData();
+            var data = await this.adminService.GetIndexPageDataAsync();
 
             AdminStatsViewModel model = new AdminStatsViewModel()
             {
