@@ -3,6 +3,7 @@ using CarPortal.Core.Services.Contracts;
 using CarPortal.Data;
 using CarPortal.Data.Entities.User;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,7 +27,10 @@ builder.Services.AddDefaultIdentity<CarPortalUser>(options =>
 })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<CarPortalDbContext>();
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+});
 
 builder.Services.AddTransient<IOfferService, OfferService>();
 builder.Services.AddTransient<IPageDataService, PageDataService>();
