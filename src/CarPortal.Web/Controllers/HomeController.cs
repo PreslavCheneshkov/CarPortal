@@ -1,10 +1,8 @@
 ﻿using CarPortal.Core.Services.Contracts;
-using CarPortal.Data.Entities.User;
 using CarPortal.Web.Models;
 using CarPortal.Web.Models.Home;
 using CarPortal.Web.Models.News;
 using CarPortal.Web.Models.Offer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
