@@ -173,41 +173,10 @@ namespace CarPortal.Core.Services
                                            LastEdited = o.LastEdited,
                                            ThumbnailUrl = $"/Images/Offers/Thumbnails/{o.OfferThumbnail.Id}{o.OfferThumbnail.Extension}",
                                            PictureIds = o.Images.Select(i => $"/Images/Offers/{ i.Id + i.Extension}").ToList(),
-                                           Comments = o.Comments.Select(c => new OfferCommentDTO()
-                                           {
-                                               Id = c.Id,
-                                               Author = c.CarPortalProfile.CarPortalUser.UserName,
-                                               Content = c.Content,
-                                               CreatedOn = c.CreatedOn.ToShortDateString(),
-                                           }).ToList(),
                                        })
                                        .FirstOrDefaultAsync(o => o.Id == offerId);
 
             return offer;
-        }
-
-        public async Task AddCommentToOffer(string content, string authorUserId, int offerId)
-        {
-            string authorProfileId = await context.Users
-                                                    .Where(u => u.Id == authorUserId)
-                                                    .Select(u => u.ProfileId)
-                                                    .FirstOrDefaultAsync();
-
-            if (string.IsNullOrEmpty(authorProfileId) || string.IsNullOrEmpty(content))
-            {
-                throw new ArgumentNullException();
-            }
-
-            OfferComment comment = new OfferComment()
-            {
-                CarPortalProfileId = authorProfileId,
-                Content = content,
-                OfferId = offerId,
-                CreatedOn = DateTime.Now,
-            };
-
-            await context.OfferComments.AddAsync(comment);
-            await context.SaveChangesAsync();
         }
 
         public async Task Delete(int offerId)

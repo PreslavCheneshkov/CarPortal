@@ -10,8 +10,6 @@ namespace CarPortal.Core.Services.Contracts
 
         Task<SingleOfferDto> GetOfferByIdAsync(int offerId);
 
-        Task AddCommentToOffer(string content, string authorUserId, int offerId);
-
         Task Delete(int offerId);
     }
 }

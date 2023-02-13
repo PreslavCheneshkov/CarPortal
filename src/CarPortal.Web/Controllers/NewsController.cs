@@ -88,37 +88,10 @@ namespace CarPortal.Web.Controllers
                 Content = article.Content,
                 CreatedOn = article.CreatedOn,
                 Id = id,
-                NewComment = new NewCommentInputModel(),
-                Comments = article.Comments.Select(c => new NewsArticleCommentViewModel()
-                {
-                    Author = c.Author,
-                    Content = c.Content,
-                    Id = c.Id,
-                    CreatedOn = c.CreatedOn,
-                }).ToList(),
+                NewComment = new NewCommentInputModel()
             };
 
             return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddComment(NewsArticleDetailsViewModel model, int newsArticleId)
-        {
-            if (model.NewComment.Content == null || newsArticleId <= 0)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                await this.newsService.AddCommentToNewsArticle(sanitizer.Sanitize(model.NewComment.Content), this.User.FindFirstValue(ClaimTypes.NameIdentifier), newsArticleId);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-
-            return RedirectToAction(nameof(NewsArticleDetails), "News", new { id = newsArticleId});
         }
 
         [HttpGet]

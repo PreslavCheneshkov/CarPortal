@@ -1,5 +1,5 @@
 ﻿<div class="row">
-    @foreach (var comment in @Model.Comments)
+    @foreach (var comment in @Model)
     {
         <div class="card text-dark bg-light mb-3 col-8 offset-2">
             <div class="card-header">@comment.Author - @comment.CreatedOn</div>
