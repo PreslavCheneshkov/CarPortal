@@ -1,8 +1,6 @@
 ﻿namespace CarPortal.Core.DTOs.Offer.DropDownModels
 {
-    public class FuelTypeDropDown
+    public class FuelTypeDropDown : DropDownModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; } = null!;
     }
 }
