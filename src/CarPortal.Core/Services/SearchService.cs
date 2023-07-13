@@ -112,7 +112,7 @@ namespace CarPortal.Core.Services
                 offers = offers.Where(o => o.Price <= inputModel.MaxPrice);
             }
 
-            if (inputModel.ExtraIds != null && inputModel.ExtraIds.Length > 0)
+            if (inputModel.ExtraIds != null && inputModel.ExtraIds.Count > 0)
             {
                 foreach (var extraId in inputModel.ExtraIds)
                 {
@@ -120,22 +120,22 @@ namespace CarPortal.Core.Services
                 }
             }
 
-            if (inputModel.ColorIds != null && inputModel.ColorIds.Length > 0)
+            if (inputModel.ColorIds != null && inputModel.ColorIds.Count > 0)
             {
                 offers = offers.Where(o => inputModel.ColorIds.Contains(o.Car.ColorId));
             }
 
-            if (inputModel.FuelTypeIds != null && inputModel.FuelTypeIds.Length > 0)
+            if (inputModel.FuelTypeIds != null && inputModel.FuelTypeIds.Count > 0)
             {
                 offers = offers.Where(o => inputModel.FuelTypeIds.Contains(o.Car.FuelTypeId));
             }
 
-            if (inputModel.TransmissionTypeIds != null && inputModel.TransmissionTypeIds.Length > 0)
+            if (inputModel.TransmissionTypeIds != null && inputModel.TransmissionTypeIds.Count > 0)
             {
                 offers = offers.Where(o => inputModel.TransmissionTypeIds.Contains(o.Car.TransmissionTypeId));
             }
 
-            if (inputModel.RegionIds != null && inputModel.RegionIds.Length > 0)
+            if (inputModel.RegionIds != null && inputModel.RegionIds.Count > 0)
             {
                 offers = offers.Where(o => inputModel.RegionIds.Contains(o.RegionId));
             }

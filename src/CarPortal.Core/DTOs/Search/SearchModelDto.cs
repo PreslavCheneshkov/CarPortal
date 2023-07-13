@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarPortal.Core.DTOs.Search
+﻿namespace CarPortal.Core.DTOs.Search
 {
     public class SearchModelDto
     {
@@ -38,14 +32,14 @@ namespace CarPortal.Core.DTOs.Search
 
         public string? OrderBy { get; set; }
 
-        public int[]? ExtraIds { get; set; }
+        public List<int>? ExtraIds { get; set; } = new List<int>();
 
-        public int[]? ColorIds { get; set; }
+        public List<int>? ColorIds { get; set; } = new List<int>();
 
-        public int[]? FuelTypeIds { get; set; }
+        public List<int>? FuelTypeIds { get; set; } = new List<int>();
 
-        public int[]? TransmissionTypeIds { get; set; }
-
-        public int[]? RegionIds { get; set; }
+        public List<int>? TransmissionTypeIds { get; set; } = new List<int>();
+            
+        public List<int>? RegionIds { get; set; } = new List<int>();
     }
 }

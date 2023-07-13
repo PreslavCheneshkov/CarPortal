@@ -1,5 +1,6 @@
 ﻿using CarPortal.API.Models.Offer;
 using CarPortal.Core.DTOs.Offer;
+using CarPortal.Core.DTOs.Search;
 using CarPortal.Core.Services.Contracts;
 using CarPortal.Data.Entities.User;
 using Microsoft.AspNetCore.Authorization;
@@ -12,17 +13,17 @@ namespace CarPortal.API.Controllers
     public class OfferController : CarPortalApiController
     {
         private readonly IOfferService _offerService;
-        private readonly IOfferDataService _offerDataService;
+        private readonly ISearchService _searchService;
 
         private readonly UserManager<CarPortalUser> _userManager;
 
         public OfferController(
             IOfferService offerService,
-            IOfferDataService offerDataService,
+            ISearchService searchService,
             UserManager<CarPortalUser> userManager)
         {
             _offerService = offerService;
-            _offerDataService = offerDataService;
+            _searchService = searchService;
             _userManager = userManager;
         }
 
@@ -66,7 +67,50 @@ namespace CarPortal.API.Controllers
             return Ok("Successfully added offer.");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Search(SearchOfferInputModel inputModel)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var searchResults = await _searchService.GetOfferSearchResultsAsync(MapToServiceModel(inputModel));
+            if (searchResults.Count == 0)
+                return NoContent();
+
+            return new JsonResult(searchResults);
+        }
+
         #region Model mappings
+
+        private SearchModelDto MapToServiceModel(SearchOfferInputModel inputModel)
+        {
+            if (inputModel is null)
+                throw new ArgumentNullException(nameof(inputModel));
+
+            return new SearchModelDto
+            {
+                ColorIds = inputModel.ColorIds,
+                ExtraIds = inputModel.ExtraIds,
+                FromDealer = inputModel.FromDealer,
+                FuelTypeIds = inputModel.FuelTypeIds,
+                Keyword = inputModel.Keyword,
+                ManufacturerId = inputModel.ManufacturerId,
+                MaxEngineDisplacement = inputModel.MaxEngineDisplacement,
+                MaxHorsePower = inputModel.MaxHorsePower,
+                MaxMileage = inputModel.MaxMileage,
+                MaxPrice = inputModel.MaxPrice,
+                MaxYear = inputModel.MaxYear,
+                MinEngineDisplacement = inputModel.MinEngineDisplacement,
+                MinHorsePower = inputModel.MinHorsePower,
+                MinPrice = inputModel.MinPrice,
+                MinYear = inputModel.MinYear,
+                ModelId = inputModel.ModelId,
+                OrderBy = inputModel.OrderBy,
+                RegionIds = inputModel.RegionIds,
+                TransmissionTypeIds = inputModel.TransmissionTypeIds,
+                VehicleCategoryId = inputModel.VehicleCategoryId
+            };
+        }
 
         private CarInputModel MapToServiceModel(AddCarInputModel car)
         {
