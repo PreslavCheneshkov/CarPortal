@@ -68,6 +68,7 @@ namespace CarPortal.API.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Search(SearchOfferInputModel inputModel)
         {
             if (!ModelState.IsValid)

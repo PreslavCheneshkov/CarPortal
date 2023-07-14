@@ -6,18 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net;
 using System.Security.Claims;
 using System.Text;
 
 namespace CarPortal.API.Controllers
 {
-    public class IdentityController : CarPortalApiController
+    public class UserController : CarPortalApiController
     {
         private readonly UserManager<CarPortalUser> _userManager;
         private readonly AppSettings _appSettings;
 
-        public IdentityController(
+        public UserController(
             UserManager<CarPortalUser> userManager,
             IOptions<AppSettings> appSettings)
         {
