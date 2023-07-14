@@ -1,6 +1,5 @@
 ﻿using CarPortal.Core.DTOs.API;
 using CarPortal.Core.Services.Contracts;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarPortal.Web.Controllers

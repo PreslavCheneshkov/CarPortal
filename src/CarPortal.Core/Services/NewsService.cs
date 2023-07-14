@@ -15,30 +15,6 @@ namespace CarPortal.Core.Services
             this.context = context;
         }
 
-        public async Task AddCommentToNewsArticle(string content, string authorUserId, int newsArticleId)
-        {
-            string authorProfileId = await context.Users
-                                                    .Where(u => u.Id == authorUserId)
-                                                    .Select(u => u.ProfileId)
-                                                    .FirstOrDefaultAsync();
-
-            if (string.IsNullOrEmpty(authorProfileId) || string.IsNullOrEmpty(content))
-            {
-                throw new ArgumentNullException();
-            }
-
-            NewsArticleComment comment = new NewsArticleComment()
-            {
-                CommenterId = authorProfileId,
-                Content = content,
-                NewsArticleId = newsArticleId,
-                CreatedOn = DateTime.Now,
-            };
-
-            await context.NewsArticleComments.AddAsync(comment);
-            await context.SaveChangesAsync();
-        }
-
         public async Task CreateArticleAsync(NewsArticleInputDTO inputModel, string authorId)
         {
             string profileId = await context.Users
@@ -103,13 +79,7 @@ namespace CarPortal.Core.Services
                                                 Title = a.Title,
                                                 Content = a.Content,
                                                 CreatedOn = a.CreatedOn.ToShortDateString(),
-                                                Id = a.Id,
-                                                Comments = a.Comments.Select(c => new NewsArticleCommentDTO()
-                                                {
-                                                    Author = c.Commenter.CarPortalUser.UserName,
-                                                    Content = c.Content,
-                                                    CreatedOn = c.CreatedOn.ToShortDateString(),
-                                                }).ToList()
+                                                Id = a.Id
                                             })
                                             .FirstOrDefaultAsync();
         }

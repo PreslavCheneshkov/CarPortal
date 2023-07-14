@@ -13,10 +13,10 @@ namespace CarPortal.Web.Controllers
 {
     public class OfferController : CarPortalController
     {
-        private readonly UserManager<CarPortalUser> userManager;
-        private readonly IOfferService offerService;
-        private readonly IPageDataService pageDataService;
-        private readonly HtmlSanitizer sanitizer;
+        private readonly UserManager<CarPortalUser> _userManager;
+        private readonly IOfferService _offerService;
+        private readonly IPageDataService _pageDataService;
+        private readonly HtmlSanitizer _sanitizer;
 
         public OfferController(
             UserManager<CarPortalUser> userManager,
@@ -24,10 +24,10 @@ namespace CarPortal.Web.Controllers
             IPageDataService pageDataService
             )
         {
-            this.offerService = offerService;
-            this.userManager = userManager;
-            this.pageDataService = pageDataService;
-            this.sanitizer = new HtmlSanitizer();
+            _offerService = offerService;
+            _userManager = userManager;
+            _pageDataService = pageDataService;
+            _sanitizer = new HtmlSanitizer();
         }
         public IActionResult Index()
         {
@@ -37,7 +37,7 @@ namespace CarPortal.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            var dropdowns = await pageDataService.PopulateViewModelWithDropDownsAsync();
+            var dropdowns = await _pageDataService.PopulateViewModelWithDropDownsAsync();
 
             var model = new AddOfferViewModel()
             {
@@ -61,7 +61,7 @@ namespace CarPortal.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var dropdowns = await pageDataService.PopulateViewModelWithDropDownsAsync();
+                var dropdowns = await _pageDataService.PopulateViewModelWithDropDownsAsync();
                 model = new AddOfferViewModel()
                 {
                     Regions = dropdowns.Regions,
@@ -81,12 +81,12 @@ namespace CarPortal.Web.Controllers
 
             var offer = new OfferInputModel
             {
-                Name = this.sanitizer.Sanitize(model.Name),
+                Name = _sanitizer.Sanitize(model.Name),
                 Price = model.Price,
                 CityId = model.CityId,
                 RegionId = model.RegionId,
-                AdditionalInfo = this.sanitizer.Sanitize(model.AdditionalInfo),
-                ContactPhoneNumber = this.sanitizer.Sanitize(model.ContactPhoneNumber),
+                AdditionalInfo = _sanitizer.Sanitize(model.AdditionalInfo),
+                ContactPhoneNumber = _sanitizer.Sanitize(model.ContactPhoneNumber),
                 Thumbnail = model.Thumbnail,
                 Images = model.Images,
                 Car = new CarInputModel()
@@ -106,11 +106,11 @@ namespace CarPortal.Web.Controllers
                 }
             };
 
-            var user = await userManager.GetUserAsync(this.User);
+            var user = await _userManager.GetUserAsync(this.User);
 
             try
             {
-                await offerService.AddOfferAsync(offer, user.Id);
+                await _offerService.AddOfferAsync(offer, user.Id);
             }
             catch (Exception)
             {
@@ -123,7 +123,7 @@ namespace CarPortal.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> BrowseRecent()
         {
-            var offers = (await offerService.GetRecentOffersAsync()).Select(o => new OfferInCollectionViewModel()
+            var offers = (await _offerService.GetRecentOffersAsync()).Select(o => new OfferInCollectionViewModel()
             {
                 OfferId = o.OfferId,
                 OfferName = o.OfferName,
@@ -145,7 +145,7 @@ namespace CarPortal.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
-            var offerDto = await offerService.GetOfferByIdAsync(id);
+            var offerDto = await _offerService.GetOfferByIdAsync(id);
 
             if (offerDto == null)
             {
@@ -186,37 +186,10 @@ namespace CarPortal.Web.Controllers
                 ThumbnailUrl = offerDto.ThumbnailUrl,
                 AdditionalInfo = offerDto.AdditionalInfo,
                 ContactPhoneNumber = offerDto.ContactPhoneNumber,
-                Comments = offerDto.Comments.Select(c => new OfferCommentViewModel()
-                {
-                    Id = c.Id,
-                    Author = c.Author,
-                    Content = c.Content,
-                    CreatedOn = c.CreatedOn,
-                }).ToList(),
                 NewComment = new OfferCommentInputModel(),
             };
 
             return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddComment(OfferDetailsViewModel model, int offerId)
-        {
-            if (model.NewComment.Content == null || offerId == null)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                await this.offerService.AddCommentToOffer(this.sanitizer.Sanitize(model.NewComment.Content), this.User.FindFirstValue(ClaimTypes.NameIdentifier), offerId);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-
-            return RedirectToAction(nameof(Details), "Offer", new { id = offerId });
         }
 
         [HttpGet]
@@ -225,7 +198,7 @@ namespace CarPortal.Web.Controllers
             SingleOfferDto offer;
             try
             {
-                offer = await this.offerService.GetOfferByIdAsync(id);
+                offer = await _offerService.GetOfferByIdAsync(id);
             }
             catch (Exception)
             {
@@ -242,7 +215,7 @@ namespace CarPortal.Web.Controllers
                 return Forbid();
             }
 
-            await this.offerService.Delete(id);
+            await _offerService.Delete(id);
 
             if (this.User.IsInRole("Administrator"))
             {
